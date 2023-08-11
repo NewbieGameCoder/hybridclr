@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stack>
+#include <deque>
 
 #include "../CommonDef.h"
 
@@ -174,6 +175,13 @@ namespace interpreter
 					il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetStackOverflowException("AllocFrame"));
 				}
 			}
+
+			if (_ilOpcodesDeque.size() > MaxOpCodesCount)
+			{
+				_ilOpcodesDeque.pop_front();
+			}
+
+			_ilOpcodesDeque.push_back(std::deque<std::string>());
 			return _frameBase + _frameTopIdx++;
 		}
 
@@ -181,6 +189,10 @@ namespace interpreter
 		{
 			IL2CPP_ASSERT(_frameTopIdx > 0);
 			--_frameTopIdx;
+			if (_ilOpcodesDeque.size() > 0)
+			{
+				_ilOpcodesDeque.pop_back();
+			}
 		}
 
 		void PopFrameN(int32_t count)
@@ -273,8 +285,40 @@ namespace interpreter
 			}
 		}
 
-	private:
+		void CollectOpCodes(Il2CppException* ex)
+		{
+			std::string opCodesStr = GetExecutedOpCodeInfo();
+			if (opCodesStr.empty() == false)
+			{
+				std::string msg = "";
+				if (ex->message != nullptr && ex->message->length > 0)
+				{
+					msg = il2cpp::utils::StringUtils::Utf16ToUtf8(ex->message->chars);
+					msg.append("\n");
+				}
+				msg.append("opCodes: ");
+				msg.append(opCodesStr);
+				ex->message = il2cpp::vm::String::New(msg.c_str());
+			}
+		}
 
+		void PushOpcode(const std::string& opcodeStr)
+		{
+			if (_ilOpcodesDeque.empty())
+			{
+				_ilOpcodesDeque.push_back(std::deque<std::string>());
+			}
+
+			std::deque<std::string>& opCodes = _ilOpcodesDeque.back();
+			if (opCodes.size() > MaxOpCodesCount)
+			{
+				opCodes.pop_front();
+			}
+
+			opCodes.push_back(opcodeStr);
+		}
+
+	private:
 
 		void InitEvalStack()
 		{
@@ -302,6 +346,30 @@ namespace interpreter
 			_exceptionFlowTopIdx = 0;
 		}
 
+		std::string GetExecutedOpCodeInfo()
+		{
+			std::string name;
+			if (_ilOpcodesDeque.empty())
+			{
+				return name;
+			}
+
+			std::deque<std::string>& opCodes = _ilOpcodesDeque.back();
+			if (opCodes.size() > 0)
+			{
+				for (int32_t j = 0; j < opCodes.size(); j++)
+				{
+					name.append(opCodes[j]);
+					if (j < opCodes.size() - 1)
+					{
+						name.append(" -> ");
+					}
+				}
+			}
+
+			return name;
+		}
+
 		StackObject* _stackBase;
 		int32_t _stackSize;
 		int32_t _stackTopIdx;
@@ -315,7 +383,8 @@ namespace interpreter
 		int32_t _exceptionFlowTopIdx;
 		int32_t _exceptionFlowCount;
 
-
+		const int MaxOpCodesCount = 20;
+		std::deque<std::deque<std::string>> _ilOpcodesDeque;
 		std::stack<const Il2CppImage*> _executingImageStack;
 	};
 
@@ -398,7 +467,7 @@ namespace interpreter
 			return newFrame;
 		}
 
-		InterpFrame* LeaveFrame()
+		InterpFrame* LeaveFrame(bool collectOpcodes = false)
 		{
 			IL2CPP_ASSERT(_machineState.GetFrameTopIdx() > _frameBaseIdx);
 			POP_STACK_FRAME();
@@ -406,6 +475,10 @@ namespace interpreter
 #if IL2CPP_ENABLE_PROFILER
 			il2cpp_codegen_profiler_method_exit(frame->method->method);
 #endif
+			if (collectOpcodes && frame->GetCurExFlow() != nullptr)
+			{
+				_machineState.CollectOpCodes(frame->GetCurExFlow()->ex);
+			}
 			if (frame->exFlowBase)
 			{
 				_machineState.SetExceptionFlowTop(frame->exFlowBase);
