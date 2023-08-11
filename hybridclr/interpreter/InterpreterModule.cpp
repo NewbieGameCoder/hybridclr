@@ -270,6 +270,20 @@ namespace interpreter
 		{
 			return Managed2NativeCallByReflectionInvoke;
 		}
+#if HYBRIDCLR_UNITY_2021_OR_NEW
+		// handle generic UnresolvedVirtualCall
+        if (il2cpp::vm::Runtime::IsFullGenericSharingEnabled())
+		{
+			if (method->genericMethod != nullptr 
+				&& method->genericMethod->methodDefinition != nullptr
+				&& !hybridclr::metadata::IsInterpreterMethod(method->genericMethod->methodDefinition)
+				)
+			{
+				return Managed2NativeCallByReflectionInvoke;
+			}
+		}
+#endif
+
 		char sigName[1000];
 		ComputeSignature(method, !forceStatic, sigName, sizeof(sigName) - 1);
 		auto it = g_managed2natives.find(sigName);
