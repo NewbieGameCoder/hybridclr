@@ -287,6 +287,11 @@ namespace interpreter
 
 		void CollectOpCodes(Il2CppException* ex)
 		{
+			if (ex == nullptr)
+			{
+				return;
+			}
+
 			std::string opCodesStr = GetExecutedOpCodeInfo();
 			if (opCodesStr.empty() == false)
 			{
@@ -300,6 +305,7 @@ namespace interpreter
 				msg.append(opCodesStr);
 				ex->message = il2cpp::vm::String::New(msg.c_str());
 			}
+			_ilOpcodesDeque.clear();
 		}
 
 		void PushOpcode(const std::string& opcodeStr)
@@ -467,7 +473,7 @@ namespace interpreter
 			return newFrame;
 		}
 
-		InterpFrame* LeaveFrame(bool collectOpcodes = false)
+		InterpFrame* LeaveFrame()
 		{
 			IL2CPP_ASSERT(_machineState.GetFrameTopIdx() > _frameBaseIdx);
 			POP_STACK_FRAME();
@@ -475,10 +481,6 @@ namespace interpreter
 #if IL2CPP_ENABLE_PROFILER
 			il2cpp_codegen_profiler_method_exit(frame->method->method);
 #endif
-			if (collectOpcodes && frame->GetCurExFlow() != nullptr)
-			{
-				_machineState.CollectOpCodes(frame->GetCurExFlow()->ex);
-			}
 			if (frame->exFlowBase)
 			{
 				_machineState.SetExceptionFlowTop(frame->exFlowBase);

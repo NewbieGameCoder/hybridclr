@@ -234,7 +234,16 @@ namespace interpreter
 			}
 		}
 #if HYBRIDCLR_UNITY_2021_OR_NEW
-		method->invoker_method(method->methodPointerCallByInterp, method, thisPtr, invokeParams, ret);
+#if HYBRIDCLR_UNITY_2022_OR_NEW
+        if (method->has_full_generic_sharing_signature)
+		{
+			method->invoker_method(method->methodPointer, method, thisPtr, invokeParams, ret);
+		}
+		else
+#endif
+		{
+			method->invoker_method(method->methodPointerCallByInterp, method, thisPtr, invokeParams, ret);
+		}
 #else
 		void* retObj = method->invoker_method(method->methodPointerCallByInterp, method, thisPtr, invokeParams);
 		if (ret)

@@ -1407,6 +1407,14 @@ inline void PushExceptionFlowInfo(InterpFrame* frame, MachineState& machine, con
 		frame->exFlowCapaticy += EXCEPTION_FLOW_INFO_ALLOC_BATCH_NUM;
 	}
 	frame->exFlowBase[frame->exFlowCount++] = newExFlowInfo;
+
+	if (newExFlowInfo.exFlowType == ExceptionFlowType::Exception)
+	{
+		if (newExFlowInfo.ex != nullptr)
+		{
+			machine.CollectOpCodes(newExFlowInfo.ex);
+		}
+	}
 }
 
 inline void PopPrevExceptionFlowInfo(InterpFrame* frame, ExceptionFlowInfo** curEx)
@@ -1493,7 +1501,7 @@ while (true) \
 			} \
 		} \
 	} \
-	frame = interpFrameGroup.LeaveFrame(true); \
+	frame = interpFrameGroup.LeaveFrame(); \
 	if (frame) \
 	{ \
 		LOAD_PREV_FRAME(); \
