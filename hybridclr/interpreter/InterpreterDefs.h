@@ -76,6 +76,7 @@ namespace hybridclr
 			int32_t exFlowCapaticy;
 
 			int32_t oldLocalPoolBottomIdx;
+			int32_t oldOpCodesStartIndex;
 
 			ExceptionFlowInfo* GetCurExFlow() const
 			{

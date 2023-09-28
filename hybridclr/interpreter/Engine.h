@@ -1,7 +1,6 @@
 #pragma once
 
 #include <stack>
-#include <deque>
 
 #include "../CommonDef.h"
 
@@ -44,6 +43,7 @@ namespace interpreter
 			_stackSize = -1;
 			_stackBase = nullptr;
 			_stackTopIdx = 0;
+			_opCodesStartIndex = 0;
 			_localPoolBottomIdx = -1;
 
 			_frameBase = nullptr;
@@ -94,6 +94,11 @@ namespace interpreter
 		StackObject* GetStackBasePtr() const
 		{
 			return _stackBase;
+		}
+
+		int32_t GetopCodesStartIndex() const
+		{
+			return _opCodesStartIndex;
 		}
 
 		int32_t GetStackTop() const
@@ -176,23 +181,16 @@ namespace interpreter
 				}
 			}
 
-			if (_ilOpcodesDeque.size() > MaxOpCodesCount)
-			{
-				_ilOpcodesDeque.pop_front();
-			}
-
-			_ilOpcodesDeque.push_back(std::deque<std::string>());
 			return _frameBase + _frameTopIdx++;
 		}
 
 		void PopFrame()
 		{
 			IL2CPP_ASSERT(_frameTopIdx > 0);
+			InterpFrame* frame = GetTopFrame();
 			--_frameTopIdx;
-			if (_ilOpcodesDeque.size() > 0)
-			{
-				_ilOpcodesDeque.pop_back();
-			}
+
+			_opCodesStartIndex = frame->oldOpCodesStartIndex;
 		}
 
 		void PopFrameN(int32_t count)
@@ -287,7 +285,7 @@ namespace interpreter
 
 		void CollectOpCodes(Il2CppException* ex)
 		{
-			if (ex == nullptr)
+			if (ex == nullptr || _ilOpcodesDeque.size() == 0)
 			{
 				return;
 			}
@@ -305,23 +303,21 @@ namespace interpreter
 				msg.append(opCodesStr);
 				ex->message = il2cpp::vm::String::New(msg.c_str());
 			}
+			_opCodesStartIndex = 0;
 			_ilOpcodesDeque.clear();
 		}
 
 		void PushOpcode(const std::string& opcodeStr)
 		{
-			if (_ilOpcodesDeque.empty())
+			if (_opCodesStartIndex >= _ilOpcodesDeque.size())
 			{
-				_ilOpcodesDeque.push_back(std::deque<std::string>());
+				_ilOpcodesDeque.push_back(opcodeStr);
 			}
-
-			std::deque<std::string>& opCodes = _ilOpcodesDeque.back();
-			if (opCodes.size() > MaxOpCodesCount)
+			else
 			{
-				opCodes.pop_front();
+				_ilOpcodesDeque[_opCodesStartIndex] = opcodeStr;
 			}
-
-			opCodes.push_back(opcodeStr);
+			_opCodesStartIndex++;
 		}
 
 	private:
@@ -355,21 +351,20 @@ namespace interpreter
 		std::string GetExecutedOpCodeInfo()
 		{
 			std::string name;
-			if (_ilOpcodesDeque.empty())
+
+			InterpFrame* frame = GetTopFrame();
+			int32_t startIndex = frame->oldOpCodesStartIndex;
+			if (_opCodesStartIndex - startIndex > MaxOpCodesCount)
 			{
-				return name;
+				startIndex = _opCodesStartIndex - MaxOpCodesCount;
 			}
 
-			std::deque<std::string>& opCodes = _ilOpcodesDeque.back();
-			if (opCodes.size() > 0)
+			for (int32_t j = startIndex; j < _opCodesStartIndex; j++)
 			{
-				for (int32_t j = 0; j < opCodes.size(); j++)
+				name.append(_ilOpcodesDeque[j]);
+				if (j < _opCodesStartIndex - 1)
 				{
-					name.append(opCodes[j]);
-					if (j < opCodes.size() - 1)
-					{
-						name.append(" -> ");
-					}
+					name.append("->");
 				}
 			}
 
@@ -389,8 +384,9 @@ namespace interpreter
 		int32_t _exceptionFlowTopIdx;
 		int32_t _exceptionFlowCount;
 
-		const int MaxOpCodesCount = 20;
-		std::deque<std::deque<std::string>> _ilOpcodesDeque;
+		const int MaxOpCodesCount = 30;
+		int32_t _opCodesStartIndex;
+		std::vector<std::string> _ilOpcodesDeque;
 		std::stack<const Il2CppImage*> _executingImageStack;
 	};
 
@@ -440,7 +436,7 @@ namespace interpreter
 			int32_t oldStackTop = _machineState.GetStackTop();
 			StackObject* stackBasePtr = _machineState.AllocStackSlot(imi->maxStackSize - imi->argStackObjectSize);
 			InterpFrame* newFrame = _machineState.PushFrame();
-			*newFrame = { imi, argBase, oldStackTop, nullptr, nullptr, nullptr, 0, 0, _machineState.GetLocalPoolBottomIdx() };
+			*newFrame = { imi, argBase, oldStackTop, nullptr, nullptr, nullptr, 0, 0, _machineState.GetLocalPoolBottomIdx(), _machineState.GetopCodesStartIndex() };
 			PUSH_STACK_FRAME(imi->method);
 			return newFrame;
 		}
@@ -454,7 +450,7 @@ namespace interpreter
 			int32_t oldStackTop = _machineState.GetStackTop();
 			StackObject* stackBasePtr = _machineState.AllocStackSlot(imi->maxStackSize);
 			InterpFrame* newFrame = _machineState.PushFrame();
-			*newFrame = { imi, stackBasePtr, oldStackTop, nullptr, nullptr, nullptr, 0, 0, _machineState.GetLocalPoolBottomIdx() };
+			*newFrame = { imi, stackBasePtr, oldStackTop, nullptr, nullptr, nullptr, 0, 0, _machineState.GetLocalPoolBottomIdx(), _machineState.GetopCodesStartIndex() };
 
 			// if not prepare arg stack. copy from args
 			if (imi->args)
