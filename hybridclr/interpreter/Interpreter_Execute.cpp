@@ -1676,6 +1676,7 @@ else \
 					//!!!{{MEMORY
 				case HiOpcodeEnum::InitLocals_n_2:
 				{
+					machine.PushOpcode("InitLocals_n_2");
 					uint16_t __size = *(uint16_t*)(ip + 2);
 					InitDefaultN(localVarBase + imi->localVarBaseOffset, __size);
 				    ip += 8;
@@ -1683,6 +1684,7 @@ else \
 				}
 				case HiOpcodeEnum::InitLocals_n_4:
 				{
+					machine.PushOpcode("InitLocals_n_4");
 					uint32_t __size = *(uint32_t*)(ip + 4);
 					InitDefaultN(localVarBase + imi->localVarBaseOffset, __size);
 				    ip += 8;
@@ -1690,6 +1692,7 @@ else \
 				}
 				case HiOpcodeEnum::LdlocVarVar:
 				{
+					machine.PushOpcode("LdlocVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(uint64_t*)(localVarBase + __dst)) = (*(uint64_t*)(localVarBase + __src));
@@ -1698,6 +1701,7 @@ else \
 				}
 				case HiOpcodeEnum::LdlocExpandVarVar_i1:
 				{
+					machine.PushOpcode("LdlocExpandVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(int8_t*)(localVarBase + __src));
@@ -1706,6 +1710,7 @@ else \
 				}
 				case HiOpcodeEnum::LdlocExpandVarVar_u1:
 				{
+					machine.PushOpcode("LdlocExpandVarVar_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(uint8_t*)(localVarBase + __src));
@@ -1714,6 +1719,7 @@ else \
 				}
 				case HiOpcodeEnum::LdlocExpandVarVar_i2:
 				{
+					machine.PushOpcode("LdlocExpandVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(int16_t*)(localVarBase + __src));
@@ -1722,6 +1728,7 @@ else \
 				}
 				case HiOpcodeEnum::LdlocExpandVarVar_u2:
 				{
+					machine.PushOpcode("LdlocExpandVarVar_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(uint16_t*)(localVarBase + __src));
@@ -1730,6 +1737,7 @@ else \
 				}
 				case HiOpcodeEnum::LdlocVarVarSize:
 				{
+					machine.PushOpcode("LdlocVarVarSize");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint16_t __size = *(uint16_t*)(ip + 6);
@@ -1739,6 +1747,7 @@ else \
 				}
 				case HiOpcodeEnum::LdlocVarAddress:
 				{
+					machine.PushOpcode("LdlocVarAddress");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(void**)(localVarBase + __dst)) = (void*)(localVarBase + __src);
@@ -1747,6 +1756,7 @@ else \
 				}
 				case HiOpcodeEnum::LdcVarConst_1:
 				{
+					machine.PushOpcode("LdcVarConst_1");
 					uint16_t __dst = *(uint16_t*)(ip + 4);
 					uint8_t __src = *(uint8_t*)(ip + 2);
 					(*(int32_t*)(localVarBase + __dst)) = __src;
@@ -1755,6 +1765,7 @@ else \
 				}
 				case HiOpcodeEnum::LdcVarConst_2:
 				{
+					machine.PushOpcode("LdcVarConst_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = __src;
@@ -1763,6 +1774,7 @@ else \
 				}
 				case HiOpcodeEnum::LdcVarConst_4:
 				{
+					machine.PushOpcode("LdcVarConst_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint32_t __src = *(uint32_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = __src;
@@ -1771,6 +1783,7 @@ else \
 				}
 				case HiOpcodeEnum::LdcVarConst_8:
 				{
+					machine.PushOpcode("LdcVarConst_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint64_t __src = *(uint64_t*)(ip + 8);
 					(*(uint64_t*)(localVarBase + __dst)) = __src;
@@ -1779,6 +1792,7 @@ else \
 				}
 				case HiOpcodeEnum::LdnullVar:
 				{
+					machine.PushOpcode("LdnullVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					(*(void**)(localVarBase + __dst)) = nullptr;
 				    ip += 8;
@@ -1786,6 +1800,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_i1:
 				{
+					machine.PushOpcode("LdindVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(int8_t*)*(void**)(localVarBase + __src));
@@ -1794,6 +1809,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_u1:
 				{
+					machine.PushOpcode("LdindVarVar_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(uint8_t*)*(void**)(localVarBase + __src));
@@ -1802,6 +1818,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_i2:
 				{
+					machine.PushOpcode("LdindVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(int16_t*)*(void**)(localVarBase + __src));
@@ -1810,6 +1827,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_u2:
 				{
+					machine.PushOpcode("LdindVarVar_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(uint16_t*)*(void**)(localVarBase + __src));
@@ -1818,6 +1836,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_i4:
 				{
+					machine.PushOpcode("LdindVarVar_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(int32_t*)*(void**)(localVarBase + __src));
@@ -1826,6 +1845,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_u4:
 				{
+					machine.PushOpcode("LdindVarVar_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (*(uint32_t*)*(void**)(localVarBase + __src));
@@ -1834,6 +1854,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_i8:
 				{
+					machine.PushOpcode("LdindVarVar_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (*(int64_t*)*(void**)(localVarBase + __src));
@@ -1842,6 +1863,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_f4:
 				{
+					machine.PushOpcode("LdindVarVar_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = (*(float*)*(void**)(localVarBase + __src));
@@ -1850,6 +1872,7 @@ else \
 				}
 				case HiOpcodeEnum::LdindVarVar_f8:
 				{
+					machine.PushOpcode("LdindVarVar_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = (*(double*)*(void**)(localVarBase + __src));
@@ -1858,6 +1881,7 @@ else \
 				}
 				case HiOpcodeEnum::StindVarVar_i1:
 				{
+					machine.PushOpcode("StindVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int8_t*)*(void**)(localVarBase + __dst)) = (*(int8_t*)(localVarBase + __src));
@@ -1866,6 +1890,7 @@ else \
 				}
 				case HiOpcodeEnum::StindVarVar_i2:
 				{
+					machine.PushOpcode("StindVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int16_t*)*(void**)(localVarBase + __dst)) = (*(int16_t*)(localVarBase + __src));
@@ -1874,6 +1899,7 @@ else \
 				}
 				case HiOpcodeEnum::StindVarVar_i4:
 				{
+					machine.PushOpcode("StindVarVar_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)*(void**)(localVarBase + __dst)) = (*(int32_t*)(localVarBase + __src));
@@ -1882,6 +1908,7 @@ else \
 				}
 				case HiOpcodeEnum::StindVarVar_i8:
 				{
+					machine.PushOpcode("StindVarVar_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)*(void**)(localVarBase + __dst)) = (*(int64_t*)(localVarBase + __src));
@@ -1890,6 +1917,7 @@ else \
 				}
 				case HiOpcodeEnum::StindVarVar_f4:
 				{
+					machine.PushOpcode("StindVarVar_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)*(void**)(localVarBase + __dst)) = (*(float*)(localVarBase + __src));
@@ -1898,6 +1926,7 @@ else \
 				}
 				case HiOpcodeEnum::StindVarVar_f8:
 				{
+					machine.PushOpcode("StindVarVar_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)*(void**)(localVarBase + __dst)) = (*(double*)(localVarBase + __src));
@@ -1906,6 +1935,7 @@ else \
 				}
 				case HiOpcodeEnum::StindVarVar_ref:
 				{
+					machine.PushOpcode("StindVarVar_ref");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(Il2CppObject**)*(void**)(localVarBase + __dst)) = (*(Il2CppObject**)(localVarBase + __src));	HYBRIDCLR_SET_WRITE_BARRIER((void**)(*(void**)(localVarBase + __dst)));
@@ -1914,6 +1944,7 @@ else \
 				}
 				case HiOpcodeEnum::LocalAllocVarVar_n_2:
 				{
+					machine.PushOpcode("LocalAllocVarVar_n_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __size = *(uint16_t*)(ip + 4);
 					(*(void**)(localVarBase + __dst)) = LOCAL_ALLOC((*(uint16_t*)(localVarBase + __size)));
@@ -1922,6 +1953,7 @@ else \
 				}
 				case HiOpcodeEnum::LocalAllocVarVar_n_4:
 				{
+					machine.PushOpcode("LocalAllocVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __size = *(uint16_t*)(ip + 4);
 					(*(void**)(localVarBase + __dst)) = LOCAL_ALLOC((*(uint32_t*)(localVarBase + __size)));
@@ -1930,6 +1962,7 @@ else \
 				}
 				case HiOpcodeEnum::InitblkVarVarVar:
 				{
+					machine.PushOpcode("InitblkVarVarVar");
 					uint16_t __addr = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __size = *(uint16_t*)(ip + 6);
@@ -1939,6 +1972,7 @@ else \
 				}
 				case HiOpcodeEnum::CpblkVarVar:
 				{
+					machine.PushOpcode("CpblkVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint16_t __size = *(uint16_t*)(ip + 6);
@@ -1948,6 +1982,7 @@ else \
 				}
 				case HiOpcodeEnum::MemoryBarrier:
 				{
+					machine.PushOpcode("MemoryBarrier");
 					MEMORY_BARRIER();
 				    ip += 8;
 				    continue;
@@ -1962,6 +1997,7 @@ else \
 		//!!!{{CONVERT
 				case HiOpcodeEnum::ConvertVarVar_i4_i1:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int8_t)((*(int32_t*)(localVarBase + __src)));
@@ -1970,6 +2006,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_u1:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint8_t)(uint32_t)((*(int32_t*)(localVarBase + __src)));
@@ -1978,6 +2015,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_i2:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int16_t)((*(int32_t*)(localVarBase + __src)));
@@ -1986,6 +2024,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_u2:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint16_t)(uint32_t)((*(int32_t*)(localVarBase + __src)));
@@ -1994,6 +2033,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_i4:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int32_t)((*(int32_t*)(localVarBase + __src)));
@@ -2002,6 +2042,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_u4:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint32_t)(uint32_t)((*(int32_t*)(localVarBase + __src)));
@@ -2010,6 +2051,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_i8:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (int64_t)((*(int32_t*)(localVarBase + __src)));
@@ -2018,6 +2060,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_u8:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (uint64_t)(uint32_t)((*(int32_t*)(localVarBase + __src)));
@@ -2026,6 +2069,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_f4:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = (float)((*(int32_t*)(localVarBase + __src)));
@@ -2034,6 +2078,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i4_f8:
 				{
+					machine.PushOpcode("ConvertVarVar_i4_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = (double)((*(int32_t*)(localVarBase + __src)));
@@ -2042,6 +2087,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_i1:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int8_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2050,6 +2096,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_u1:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint8_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2058,6 +2105,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_i2:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int16_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2066,6 +2114,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_u2:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint16_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2074,6 +2123,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_i4:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int32_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2082,6 +2132,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_u4:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint32_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2090,6 +2141,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_i8:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (int64_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2098,6 +2150,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_u8:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (uint64_t)((*(uint32_t*)(localVarBase + __src)));
@@ -2106,6 +2159,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_f4:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = (float)((*(uint32_t*)(localVarBase + __src)));
@@ -2114,6 +2168,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u4_f8:
 				{
+					machine.PushOpcode("ConvertVarVar_u4_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = (double)((*(uint32_t*)(localVarBase + __src)));
@@ -2122,6 +2177,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_i1:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int8_t)((*(int64_t*)(localVarBase + __src)));
@@ -2130,6 +2186,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_u1:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint8_t)(uint64_t)((*(int64_t*)(localVarBase + __src)));
@@ -2138,6 +2195,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_i2:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int16_t)((*(int64_t*)(localVarBase + __src)));
@@ -2146,6 +2204,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_u2:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint16_t)(uint64_t)((*(int64_t*)(localVarBase + __src)));
@@ -2154,6 +2213,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_i4:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int32_t)((*(int64_t*)(localVarBase + __src)));
@@ -2162,6 +2222,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_u4:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint32_t)(uint64_t)((*(int64_t*)(localVarBase + __src)));
@@ -2170,6 +2231,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_i8:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (int64_t)((*(int64_t*)(localVarBase + __src)));
@@ -2178,6 +2240,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_u8:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (uint64_t)(uint64_t)((*(int64_t*)(localVarBase + __src)));
@@ -2186,6 +2249,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_f4:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = (float)((*(int64_t*)(localVarBase + __src)));
@@ -2194,6 +2258,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_i8_f8:
 				{
+					machine.PushOpcode("ConvertVarVar_i8_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = (double)((*(int64_t*)(localVarBase + __src)));
@@ -2202,6 +2267,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_i1:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int8_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2210,6 +2276,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_u1:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint8_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2218,6 +2285,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_i2:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int16_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2226,6 +2294,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_u2:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint16_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2234,6 +2303,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_i4:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (int32_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2242,6 +2312,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_u4:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = (uint32_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2250,6 +2321,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_i8:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (int64_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2258,6 +2330,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_u8:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = (uint64_t)((*(uint64_t*)(localVarBase + __src)));
@@ -2266,6 +2339,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_f4:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = (float)((*(uint64_t*)(localVarBase + __src)));
@@ -2274,6 +2348,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_u8_f8:
 				{
+					machine.PushOpcode("ConvertVarVar_u8_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = (double)((*(uint64_t*)(localVarBase + __src)));
@@ -2282,6 +2357,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_i1:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int8_t>((*(float*)(localVarBase + __src)));
@@ -2290,6 +2366,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_u1:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint8_t, int32_t>((*(float*)(localVarBase + __src)));
@@ -2298,6 +2375,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_i2:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int16_t>((*(float*)(localVarBase + __src)));
@@ -2306,6 +2384,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_u2:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint16_t, int32_t>((*(float*)(localVarBase + __src)));
@@ -2314,6 +2393,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_i4:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int32_t>((*(float*)(localVarBase + __src)));
@@ -2322,6 +2402,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_u4:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint32_t, int32_t>((*(float*)(localVarBase + __src)));
@@ -2330,6 +2411,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_i8:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int64_t>((*(float*)(localVarBase + __src)));
@@ -2338,6 +2420,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_u8:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint64_t, int64_t>((*(float*)(localVarBase + __src)));
@@ -2346,6 +2429,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_f4:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = (float)((*(float*)(localVarBase + __src)));
@@ -2354,6 +2438,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f4_f8:
 				{
+					machine.PushOpcode("ConvertVarVar_f4_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = (double)((*(float*)(localVarBase + __src)));
@@ -2362,6 +2447,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_i1:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int8_t>((*(double*)(localVarBase + __src)));
@@ -2370,6 +2456,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_u1:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint8_t, int32_t>((*(double*)(localVarBase + __src)));
@@ -2378,6 +2465,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_i2:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int16_t>((*(double*)(localVarBase + __src)));
@@ -2386,6 +2474,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_u2:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint16_t, int32_t>((*(double*)(localVarBase + __src)));
@@ -2394,6 +2483,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_i4:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int32_t>((*(double*)(localVarBase + __src)));
@@ -2402,6 +2492,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_u4:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint32_t, int32_t>((*(double*)(localVarBase + __src)));
@@ -2410,6 +2501,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_i8:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_double_to_int<int64_t>((*(double*)(localVarBase + __src)));
@@ -2418,6 +2510,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_u8:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = il2cpp_codegen_cast_floating_point<uint64_t, int64_t>((*(double*)(localVarBase + __src)));
@@ -2426,6 +2519,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_f4:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = (float)((*(double*)(localVarBase + __src)));
@@ -2434,6 +2528,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertVarVar_f8_f8:
 				{
+					machine.PushOpcode("ConvertVarVar_f8_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = (double)((*(double*)(localVarBase + __src)));
@@ -2442,6 +2537,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_i1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2455,6 +2551,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_u1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2468,6 +2565,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_i2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2481,6 +2579,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_u2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2494,6 +2593,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_i4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2507,6 +2607,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_u4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2520,6 +2621,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_i8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2533,6 +2635,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i4_u8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i4_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int32_t val = (*(int32_t*)(localVarBase + __src));
@@ -2546,6 +2649,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_i1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2559,6 +2663,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_u1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2572,6 +2677,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_i2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2585,6 +2691,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_u2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2598,6 +2705,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_i4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2611,6 +2719,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_u4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2624,6 +2733,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_i8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2637,6 +2747,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u4_u8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u4_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint32_t val = (*(uint32_t*)(localVarBase + __src));
@@ -2650,6 +2761,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_i1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2663,6 +2775,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_u1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2676,6 +2789,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_i2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2689,6 +2803,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_u2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2702,6 +2817,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_i4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2715,6 +2831,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_u4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2728,6 +2845,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_i8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2741,6 +2859,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_i8_u8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_i8_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    int64_t val = (*(int64_t*)(localVarBase + __src));
@@ -2754,6 +2873,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_i1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2767,6 +2887,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_u1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2780,6 +2901,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_i2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2793,6 +2915,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_u2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2806,6 +2929,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_i4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2819,6 +2943,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_u4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2832,6 +2957,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_i8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2845,6 +2971,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_u8_u8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_u8_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    uint64_t val = (*(uint64_t*)(localVarBase + __src));
@@ -2858,6 +2985,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_i1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2871,6 +2999,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_u1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2884,6 +3013,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_i2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2897,6 +3027,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_u2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2910,6 +3041,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_i4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2923,6 +3055,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_u4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2936,6 +3069,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_i8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2949,6 +3083,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f4_u8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f4_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    float val = (*(float*)(localVarBase + __src));
@@ -2962,6 +3097,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_i1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -2975,6 +3111,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_u1:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -2988,6 +3125,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_i2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -3001,6 +3139,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_u2:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -3014,6 +3153,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_i4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -3027,6 +3167,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_u4:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -3040,6 +3181,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_i8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -3053,6 +3195,7 @@ else \
 				}
 				case HiOpcodeEnum::ConvertOverflowVarVar_f8_u8:
 				{
+					machine.PushOpcode("ConvertOverflowVarVar_f8_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    double val = (*(double*)(localVarBase + __src));
@@ -3072,6 +3215,7 @@ else \
 		//!!!{{ARITH
 				case HiOpcodeEnum::BinOpVarVarVar_Add_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Add_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3081,6 +3225,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Sub_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Sub_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3090,6 +3235,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Mul_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Mul_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3099,6 +3245,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_MulUn_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_MulUn_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3108,6 +3255,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Div_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Div_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3117,6 +3265,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_DivUn_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_DivUn_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3126,6 +3275,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Rem_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Rem_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3135,6 +3285,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_RemUn_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_RemUn_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3144,6 +3295,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_And_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_And_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3153,6 +3305,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Or_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Or_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3162,6 +3315,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Xor_i4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Xor_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3171,6 +3325,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Add_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Add_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3180,6 +3335,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Sub_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Sub_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3189,6 +3345,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Mul_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Mul_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3198,6 +3355,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_MulUn_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_MulUn_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3207,6 +3365,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Div_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Div_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3216,6 +3375,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_DivUn_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_DivUn_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3225,6 +3385,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Rem_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Rem_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3234,6 +3395,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_RemUn_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_RemUn_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3243,6 +3405,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_And_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_And_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3252,6 +3415,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Or_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Or_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3261,6 +3425,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Xor_i8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Xor_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3270,6 +3435,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Add_f4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Add_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3279,6 +3445,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Sub_f4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Sub_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3288,6 +3455,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Mul_f4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Mul_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3297,6 +3465,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Div_f4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Div_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3306,6 +3475,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Rem_f4:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Rem_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3315,6 +3485,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Add_f8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Add_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3324,6 +3495,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Sub_f8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Sub_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3333,6 +3505,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Mul_f8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Mul_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3342,6 +3515,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Div_f8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Div_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3351,6 +3525,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpVarVarVar_Rem_f8:
 				{
+					machine.PushOpcode("BinOpVarVarVar_Rem_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3360,6 +3535,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Add_i4:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Add_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3378,6 +3554,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Sub_i4:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Sub_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3396,6 +3573,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Mul_i4:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Mul_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3414,6 +3592,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Add_i8:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Add_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3432,6 +3611,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Sub_i8:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Sub_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3450,6 +3630,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Mul_i8:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Mul_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3468,6 +3649,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Add_u4:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Add_u4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3486,6 +3668,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Sub_u4:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Sub_u4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3504,6 +3687,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Mul_u4:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Mul_u4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3522,6 +3706,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Add_u8:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Add_u8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3540,6 +3725,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Sub_u8:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Sub_u8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3558,6 +3744,7 @@ else \
 				}
 				case HiOpcodeEnum::BinOpOverflowVarVarVar_Mul_u8:
 				{
+					machine.PushOpcode("BinOpOverflowVarVarVar_Mul_u8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __op1 = *(uint16_t*)(ip + 4);
 					uint16_t __op2 = *(uint16_t*)(ip + 6);
@@ -3576,6 +3763,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shl_i4_i4:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shl_i4_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3585,6 +3773,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shr_i4_i4:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shr_i4_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3594,6 +3783,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_ShrUn_i4_i4:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_ShrUn_i4_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3603,6 +3793,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shl_i4_i8:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shl_i4_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3612,6 +3803,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shr_i4_i8:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shr_i4_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3621,6 +3813,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_ShrUn_i4_i8:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_ShrUn_i4_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3630,6 +3823,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shl_i8_i4:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shl_i8_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3639,6 +3833,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shr_i8_i4:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shr_i8_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3648,6 +3843,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_ShrUn_i8_i4:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_ShrUn_i8_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3657,6 +3853,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shl_i8_i8:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shl_i8_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3666,6 +3863,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_Shr_i8_i8:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_Shr_i8_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3675,6 +3873,7 @@ else \
 				}
 				case HiOpcodeEnum::BitShiftBinOpVarVarVar_ShrUn_i8_i8:
 				{
+					machine.PushOpcode("BitShiftBinOpVarVarVar_ShrUn_i8_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __value = *(uint16_t*)(ip + 4);
 					uint16_t __shiftAmount = *(uint16_t*)(ip + 6);
@@ -3684,6 +3883,7 @@ else \
 				}
 				case HiOpcodeEnum::UnaryOpVarVar_Neg_i4:
 				{
+					machine.PushOpcode("UnaryOpVarVar_Neg_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = - (*(int32_t*)(localVarBase + __src));
@@ -3692,6 +3892,7 @@ else \
 				}
 				case HiOpcodeEnum::UnaryOpVarVar_Not_i4:
 				{
+					machine.PushOpcode("UnaryOpVarVar_Not_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int32_t*)(localVarBase + __dst)) = ~ (*(int32_t*)(localVarBase + __src));
@@ -3700,6 +3901,7 @@ else \
 				}
 				case HiOpcodeEnum::UnaryOpVarVar_Neg_i8:
 				{
+					machine.PushOpcode("UnaryOpVarVar_Neg_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = - (*(int64_t*)(localVarBase + __src));
@@ -3708,6 +3910,7 @@ else \
 				}
 				case HiOpcodeEnum::UnaryOpVarVar_Not_i8:
 				{
+					machine.PushOpcode("UnaryOpVarVar_Not_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(int64_t*)(localVarBase + __dst)) = ~ (*(int64_t*)(localVarBase + __src));
@@ -3716,6 +3919,7 @@ else \
 				}
 				case HiOpcodeEnum::UnaryOpVarVar_Neg_f4:
 				{
+					machine.PushOpcode("UnaryOpVarVar_Neg_f4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(float*)(localVarBase + __dst)) = - (*(float*)(localVarBase + __src));
@@ -3724,6 +3928,7 @@ else \
 				}
 				case HiOpcodeEnum::UnaryOpVarVar_Neg_f8:
 				{
+					machine.PushOpcode("UnaryOpVarVar_Neg_f8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					(*(double*)(localVarBase + __dst)) = - (*(double*)(localVarBase + __src));
@@ -3732,6 +3937,7 @@ else \
 				}
 				case HiOpcodeEnum::CheckFiniteVar_f4:
 				{
+					machine.PushOpcode("CheckFiniteVar_f4");
 					uint16_t __src = *(uint16_t*)(ip + 2);
 					HiCheckFinite((*(float*)(localVarBase + __src)));
 				    ip += 8;
@@ -3739,6 +3945,7 @@ else \
 				}
 				case HiOpcodeEnum::CheckFiniteVar_f8:
 				{
+					machine.PushOpcode("CheckFiniteVar_f8");
 					uint16_t __src = *(uint16_t*)(ip + 2);
 					HiCheckFinite((*(double*)(localVarBase + __src)));
 				    ip += 8;
@@ -3752,6 +3959,7 @@ else \
 		//!!!{{COMPARE
 				case HiOpcodeEnum::CompOpVarVarVar_Ceq_i4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Ceq_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3761,6 +3969,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Ceq_i8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Ceq_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3770,6 +3979,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Ceq_f4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Ceq_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3779,6 +3989,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Ceq_f8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Ceq_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3788,6 +3999,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Cgt_i4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Cgt_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3797,6 +4009,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Cgt_i8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Cgt_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3806,6 +4019,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Cgt_f4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Cgt_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3815,6 +4029,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Cgt_f8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Cgt_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3824,6 +4039,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CgtUn_i4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CgtUn_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3833,6 +4049,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CgtUn_i8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CgtUn_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3842,6 +4059,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CgtUn_f4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CgtUn_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3851,6 +4069,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CgtUn_f8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CgtUn_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3860,6 +4079,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Clt_i4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Clt_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3869,6 +4089,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Clt_i8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Clt_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3878,6 +4099,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Clt_f4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Clt_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3887,6 +4109,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_Clt_f8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_Clt_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3896,6 +4119,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CltUn_i4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CltUn_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3905,6 +4129,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CltUn_i8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CltUn_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3914,6 +4139,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CltUn_f4:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CltUn_f4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3923,6 +4149,7 @@ else \
 				}
 				case HiOpcodeEnum::CompOpVarVarVar_CltUn_f8:
 				{
+					machine.PushOpcode("CompOpVarVarVar_CltUn_f8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __c1 = *(uint16_t*)(ip + 4);
 					uint16_t __c2 = *(uint16_t*)(ip + 6);
@@ -3938,12 +4165,14 @@ else \
 		//!!!{{BRANCH
 				case HiOpcodeEnum::BranchUncondition_4:
 				{
+					machine.PushOpcode("BranchUncondition_4");
 					int32_t __offset = *(int32_t*)(ip + 4);
 					ip = ipBase + __offset;
 				    continue;
 				}
 				case HiOpcodeEnum::BranchTrueVar_i4:
 				{
+					machine.PushOpcode("BranchTrueVar_i4");
 					uint16_t __op = *(uint16_t*)(ip + 2);
 					int32_t __offset = *(int32_t*)(ip + 4);
 				    if ((*(int32_t*)(localVarBase + __op)))
@@ -3958,6 +4187,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchTrueVar_i8:
 				{
+					machine.PushOpcode("BranchTrueVar_i8");
 					uint16_t __op = *(uint16_t*)(ip + 2);
 					int32_t __offset = *(int32_t*)(ip + 4);
 				    if ((*(int64_t*)(localVarBase + __op)))
@@ -3972,6 +4202,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchFalseVar_i4:
 				{
+					machine.PushOpcode("BranchFalseVar_i4");
 					uint16_t __op = *(uint16_t*)(ip + 2);
 					int32_t __offset = *(int32_t*)(ip + 4);
 				    if (!(*(int32_t*)(localVarBase + __op)))
@@ -3986,6 +4217,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchFalseVar_i8:
 				{
+					machine.PushOpcode("BranchFalseVar_i8");
 					uint16_t __op = *(uint16_t*)(ip + 2);
 					int32_t __offset = *(int32_t*)(ip + 4);
 				    if (!(*(int64_t*)(localVarBase + __op)))
@@ -4000,6 +4232,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Ceq_i4:
 				{
+					machine.PushOpcode("BranchVarVar_Ceq_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4015,6 +4248,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Ceq_i8:
 				{
+					machine.PushOpcode("BranchVarVar_Ceq_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4030,6 +4264,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Ceq_f4:
 				{
+					machine.PushOpcode("BranchVarVar_Ceq_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4045,6 +4280,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Ceq_f8:
 				{
+					machine.PushOpcode("BranchVarVar_Ceq_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4060,6 +4296,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CneUn_i4:
 				{
+					machine.PushOpcode("BranchVarVar_CneUn_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4075,6 +4312,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CneUn_i8:
 				{
+					machine.PushOpcode("BranchVarVar_CneUn_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4090,6 +4328,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CneUn_f4:
 				{
+					machine.PushOpcode("BranchVarVar_CneUn_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4105,6 +4344,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CneUn_f8:
 				{
+					machine.PushOpcode("BranchVarVar_CneUn_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4120,6 +4360,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cgt_i4:
 				{
+					machine.PushOpcode("BranchVarVar_Cgt_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4135,6 +4376,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cgt_i8:
 				{
+					machine.PushOpcode("BranchVarVar_Cgt_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4150,6 +4392,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cgt_f4:
 				{
+					machine.PushOpcode("BranchVarVar_Cgt_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4165,6 +4408,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cgt_f8:
 				{
+					machine.PushOpcode("BranchVarVar_Cgt_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4180,6 +4424,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgtUn_i4:
 				{
+					machine.PushOpcode("BranchVarVar_CgtUn_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4195,6 +4440,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgtUn_i8:
 				{
+					machine.PushOpcode("BranchVarVar_CgtUn_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4210,6 +4456,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgtUn_f4:
 				{
+					machine.PushOpcode("BranchVarVar_CgtUn_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4225,6 +4472,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgtUn_f8:
 				{
+					machine.PushOpcode("BranchVarVar_CgtUn_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4240,6 +4488,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cge_i4:
 				{
+					machine.PushOpcode("BranchVarVar_Cge_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4255,6 +4504,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cge_i8:
 				{
+					machine.PushOpcode("BranchVarVar_Cge_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4270,6 +4520,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cge_f4:
 				{
+					machine.PushOpcode("BranchVarVar_Cge_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4285,6 +4536,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cge_f8:
 				{
+					machine.PushOpcode("BranchVarVar_Cge_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4300,6 +4552,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgeUn_i4:
 				{
+					machine.PushOpcode("BranchVarVar_CgeUn_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4315,6 +4568,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgeUn_i8:
 				{
+					machine.PushOpcode("BranchVarVar_CgeUn_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4330,6 +4584,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgeUn_f4:
 				{
+					machine.PushOpcode("BranchVarVar_CgeUn_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4345,6 +4600,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CgeUn_f8:
 				{
+					machine.PushOpcode("BranchVarVar_CgeUn_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4360,6 +4616,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Clt_i4:
 				{
+					machine.PushOpcode("BranchVarVar_Clt_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4375,6 +4632,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Clt_i8:
 				{
+					machine.PushOpcode("BranchVarVar_Clt_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4390,6 +4648,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Clt_f4:
 				{
+					machine.PushOpcode("BranchVarVar_Clt_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4405,6 +4664,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Clt_f8:
 				{
+					machine.PushOpcode("BranchVarVar_Clt_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4420,6 +4680,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CltUn_i4:
 				{
+					machine.PushOpcode("BranchVarVar_CltUn_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4435,6 +4696,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CltUn_i8:
 				{
+					machine.PushOpcode("BranchVarVar_CltUn_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4450,6 +4712,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CltUn_f4:
 				{
+					machine.PushOpcode("BranchVarVar_CltUn_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4465,6 +4728,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CltUn_f8:
 				{
+					machine.PushOpcode("BranchVarVar_CltUn_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4480,6 +4744,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cle_i4:
 				{
+					machine.PushOpcode("BranchVarVar_Cle_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4495,6 +4760,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cle_i8:
 				{
+					machine.PushOpcode("BranchVarVar_Cle_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4510,6 +4776,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cle_f4:
 				{
+					machine.PushOpcode("BranchVarVar_Cle_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4525,6 +4792,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_Cle_f8:
 				{
+					machine.PushOpcode("BranchVarVar_Cle_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4540,6 +4808,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CleUn_i4:
 				{
+					machine.PushOpcode("BranchVarVar_CleUn_i4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4555,6 +4824,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CleUn_i8:
 				{
+					machine.PushOpcode("BranchVarVar_CleUn_i8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4570,6 +4840,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CleUn_f4:
 				{
+					machine.PushOpcode("BranchVarVar_CleUn_f4");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4585,6 +4856,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchVarVar_CleUn_f8:
 				{
+					machine.PushOpcode("BranchVarVar_CleUn_f8");
 					uint16_t __op1 = *(uint16_t*)(ip + 2);
 					uint16_t __op2 = *(uint16_t*)(ip + 4);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -4600,6 +4872,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchJump:
 				{
+					machine.PushOpcode("BranchJump");
 					uint32_t __token = *(uint32_t*)(ip + 4);
 					IL2CPP_ASSERT(false);
 				    ip += 8;
@@ -4607,6 +4880,7 @@ else \
 				}
 				case HiOpcodeEnum::BranchSwitch:
 				{
+					machine.PushOpcode("BranchSwitch");
 				    uint16_t __value = *(uint16_t*)(ip + 2);
 				    uint32_t __caseNum = *(uint32_t*)(ip + 4);
 				    uint32_t __caseOffsets = *(uint32_t*)(ip + 8);
@@ -4629,6 +4903,7 @@ else \
 		//!!!{{FUNCTION
 				case HiOpcodeEnum::NewClassVar:
 				{
+					machine.PushOpcode("NewClassVar");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					void* __managed2NativeMethod = ((void*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -4643,6 +4918,7 @@ else \
 				}
 				case HiOpcodeEnum::NewClassVar_Ctor_0:
 				{
+					machine.PushOpcode("NewClassVar_Ctor_0");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 				    Il2CppObject* _obj = il2cpp::vm::Object::New(__method->klass);
@@ -4653,6 +4929,7 @@ else \
 				}
 				case HiOpcodeEnum::NewClassVar_NotCtor:
 				{
+					machine.PushOpcode("NewClassVar_NotCtor");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 				    (*(Il2CppObject**)(localVarBase + __obj)) = il2cpp::vm::Object::New(__klass);
@@ -4661,6 +4938,7 @@ else \
 				}
 				case HiOpcodeEnum::NewValueTypeVar:
 				{
+					machine.PushOpcode("NewValueTypeVar");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					void* __managed2NativeMethod = ((void*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -4679,6 +4957,7 @@ else \
 				}
 				case HiOpcodeEnum::NewClassInterpVar:
 				{
+					machine.PushOpcode("NewClassInterpVar");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 12)]);
 					uint16_t __argBase = *(uint16_t*)(ip + 4);
@@ -4695,6 +4974,7 @@ else \
 				}
 				case HiOpcodeEnum::NewClassInterpVar_Ctor_0:
 				{
+					machine.PushOpcode("NewClassInterpVar_Ctor_0");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __ctorFrameBase = *(uint16_t*)(ip + 4);
@@ -4708,6 +4988,7 @@ else \
 				}
 				case HiOpcodeEnum::NewValueTypeInterpVar:
 				{
+					machine.PushOpcode("NewValueTypeInterpVar");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 12)]);
 					uint16_t __argBase = *(uint16_t*)(ip + 4);
@@ -4724,6 +5005,7 @@ else \
 				}
 				case HiOpcodeEnum::AdjustValueTypeRefVar:
 				{
+					machine.PushOpcode("AdjustValueTypeRefVar");
 					uint16_t __data = *(uint16_t*)(ip + 2);
 				    // ref => fake value type boxed object value. // fake obj = ref(value_type) - sizeof(Il2CppObject)
 				    StackObject* _thisSo = ((StackObject*)((void*)(localVarBase + __data)));
@@ -4733,6 +5015,7 @@ else \
 				}
 				case HiOpcodeEnum::BoxRefVarVar:
 				{
+					machine.PushOpcode("BoxRefVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -4742,6 +5025,7 @@ else \
 				}
 				case HiOpcodeEnum::LdvirftnVarVar:
 				{
+					machine.PushOpcode("LdvirftnVarVar");
 					uint16_t __resultMethod = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					MethodInfo* __virtualMethod = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -4751,66 +5035,77 @@ else \
 				}
 				case HiOpcodeEnum::RetVar_ret_1:
 				{
+					machine.PushOpcode("RetVar_ret_1");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(1, 8);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_2:
 				{
+					machine.PushOpcode("RetVar_ret_2");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(2, 8);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_4:
 				{
+					machine.PushOpcode("RetVar_ret_4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(4, 8);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_8:
 				{
+					machine.PushOpcode("RetVar_ret_8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(8, 8);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_12:
 				{
+					machine.PushOpcode("RetVar_ret_12");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(12, 12);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_16:
 				{
+					machine.PushOpcode("RetVar_ret_16");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(16, 16);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_20:
 				{
+					machine.PushOpcode("RetVar_ret_20");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(20, 20);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_24:
 				{
+					machine.PushOpcode("RetVar_ret_24");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(24, 24);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_28:
 				{
+					machine.PushOpcode("RetVar_ret_28");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(28, 28);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_32:
 				{
+					machine.PushOpcode("RetVar_ret_32");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    SET_RET_AND_LEAVE_FRAME(32, 32);
 				    continue;
 				}
 				case HiOpcodeEnum::RetVar_ret_n:
 				{
+					machine.PushOpcode("RetVar_ret_n");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint32_t __size = *(uint32_t*)(ip + 4);
 				    std::memmove(frame->ret, (void*)(localVarBase + __ret), __size);
@@ -4819,11 +5114,13 @@ else \
 				}
 				case HiOpcodeEnum::RetVar_void:
 				{
+					machine.PushOpcode("RetVar_void");
 					LEAVE_FRAME();
 				    continue;
 				}
 				case HiOpcodeEnum::CallNativeInstance_void:
 				{
+					machine.PushOpcode("CallNativeInstance_void");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -4835,6 +5132,7 @@ else \
 				}
 				case HiOpcodeEnum::CallNativeInstance_ret:
 				{
+					machine.PushOpcode("CallNativeInstance_ret");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -4848,6 +5146,7 @@ else \
 				}
 				case HiOpcodeEnum::CallNativeInstance_ret_expand:
 				{
+					machine.PushOpcode("CallNativeInstance_ret_expand");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 8);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 12);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 16);
@@ -4863,6 +5162,7 @@ else \
 				}
 				case HiOpcodeEnum::CallNativeStatic_void:
 				{
+					machine.PushOpcode("CallNativeStatic_void");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -4874,6 +5174,7 @@ else \
 				}
 				case HiOpcodeEnum::CallNativeStatic_ret:
 				{
+					machine.PushOpcode("CallNativeStatic_ret");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -4887,6 +5188,7 @@ else \
 				}
 				case HiOpcodeEnum::CallNativeStatic_ret_expand:
 				{
+					machine.PushOpcode("CallNativeStatic_ret_expand");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 8);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 12);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 16);
@@ -4902,6 +5204,7 @@ else \
 				}
 				case HiOpcodeEnum::CallInterp_void:
 				{
+					machine.PushOpcode("CallInterp_void");
 					MethodInfo* __methodInfo = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					uint16_t __argBase = *(uint16_t*)(ip + 2);
 					if (metadata::IsInstanceMethod(__methodInfo))
@@ -4913,6 +5216,7 @@ else \
 				}
 				case HiOpcodeEnum::CallInterp_ret:
 				{
+					machine.PushOpcode("CallInterp_ret");
 					MethodInfo* __methodInfo = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __argBase = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -4925,6 +5229,7 @@ else \
 				}
 				case HiOpcodeEnum::CallVirtual_void:
 				{
+					machine.PushOpcode("CallVirtual_void");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -4952,6 +5257,7 @@ else \
 				}
 				case HiOpcodeEnum::CallVirtual_ret:
 				{
+					machine.PushOpcode("CallVirtual_ret");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -4981,6 +5287,7 @@ else \
 				}
 				case HiOpcodeEnum::CallVirtual_ret_expand:
 				{
+					machine.PushOpcode("CallVirtual_ret_expand");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 8);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 12);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 16);
@@ -5012,6 +5319,7 @@ else \
 				}
 				case HiOpcodeEnum::CallInterpVirtual_void:
 				{
+					machine.PushOpcode("CallInterpVirtual_void");
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					uint16_t __argBase = *(uint16_t*)(ip + 2);
 				    StackObject* _argBasePtr = (StackObject*)(void*)(localVarBase + __argBase);
@@ -5025,6 +5333,7 @@ else \
 				}
 				case HiOpcodeEnum::CallInterpVirtual_ret:
 				{
+					machine.PushOpcode("CallInterpVirtual_ret");
 					MethodInfo* __method = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __argBase = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5039,6 +5348,7 @@ else \
 				}
 				case HiOpcodeEnum::CallInd_void:
 				{
+					machine.PushOpcode("CallInd_void");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -5065,6 +5375,7 @@ else \
 				}
 				case HiOpcodeEnum::CallInd_ret:
 				{
+					machine.PushOpcode("CallInd_ret");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 4);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -5093,6 +5404,7 @@ else \
 				}
 				case HiOpcodeEnum::CallInd_ret_expand:
 				{
+					machine.PushOpcode("CallInd_ret_expand");
 					uint32_t __managed2NativeMethod = *(uint32_t*)(ip + 8);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 12);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 16);
@@ -5123,6 +5435,7 @@ else \
 				}
 				case HiOpcodeEnum::CallDelegateInvoke_void:
 				{
+					machine.PushOpcode("CallDelegateInvoke_void");
 					uint32_t __managed2NativeStaticMethod = *(uint32_t*)(ip + 4);
 					uint32_t __managed2NativeInstanceMethod = *(uint32_t*)(ip + 8);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 12);
@@ -5200,6 +5513,7 @@ else \
 				}
 				case HiOpcodeEnum::CallDelegateInvoke_ret:
 				{
+					machine.PushOpcode("CallDelegateInvoke_ret");
 					uint32_t __managed2NativeStaticMethod = *(uint32_t*)(ip + 8);
 					uint32_t __managed2NativeInstanceMethod = *(uint32_t*)(ip + 12);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 16);
@@ -5280,6 +5594,7 @@ else \
 				}
 				case HiOpcodeEnum::CallDelegateInvoke_ret_expand:
 				{
+					machine.PushOpcode("CallDelegateInvoke_ret_expand");
 					uint32_t __managed2NativeStaticMethod = *(uint32_t*)(ip + 8);
 					uint32_t __managed2NativeInstanceMethod = *(uint32_t*)(ip + 12);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 16);
@@ -5360,6 +5675,7 @@ else \
 				}
 				case HiOpcodeEnum::CallDelegateBeginInvoke:
 				{
+					machine.PushOpcode("CallDelegateBeginInvoke");
 					uint16_t __result = *(uint16_t*)(ip + 2);
 					uint32_t __methodInfo = *(uint32_t*)(ip + 4);
 					uint32_t __argIdxs = *(uint32_t*)(ip + 8);
@@ -5369,6 +5685,7 @@ else \
 				}
 				case HiOpcodeEnum::CallDelegateEndInvoke_void:
 				{
+					machine.PushOpcode("CallDelegateEndInvoke_void");
 					uint32_t __methodInfo = *(uint32_t*)(ip + 4);
 					uint16_t __asyncResult = *(uint16_t*)(ip + 2);
 				    InvokeDelegateEndInvokeVoid(((MethodInfo*)imi->resolveDatas[__methodInfo]), (Il2CppAsyncResult*)(*(Il2CppObject**)(localVarBase + __asyncResult)));
@@ -5377,6 +5694,7 @@ else \
 				}
 				case HiOpcodeEnum::CallDelegateEndInvoke_ret:
 				{
+					machine.PushOpcode("CallDelegateEndInvoke_ret");
 					uint32_t __methodInfo = *(uint32_t*)(ip + 8);
 					uint16_t __asyncResult = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5386,6 +5704,7 @@ else \
 				}
 				case HiOpcodeEnum::NewDelegate:
 				{
+					machine.PushOpcode("NewDelegate");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
@@ -5398,6 +5717,7 @@ else \
 				}
 				case HiOpcodeEnum::CtorDelegate:
 				{
+					machine.PushOpcode("CtorDelegate");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					MethodInfo* __ctor = ((MethodInfo*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
@@ -5410,6 +5730,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 				    void* _self = (*(void**)(localVarBase + __self));
@@ -5422,6 +5743,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i1_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i1_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5435,6 +5757,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5448,6 +5771,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i2_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i2_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5461,6 +5785,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u2_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u2_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5474,6 +5799,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5487,6 +5813,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5500,6 +5827,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5513,6 +5841,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_0:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_0");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -5526,6 +5855,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5539,6 +5869,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5553,6 +5884,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5568,6 +5900,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5584,6 +5917,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5597,6 +5931,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5611,6 +5946,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5626,6 +5962,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5642,6 +5979,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5655,6 +5993,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5669,6 +6008,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5684,6 +6024,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5700,6 +6041,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5713,6 +6055,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5727,6 +6070,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5742,6 +6086,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_v_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_v_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5758,6 +6103,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5772,6 +6118,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5787,6 +6134,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5803,6 +6151,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5820,6 +6169,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5834,6 +6184,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5849,6 +6200,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5865,6 +6217,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5882,6 +6235,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5896,6 +6250,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5911,6 +6266,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5927,6 +6283,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5944,6 +6301,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5958,6 +6316,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5973,6 +6332,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -5989,6 +6349,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_u1_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_u1_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6006,6 +6367,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6020,6 +6382,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6035,6 +6398,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6051,6 +6415,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6068,6 +6433,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6082,6 +6448,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6097,6 +6464,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6113,6 +6481,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6130,6 +6499,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6144,6 +6514,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6159,6 +6530,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6175,6 +6547,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6192,6 +6565,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6206,6 +6580,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6221,6 +6596,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6237,6 +6613,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i4_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i4_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6254,6 +6631,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6268,6 +6646,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6283,6 +6662,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6299,6 +6679,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6316,6 +6697,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6330,6 +6712,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6345,6 +6728,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6361,6 +6745,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6378,6 +6763,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6392,6 +6778,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6407,6 +6794,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6423,6 +6811,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6440,6 +6829,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6454,6 +6844,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6469,6 +6860,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6485,6 +6877,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_i8_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_i8_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6502,6 +6895,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6516,6 +6910,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6531,6 +6926,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6547,6 +6943,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6564,6 +6961,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6578,6 +6976,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6593,6 +6992,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6609,6 +7009,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6626,6 +7027,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6640,6 +7042,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6655,6 +7058,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6671,6 +7075,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6688,6 +7093,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6702,6 +7108,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6717,6 +7124,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6733,6 +7141,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f4_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f4_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6750,6 +7159,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6764,6 +7174,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6779,6 +7190,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6795,6 +7207,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6812,6 +7225,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6826,6 +7240,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6841,6 +7256,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6857,6 +7273,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6874,6 +7291,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6888,6 +7306,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6903,6 +7322,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6919,6 +7339,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6936,6 +7357,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6950,6 +7372,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6965,6 +7388,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6981,6 +7405,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeInstance_f8_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeInstance_f8_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 16);
 					uint16_t __self = *(uint16_t*)(ip + 2);
 					uint16_t __param0 = *(uint16_t*)(ip + 4);
@@ -6998,6 +7423,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
 				    RuntimeInitClassCCtorWithoutInitClass(_resolvedMethod);
@@ -7008,6 +7434,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i1_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i1_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7019,6 +7446,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7030,6 +7458,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i2_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i2_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7041,6 +7470,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u2_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u2_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7052,6 +7482,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7063,6 +7494,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7074,6 +7506,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7085,6 +7518,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_0:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_0");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7096,6 +7530,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7107,6 +7542,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7119,6 +7555,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7132,6 +7569,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7146,6 +7584,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7157,6 +7596,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7169,6 +7609,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7182,6 +7623,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7196,6 +7638,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7207,6 +7650,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7219,6 +7663,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7232,6 +7677,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7246,6 +7692,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 4);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 				    MethodInfo* _resolvedMethod = ((MethodInfo*)imi->resolveDatas[__method]);
@@ -7257,6 +7704,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7269,6 +7717,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7282,6 +7731,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_v_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_v_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7296,6 +7746,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7308,6 +7759,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7321,6 +7773,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7335,6 +7788,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7350,6 +7804,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7362,6 +7817,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7375,6 +7831,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7389,6 +7846,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7404,6 +7862,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7416,6 +7875,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7429,6 +7889,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7443,6 +7904,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7458,6 +7920,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7470,6 +7933,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7483,6 +7947,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7497,6 +7962,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_u1_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_u1_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7512,6 +7978,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7524,6 +7991,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7537,6 +8005,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7551,6 +8020,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7566,6 +8036,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7578,6 +8049,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7591,6 +8063,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7605,6 +8078,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7620,6 +8094,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7632,6 +8107,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7645,6 +8121,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7659,6 +8136,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7674,6 +8152,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7686,6 +8165,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7699,6 +8179,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7713,6 +8194,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i4_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i4_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7728,6 +8210,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7740,6 +8223,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7753,6 +8237,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7767,6 +8252,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7782,6 +8268,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7794,6 +8281,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7807,6 +8295,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7821,6 +8310,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7836,6 +8326,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7848,6 +8339,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7861,6 +8353,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7875,6 +8368,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7890,6 +8384,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7902,6 +8397,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7915,6 +8411,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7929,6 +8426,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_i8_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_i8_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7944,6 +8442,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -7956,6 +8455,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7969,6 +8469,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7983,6 +8484,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -7998,6 +8500,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -8010,6 +8513,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8023,6 +8527,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8037,6 +8542,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8052,6 +8558,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -8064,6 +8571,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8077,6 +8585,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8091,6 +8600,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8106,6 +8616,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -8118,6 +8629,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8131,6 +8643,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8145,6 +8658,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f4_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f4_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8160,6 +8674,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -8172,6 +8687,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8185,6 +8701,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8199,6 +8716,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8214,6 +8732,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -8226,6 +8745,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8239,6 +8759,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8253,6 +8774,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_i8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_i8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8268,6 +8790,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f4_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f4_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -8280,6 +8803,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f4_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f4_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8293,6 +8817,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f4_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f4_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8307,6 +8832,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f4_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f4_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8322,6 +8848,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f8_1:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f8_1");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __ret = *(uint16_t*)(ip + 4);
@@ -8334,6 +8861,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f8_2:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f8_2");
 					uint32_t __method = *(uint32_t*)(ip + 8);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8347,6 +8875,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f8_3:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f8_3");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8361,6 +8890,7 @@ else \
 				}
 				case HiOpcodeEnum::CallCommonNativeStatic_f8_f8_4:
 				{
+					machine.PushOpcode("CallCommonNativeStatic_f8_f8_4");
 					uint32_t __method = *(uint32_t*)(ip + 12);
 					uint16_t __param0 = *(uint16_t*)(ip + 2);
 					uint16_t __param1 = *(uint16_t*)(ip + 4);
@@ -8382,6 +8912,7 @@ else \
 		//!!!{{OBJECT
 				case HiOpcodeEnum::BoxVarVar:
 				{
+					machine.PushOpcode("BoxVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -8391,6 +8922,7 @@ else \
 				}
 				case HiOpcodeEnum::UnBoxVarVar:
 				{
+					machine.PushOpcode("UnBoxVarVar");
 					uint16_t __addr = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -8400,6 +8932,7 @@ else \
 				}
 				case HiOpcodeEnum::UnBoxAnyVarVar:
 				{
+					machine.PushOpcode("UnBoxAnyVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -8409,6 +8942,7 @@ else \
 				}
 				case HiOpcodeEnum::CastclassVar:
 				{
+					machine.PushOpcode("CastclassVar");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint32_t __klass = *(uint32_t*)(ip + 4);
 				    HiCastClass((*(Il2CppObject**)(localVarBase + __obj)), ((Il2CppClass*)imi->resolveDatas[__klass]));
@@ -8417,6 +8951,7 @@ else \
 				}
 				case HiOpcodeEnum::IsInstVar:
 				{
+					machine.PushOpcode("IsInstVar");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint32_t __klass = *(uint32_t*)(ip + 4);
 				    (*(Il2CppObject**)(localVarBase + __obj)) = il2cpp::vm::Object::IsInst((*(Il2CppObject**)(localVarBase + __obj)), ((Il2CppClass*)imi->resolveDatas[__klass]));
@@ -8425,6 +8960,7 @@ else \
 				}
 				case HiOpcodeEnum::LdtokenVar:
 				{
+					machine.PushOpcode("LdtokenVar");
 					uint16_t __runtimeHandle = *(uint16_t*)(ip + 2);
 					void* __token = ((void*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 				    (*(void**)(localVarBase + __runtimeHandle)) = __token;
@@ -8433,6 +8969,7 @@ else \
 				}
 				case HiOpcodeEnum::MakeRefVarVar:
 				{
+					machine.PushOpcode("MakeRefVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -8442,6 +8979,7 @@ else \
 				}
 				case HiOpcodeEnum::RefAnyTypeVarVar:
 				{
+					machine.PushOpcode("RefAnyTypeVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __typedRef = *(uint16_t*)(ip + 4);
 				    (*(void**)(localVarBase + __dst)) = RefAnyType((*(Il2CppTypedRef*)(localVarBase + __typedRef)));
@@ -8450,6 +8988,7 @@ else \
 				}
 				case HiOpcodeEnum::RefAnyValueVarVar:
 				{
+					machine.PushOpcode("RefAnyValueVarVar");
 					uint16_t __addr = *(uint16_t*)(ip + 2);
 					uint16_t __typedRef = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -8459,6 +8998,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_ref:
 				{
+					machine.PushOpcode("CpobjVarVar_ref");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    void** _dstAddr_ = (void**)((*(void**)(localVarBase + __dst)));
@@ -8469,6 +9009,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_1:
 				{
+					machine.PushOpcode("CpobjVarVar_1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy1((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8477,6 +9018,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_2:
 				{
+					machine.PushOpcode("CpobjVarVar_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy2((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8485,6 +9027,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_4:
 				{
+					machine.PushOpcode("CpobjVarVar_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy4((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8493,6 +9036,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_8:
 				{
+					machine.PushOpcode("CpobjVarVar_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy8((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8501,6 +9045,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_12:
 				{
+					machine.PushOpcode("CpobjVarVar_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy12((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8509,6 +9054,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_16:
 				{
+					machine.PushOpcode("CpobjVarVar_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy16((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8517,6 +9063,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_20:
 				{
+					machine.PushOpcode("CpobjVarVar_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy20((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8525,6 +9072,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_24:
 				{
+					machine.PushOpcode("CpobjVarVar_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy24((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8533,6 +9081,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_28:
 				{
+					machine.PushOpcode("CpobjVarVar_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy28((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8541,6 +9090,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_32:
 				{
+					machine.PushOpcode("CpobjVarVar_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy32((*(void**)(localVarBase + __dst)), (*(void**)(localVarBase + __src)));
@@ -8549,6 +9099,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_n_2:
 				{
+					machine.PushOpcode("CpobjVarVar_n_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint16_t __size = *(uint16_t*)(ip + 6);
@@ -8558,6 +9109,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_n_4:
 				{
+					machine.PushOpcode("CpobjVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint32_t __size = *(uint32_t*)(ip + 8);
@@ -8567,6 +9119,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_WriteBarrier_n_2:
 				{
+					machine.PushOpcode("CpobjVarVar_WriteBarrier_n_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint16_t __size = *(uint16_t*)(ip + 6);
@@ -8578,6 +9131,7 @@ else \
 				}
 				case HiOpcodeEnum::CpobjVarVar_WriteBarrier_n_4:
 				{
+					machine.PushOpcode("CpobjVarVar_WriteBarrier_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint32_t __size = *(uint32_t*)(ip + 8);
@@ -8589,6 +9143,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_ref:
 				{
+					machine.PushOpcode("LdobjVarVar_ref");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					*(void**)(void*)(localVarBase + __dst) = (*(void**)*(void**)(localVarBase + __src));
@@ -8597,6 +9152,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_1:
 				{
+					machine.PushOpcode("LdobjVarVar_1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy1((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8605,6 +9161,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_2:
 				{
+					machine.PushOpcode("LdobjVarVar_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy2((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8613,6 +9170,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_4:
 				{
+					machine.PushOpcode("LdobjVarVar_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy4((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8621,6 +9179,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_8:
 				{
+					machine.PushOpcode("LdobjVarVar_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy8((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8629,6 +9188,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_12:
 				{
+					machine.PushOpcode("LdobjVarVar_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy12((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8637,6 +9197,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_16:
 				{
+					machine.PushOpcode("LdobjVarVar_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy16((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8645,6 +9206,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_20:
 				{
+					machine.PushOpcode("LdobjVarVar_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy20((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8653,6 +9215,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_24:
 				{
+					machine.PushOpcode("LdobjVarVar_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy24((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8661,6 +9224,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_28:
 				{
+					machine.PushOpcode("LdobjVarVar_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy28((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8669,6 +9233,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_32:
 				{
+					machine.PushOpcode("LdobjVarVar_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy32((void*)(localVarBase + __dst), (*(void**)(localVarBase + __src)));
@@ -8677,6 +9242,7 @@ else \
 				}
 				case HiOpcodeEnum::LdobjVarVar_n_4:
 				{
+					machine.PushOpcode("LdobjVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint32_t __size = *(uint32_t*)(ip + 8);
@@ -8686,6 +9252,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_ref:
 				{
+					machine.PushOpcode("StobjVarVar_ref");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 				    void** _dstAddr_ = (void**)((*(void**)(localVarBase + __dst)));
@@ -8696,6 +9263,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_1:
 				{
+					machine.PushOpcode("StobjVarVar_1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy1((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8704,6 +9272,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_2:
 				{
+					machine.PushOpcode("StobjVarVar_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy2((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8712,6 +9281,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_4:
 				{
+					machine.PushOpcode("StobjVarVar_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy4((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8720,6 +9290,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_8:
 				{
+					machine.PushOpcode("StobjVarVar_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy8((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8728,6 +9299,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_12:
 				{
+					machine.PushOpcode("StobjVarVar_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy12((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8736,6 +9308,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_16:
 				{
+					machine.PushOpcode("StobjVarVar_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy16((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8744,6 +9317,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_20:
 				{
+					machine.PushOpcode("StobjVarVar_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy20((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8752,6 +9326,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_24:
 				{
+					machine.PushOpcode("StobjVarVar_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy24((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8760,6 +9335,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_28:
 				{
+					machine.PushOpcode("StobjVarVar_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy28((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8768,6 +9344,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_32:
 				{
+					machine.PushOpcode("StobjVarVar_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					Copy32((*(void**)(localVarBase + __dst)), (void*)(localVarBase + __src));
@@ -8776,6 +9353,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_n_4:
 				{
+					machine.PushOpcode("StobjVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint32_t __size = *(uint32_t*)(ip + 8);
@@ -8785,6 +9363,7 @@ else \
 				}
 				case HiOpcodeEnum::StobjVarVar_WriteBarrier_n_4:
 				{
+					machine.PushOpcode("StobjVarVar_WriteBarrier_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint32_t __size = *(uint32_t*)(ip + 8);
@@ -8796,6 +9375,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_ref:
 				{
+					machine.PushOpcode("InitobjVar_ref");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 				    void* _objAddr_ = (*(void**)(localVarBase + __obj));
 				    CHECK_NOT_NULL_THROW(_objAddr_);
@@ -8806,6 +9386,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_1:
 				{
+					machine.PushOpcode("InitobjVar_1");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault1((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8813,6 +9394,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_2:
 				{
+					machine.PushOpcode("InitobjVar_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault2((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8820,6 +9402,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_4:
 				{
+					machine.PushOpcode("InitobjVar_4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault4((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8827,6 +9410,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_8:
 				{
+					machine.PushOpcode("InitobjVar_8");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault8((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8834,6 +9418,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_12:
 				{
+					machine.PushOpcode("InitobjVar_12");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault12((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8841,6 +9426,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_16:
 				{
+					machine.PushOpcode("InitobjVar_16");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault16((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8848,6 +9434,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_20:
 				{
+					machine.PushOpcode("InitobjVar_20");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault20((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8855,6 +9442,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_24:
 				{
+					machine.PushOpcode("InitobjVar_24");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault24((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8862,6 +9450,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_28:
 				{
+					machine.PushOpcode("InitobjVar_28");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault28((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8869,6 +9458,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_32:
 				{
+					machine.PushOpcode("InitobjVar_32");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					InitDefault32((*(void**)(localVarBase + __obj)));
 				    ip += 8;
@@ -8876,6 +9466,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_n_2:
 				{
+					machine.PushOpcode("InitobjVar_n_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __size = *(uint16_t*)(ip + 4);
 					InitDefaultN((*(void**)(localVarBase + __obj)), __size);
@@ -8884,6 +9475,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_n_4:
 				{
+					machine.PushOpcode("InitobjVar_n_4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint32_t __size = *(uint32_t*)(ip + 4);
 					InitDefaultN((*(void**)(localVarBase + __obj)), __size);
@@ -8892,6 +9484,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_WriteBarrier_n_2:
 				{
+					machine.PushOpcode("InitobjVar_WriteBarrier_n_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __size = *(uint16_t*)(ip + 4);
 				    void* _objAddr_ = (*(void**)(localVarBase + __obj));
@@ -8902,6 +9495,7 @@ else \
 				}
 				case HiOpcodeEnum::InitobjVar_WriteBarrier_n_4:
 				{
+					machine.PushOpcode("InitobjVar_WriteBarrier_n_4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint32_t __size = *(uint32_t*)(ip + 4);
 				    void* _objAddr_ = (*(void**)(localVarBase + __obj));
@@ -8912,6 +9506,7 @@ else \
 				}
 				case HiOpcodeEnum::LdstrVar:
 				{
+					machine.PushOpcode("LdstrVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint32_t __str = *(uint32_t*)(ip + 4);
 				    (*(Il2CppString**)(localVarBase + __dst)) = ((Il2CppString*)imi->resolveDatas[__str]);
@@ -8920,6 +9515,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_i1:
 				{
+					machine.PushOpcode("LdfldVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -8930,6 +9526,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_u1:
 				{
+					machine.PushOpcode("LdfldVarVar_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -8940,6 +9537,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_i2:
 				{
+					machine.PushOpcode("LdfldVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -8950,6 +9548,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_u2:
 				{
+					machine.PushOpcode("LdfldVarVar_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -8960,6 +9559,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_i4:
 				{
+					machine.PushOpcode("LdfldVarVar_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -8970,6 +9570,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_u4:
 				{
+					machine.PushOpcode("LdfldVarVar_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -8980,6 +9581,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_i8:
 				{
+					machine.PushOpcode("LdfldVarVar_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -8990,6 +9592,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_u8:
 				{
+					machine.PushOpcode("LdfldVarVar_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9000,6 +9603,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_size_8:
 				{
+					machine.PushOpcode("LdfldVarVar_size_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9010,6 +9614,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_size_12:
 				{
+					machine.PushOpcode("LdfldVarVar_size_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9020,6 +9625,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_size_16:
 				{
+					machine.PushOpcode("LdfldVarVar_size_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9030,6 +9636,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_size_20:
 				{
+					machine.PushOpcode("LdfldVarVar_size_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9040,6 +9647,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_size_24:
 				{
+					machine.PushOpcode("LdfldVarVar_size_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9050,6 +9658,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_size_28:
 				{
+					machine.PushOpcode("LdfldVarVar_size_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9060,6 +9669,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_size_32:
 				{
+					machine.PushOpcode("LdfldVarVar_size_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9070,6 +9680,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_n_2:
 				{
+					machine.PushOpcode("LdfldVarVar_n_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9081,6 +9692,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldVarVar_n_4:
 				{
+					machine.PushOpcode("LdfldVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9092,6 +9704,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_i1:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9101,6 +9714,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_u1:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9110,6 +9724,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_i2:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9119,6 +9734,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_u2:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9128,6 +9744,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_i4:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9137,6 +9754,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_u4:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9146,6 +9764,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_i8:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9155,6 +9774,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_u8:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9164,6 +9784,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_size_8:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_size_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9173,6 +9794,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_size_12:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_size_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9182,6 +9804,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_size_16:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_size_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9191,6 +9814,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_size_20:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_size_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9200,6 +9824,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_size_24:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_size_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9209,6 +9834,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_size_28:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_size_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9218,6 +9844,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_size_32:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_size_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9227,6 +9854,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_n_2:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_n_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9237,6 +9865,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldValueTypeVarVar_n_4:
 				{
+					machine.PushOpcode("LdfldValueTypeVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9247,6 +9876,7 @@ else \
 				}
 				case HiOpcodeEnum::LdfldaVarVar:
 				{
+					machine.PushOpcode("LdfldaVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __offset = *(uint16_t*)(ip + 6);
@@ -9257,6 +9887,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_i1:
 				{
+					machine.PushOpcode("StfldVarVar_i1");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9268,6 +9899,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_u1:
 				{
+					machine.PushOpcode("StfldVarVar_u1");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9279,6 +9911,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_i2:
 				{
+					machine.PushOpcode("StfldVarVar_i2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9290,6 +9923,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_u2:
 				{
+					machine.PushOpcode("StfldVarVar_u2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9301,6 +9935,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_i4:
 				{
+					machine.PushOpcode("StfldVarVar_i4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9312,6 +9947,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_u4:
 				{
+					machine.PushOpcode("StfldVarVar_u4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9323,6 +9959,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_i8:
 				{
+					machine.PushOpcode("StfldVarVar_i8");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9334,6 +9971,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_u8:
 				{
+					machine.PushOpcode("StfldVarVar_u8");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9345,6 +9983,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_ref:
 				{
+					machine.PushOpcode("StfldVarVar_ref");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9356,6 +9995,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_size_8:
 				{
+					machine.PushOpcode("StfldVarVar_size_8");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9366,6 +10006,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_size_12:
 				{
+					machine.PushOpcode("StfldVarVar_size_12");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9376,6 +10017,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_size_16:
 				{
+					machine.PushOpcode("StfldVarVar_size_16");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9386,6 +10028,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_size_20:
 				{
+					machine.PushOpcode("StfldVarVar_size_20");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9396,6 +10039,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_size_24:
 				{
+					machine.PushOpcode("StfldVarVar_size_24");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9406,6 +10050,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_size_28:
 				{
+					machine.PushOpcode("StfldVarVar_size_28");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9416,6 +10061,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_size_32:
 				{
+					machine.PushOpcode("StfldVarVar_size_32");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9426,6 +10072,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_n_2:
 				{
+					machine.PushOpcode("StfldVarVar_n_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9437,6 +10084,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_n_4:
 				{
+					machine.PushOpcode("StfldVarVar_n_4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9448,6 +10096,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_WriteBarrier_n_2:
 				{
+					machine.PushOpcode("StfldVarVar_WriteBarrier_n_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9461,6 +10110,7 @@ else \
 				}
 				case HiOpcodeEnum::StfldVarVar_WriteBarrier_n_4:
 				{
+					machine.PushOpcode("StfldVarVar_WriteBarrier_n_4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
 					uint16_t __data = *(uint16_t*)(ip + 6);
@@ -9474,6 +10124,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_i1:
 				{
+					machine.PushOpcode("LdsfldVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9484,6 +10135,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_u1:
 				{
+					machine.PushOpcode("LdsfldVarVar_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9494,6 +10146,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_i2:
 				{
+					machine.PushOpcode("LdsfldVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9504,6 +10157,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_u2:
 				{
+					machine.PushOpcode("LdsfldVarVar_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9514,6 +10168,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_i4:
 				{
+					machine.PushOpcode("LdsfldVarVar_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9524,6 +10179,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_u4:
 				{
+					machine.PushOpcode("LdsfldVarVar_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9534,6 +10190,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_i8:
 				{
+					machine.PushOpcode("LdsfldVarVar_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9544,6 +10201,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_u8:
 				{
+					machine.PushOpcode("LdsfldVarVar_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9554,6 +10212,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_size_8:
 				{
+					machine.PushOpcode("LdsfldVarVar_size_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9564,6 +10223,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_size_12:
 				{
+					machine.PushOpcode("LdsfldVarVar_size_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9574,6 +10234,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_size_16:
 				{
+					machine.PushOpcode("LdsfldVarVar_size_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9584,6 +10245,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_size_20:
 				{
+					machine.PushOpcode("LdsfldVarVar_size_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9594,6 +10256,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_size_24:
 				{
+					machine.PushOpcode("LdsfldVarVar_size_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9604,6 +10267,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_size_28:
 				{
+					machine.PushOpcode("LdsfldVarVar_size_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9614,6 +10278,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_size_32:
 				{
+					machine.PushOpcode("LdsfldVarVar_size_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9624,6 +10289,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_n_2:
 				{
+					machine.PushOpcode("LdsfldVarVar_n_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9635,6 +10301,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldVarVar_n_4:
 				{
+					machine.PushOpcode("LdsfldVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9646,6 +10313,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_i1:
 				{
+					machine.PushOpcode("StsfldVarVar_i1");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9657,6 +10325,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_u1:
 				{
+					machine.PushOpcode("StsfldVarVar_u1");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9668,6 +10337,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_i2:
 				{
+					machine.PushOpcode("StsfldVarVar_i2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9679,6 +10349,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_u2:
 				{
+					machine.PushOpcode("StsfldVarVar_u2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9690,6 +10361,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_i4:
 				{
+					machine.PushOpcode("StsfldVarVar_i4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9701,6 +10373,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_u4:
 				{
+					machine.PushOpcode("StsfldVarVar_u4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9712,6 +10385,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_i8:
 				{
+					machine.PushOpcode("StsfldVarVar_i8");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9723,6 +10397,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_u8:
 				{
+					machine.PushOpcode("StsfldVarVar_u8");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9734,6 +10409,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_ref:
 				{
+					machine.PushOpcode("StsfldVarVar_ref");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9745,6 +10421,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_size_8:
 				{
+					machine.PushOpcode("StsfldVarVar_size_8");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9755,6 +10432,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_size_12:
 				{
+					machine.PushOpcode("StsfldVarVar_size_12");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9765,6 +10443,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_size_16:
 				{
+					machine.PushOpcode("StsfldVarVar_size_16");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9775,6 +10454,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_size_20:
 				{
+					machine.PushOpcode("StsfldVarVar_size_20");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9785,6 +10465,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_size_24:
 				{
+					machine.PushOpcode("StsfldVarVar_size_24");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9795,6 +10476,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_size_28:
 				{
+					machine.PushOpcode("StsfldVarVar_size_28");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9805,6 +10487,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_size_32:
 				{
+					machine.PushOpcode("StsfldVarVar_size_32");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9815,6 +10498,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_n_2:
 				{
+					machine.PushOpcode("StsfldVarVar_n_2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9826,6 +10510,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_n_4:
 				{
+					machine.PushOpcode("StsfldVarVar_n_4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9837,6 +10522,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_WriteBarrier_n_2:
 				{
+					machine.PushOpcode("StsfldVarVar_WriteBarrier_n_2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9850,6 +10536,7 @@ else \
 				}
 				case HiOpcodeEnum::StsfldVarVar_WriteBarrier_n_4:
 				{
+					machine.PushOpcode("StsfldVarVar_WriteBarrier_n_4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -9863,6 +10550,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldaVarVar:
 				{
+					machine.PushOpcode("LdsfldaVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 4);
@@ -9873,6 +10561,7 @@ else \
 				}
 				case HiOpcodeEnum::LdsfldaFromFieldDataVarVar:
 				{
+					machine.PushOpcode("LdsfldaFromFieldDataVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					void* __src = ((void*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 				    (*(void**)(localVarBase + __dst)) = __src;
@@ -9881,6 +10570,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalaVarVar:
 				{
+					machine.PushOpcode("LdthreadlocalaVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9891,6 +10581,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_i1:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9901,6 +10592,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_u1:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9911,6 +10603,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_i2:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9921,6 +10614,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_u2:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9931,6 +10625,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_i4:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9941,6 +10636,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_u4:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9951,6 +10647,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_i8:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9961,6 +10658,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_u8:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9971,6 +10669,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_size_8:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_size_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9981,6 +10680,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_size_12:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_size_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -9991,6 +10691,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_size_16:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_size_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -10001,6 +10702,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_size_20:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_size_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -10011,6 +10713,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_size_24:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_size_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -10021,6 +10724,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_size_28:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_size_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -10031,6 +10735,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_size_32:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_size_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -10041,6 +10746,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_n_2:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_n_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					int32_t __offset = *(int32_t*)(ip + 12);
@@ -10052,6 +10758,7 @@ else \
 				}
 				case HiOpcodeEnum::LdthreadlocalVarVar_n_4:
 				{
+					machine.PushOpcode("LdthreadlocalVarVar_n_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 4)]);
 					int32_t __offset = *(int32_t*)(ip + 8);
@@ -10063,6 +10770,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_i1:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_i1");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10074,6 +10782,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_u1:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_u1");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10085,6 +10794,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_i2:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_i2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10096,6 +10806,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_u2:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_u2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10107,6 +10818,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_i4:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_i4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10118,6 +10830,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_u4:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_u4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10129,6 +10842,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_i8:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_i8");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10140,6 +10854,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_u8:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_u8");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10151,6 +10866,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_ref:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_ref");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10162,6 +10878,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_size_8:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_size_8");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10172,6 +10889,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_size_12:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_size_12");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10182,6 +10900,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_size_16:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_size_16");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10192,6 +10911,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_size_20:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_size_20");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10202,6 +10922,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_size_24:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_size_24");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10212,6 +10933,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_size_28:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_size_28");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10222,6 +10944,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_size_32:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_size_32");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10232,6 +10955,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_n_2:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_n_2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10243,6 +10967,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_n_4:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_n_4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10254,6 +10979,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_WriteBarrier_n_2:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_WriteBarrier_n_2");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10267,6 +10993,7 @@ else \
 				}
 				case HiOpcodeEnum::StthreadlocalVarVar_WriteBarrier_n_4:
 				{
+					machine.PushOpcode("StthreadlocalVarVar_WriteBarrier_n_4");
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
 					uint16_t __offset = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
@@ -10286,6 +11013,7 @@ else \
 		//!!!{{ARRAY
 				case HiOpcodeEnum::NewArrVarVar:
 				{
+					machine.PushOpcode("NewArrVarVar");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __size = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -10295,6 +11023,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayLengthVarVar:
 				{
+					machine.PushOpcode("GetArrayLengthVarVar");
 					uint16_t __len = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 				    CHECK_NOT_NULL_THROW((*(Il2CppArray**)(localVarBase + __arr)));
@@ -10304,6 +11033,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementAddressAddrVarVar:
 				{
+					machine.PushOpcode("GetArrayElementAddressAddrVarVar");
 					uint16_t __addr = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10315,6 +11045,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementAddressCheckAddrVarVar:
 				{
+					machine.PushOpcode("GetArrayElementAddressCheckAddrVarVar");
 					uint16_t __addr = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10328,6 +11059,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_i1:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_i1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10339,6 +11071,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_u1:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_u1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10350,6 +11083,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_i2:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_i2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10361,6 +11095,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_u2:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_u2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10372,6 +11107,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_i4:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_i4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10383,6 +11119,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_u4:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_u4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10394,6 +11131,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_i8:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_i8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10405,6 +11143,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_u8:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_u8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10416,6 +11155,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_1:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10427,6 +11167,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_2:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_2");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10438,6 +11179,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_4:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_4");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10449,6 +11191,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_8:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_8");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10460,6 +11203,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_12:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_12");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10471,6 +11215,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_16:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_16");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10482,6 +11227,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_20:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_20");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10493,6 +11239,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_24:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_24");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10504,6 +11251,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_28:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_28");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10515,6 +11263,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_size_32:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_size_32");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10526,6 +11275,7 @@ else \
 				}
 				case HiOpcodeEnum::GetArrayElementVarVar_n:
 				{
+					machine.PushOpcode("GetArrayElementVarVar_n");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __index = *(uint16_t*)(ip + 6);
@@ -10538,6 +11288,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_i1:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_i1");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10549,6 +11300,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_u1:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_u1");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10560,6 +11312,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_i2:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_i2");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10571,6 +11324,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_u2:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_u2");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10582,6 +11336,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_i4:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_i4");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10593,6 +11348,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_u4:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_u4");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10604,6 +11360,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_i8:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_i8");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10615,6 +11372,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_u8:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_u8");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10626,6 +11384,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_ref:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_ref");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10638,6 +11397,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_size_12:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_size_12");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10649,6 +11409,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_size_16:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_size_16");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10660,6 +11421,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_n:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_n");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10672,6 +11434,7 @@ else \
 				}
 				case HiOpcodeEnum::SetArrayElementVarVar_WriteBarrier_n:
 				{
+					machine.PushOpcode("SetArrayElementVarVar_WriteBarrier_n");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10684,6 +11447,7 @@ else \
 				}
 				case HiOpcodeEnum::NewMdArrVarVar_length:
 				{
+					machine.PushOpcode("NewMdArrVarVar_length");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -10693,6 +11457,7 @@ else \
 				}
 				case HiOpcodeEnum::NewMdArrVarVar_length_bound:
 				{
+					machine.PushOpcode("NewMdArrVarVar_length_bound");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __lowerBoundIdxs = *(uint16_t*)(ip + 6);
@@ -10703,6 +11468,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_i1:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_i1");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10712,6 +11478,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_u1:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_u1");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10721,6 +11488,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_i2:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_i2");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10730,6 +11498,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_u2:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_u2");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10739,6 +11508,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_i4:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_i4");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10748,6 +11518,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_u4:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_u4");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10757,6 +11528,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_i8:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_i8");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10766,6 +11538,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_u8:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_u8");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10775,6 +11548,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementVarVar_n:
 				{
+					machine.PushOpcode("GetMdArrElementVarVar_n");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -10784,6 +11558,7 @@ else \
 				}
 				case HiOpcodeEnum::GetMdArrElementAddressVarVar:
 				{
+					machine.PushOpcode("GetMdArrElementAddressVarVar");
 					uint16_t __addr = *(uint16_t*)(ip + 2);
 					uint16_t __arr = *(uint16_t*)(ip + 4);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 6);
@@ -10793,6 +11568,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_i1:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_i1");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10804,6 +11580,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_u1:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_u1");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10815,6 +11592,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_i2:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_i2");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10826,6 +11604,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_u2:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_u2");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10837,6 +11616,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_i4:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_i4");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10848,6 +11628,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_u4:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_u4");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10859,6 +11640,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_i8:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_i8");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10870,6 +11652,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_u8:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_u8");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10881,6 +11664,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_ref:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_ref");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10893,6 +11677,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_n:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_n");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10902,6 +11687,7 @@ else \
 				}
 				case HiOpcodeEnum::SetMdArrElementVarVar_WriteBarrier_n:
 				{
+					machine.PushOpcode("SetMdArrElementVarVar_WriteBarrier_n");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __lengthIdxs = *(uint16_t*)(ip + 4);
 					uint16_t __ele = *(uint16_t*)(ip + 6);
@@ -10917,6 +11703,7 @@ else \
 		//!!!{{EXCEPTION
 				case HiOpcodeEnum::ThrowEx:
 				{
+					machine.PushOpcode("ThrowEx");
 					uint16_t __exceptionObj = *(uint16_t*)(ip + 2);
 					uint16_t __firstHandlerIndex = *(uint16_t*)(ip + 4);
 					THROW_EX((Il2CppException*)(*(Il2CppObject**)(localVarBase + __exceptionObj)), __firstHandlerIndex);
@@ -10924,11 +11711,13 @@ else \
 				}
 				case HiOpcodeEnum::RethrowEx:
 				{
+					machine.PushOpcode("RethrowEx");
 					RETHROW_EX();
 				    continue;
 				}
 				case HiOpcodeEnum::LeaveEx:
 				{
+					machine.PushOpcode("LeaveEx");
 					int32_t __target = *(int32_t*)(ip + 4);
 					uint16_t __firstHandlerIndex = *(uint16_t*)(ip + 2);
 					LEAVE_EX(__target, __firstHandlerIndex);
@@ -10936,12 +11725,14 @@ else \
 				}
 				case HiOpcodeEnum::LeaveEx_Directly:
 				{
+					machine.PushOpcode("LeaveEx_Directly");
 					int32_t __target = *(int32_t*)(ip + 4);
 					LEAVE_EX_DIRECTLY(__target);
 				    continue;
 				}
 				case HiOpcodeEnum::EndFilterEx:
 				{
+					machine.PushOpcode("EndFilterEx");
 					uint16_t __value = *(uint16_t*)(ip + 2);
 					ENDFILTER_EX((*(bool*)(localVarBase + __value)));
 				    ip += 8;
@@ -10949,6 +11740,7 @@ else \
 				}
 				case HiOpcodeEnum::EndFinallyEx:
 				{
+					machine.PushOpcode("EndFinallyEx");
 					ENDFINALLY_EX();
 				    continue;
 				}
@@ -10960,6 +11752,7 @@ else \
 		//!!!{{INSTRINCT
 				case HiOpcodeEnum::NullableNewVarVar:
 				{
+					machine.PushOpcode("NullableNewVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -10969,6 +11762,7 @@ else \
 				}
 				case HiOpcodeEnum::NullableCtorVarVar:
 				{
+					machine.PushOpcode("NullableCtorVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __data = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -10978,6 +11772,7 @@ else \
 				}
 				case HiOpcodeEnum::NullableHasValueVar:
 				{
+					machine.PushOpcode("NullableHasValueVar");
 					uint16_t __result = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -10987,6 +11782,7 @@ else \
 				}
 				case HiOpcodeEnum::NullableGetValueOrDefaultVarVar:
 				{
+					machine.PushOpcode("NullableGetValueOrDefaultVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -10996,6 +11792,7 @@ else \
 				}
 				case HiOpcodeEnum::NullableGetValueOrDefaultVarVar_1:
 				{
+					machine.PushOpcode("NullableGetValueOrDefaultVarVar_1");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					uint16_t __defaultValue = *(uint16_t*)(ip + 6);
@@ -11006,6 +11803,7 @@ else \
 				}
 				case HiOpcodeEnum::NullableGetValueVarVar:
 				{
+					machine.PushOpcode("NullableGetValueVarVar");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __obj = *(uint16_t*)(ip + 4);
 					Il2CppClass* __klass = ((Il2CppClass*)imi->resolveDatas[*(uint32_t*)(ip + 8)]);
@@ -11015,6 +11813,7 @@ else \
 				}
 				case HiOpcodeEnum::InterlockedCompareExchangeVarVarVarVar_i4:
 				{
+					machine.PushOpcode("InterlockedCompareExchangeVarVarVarVar_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __location = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11025,6 +11824,7 @@ else \
 				}
 				case HiOpcodeEnum::InterlockedCompareExchangeVarVarVarVar_i8:
 				{
+					machine.PushOpcode("InterlockedCompareExchangeVarVarVarVar_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __location = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11035,6 +11835,7 @@ else \
 				}
 				case HiOpcodeEnum::InterlockedCompareExchangeVarVarVarVar_pointer:
 				{
+					machine.PushOpcode("InterlockedCompareExchangeVarVarVarVar_pointer");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __location = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11045,6 +11846,7 @@ else \
 				}
 				case HiOpcodeEnum::InterlockedExchangeVarVarVar_i4:
 				{
+					machine.PushOpcode("InterlockedExchangeVarVarVar_i4");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __location = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11054,6 +11856,7 @@ else \
 				}
 				case HiOpcodeEnum::InterlockedExchangeVarVarVar_i8:
 				{
+					machine.PushOpcode("InterlockedExchangeVarVarVar_i8");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __location = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11063,6 +11866,7 @@ else \
 				}
 				case HiOpcodeEnum::InterlockedExchangeVarVarVar_pointer:
 				{
+					machine.PushOpcode("InterlockedExchangeVarVarVar_pointer");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 					uint16_t __location = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11072,6 +11876,7 @@ else \
 				}
 				case HiOpcodeEnum::NewSystemObjectVar:
 				{
+					machine.PushOpcode("NewSystemObjectVar");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 				(*(Il2CppObject**)(localVarBase + __obj)) = il2cpp::vm::Object::New(il2cpp_defaults.object_class);
 				    ip += 8;
@@ -11079,6 +11884,7 @@ else \
 				}
 				case HiOpcodeEnum::NewVector2:
 				{
+					machine.PushOpcode("NewVector2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11088,6 +11894,7 @@ else \
 				}
 				case HiOpcodeEnum::NewVector3_2:
 				{
+					machine.PushOpcode("NewVector3_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11097,6 +11904,7 @@ else \
 				}
 				case HiOpcodeEnum::NewVector3_3:
 				{
+					machine.PushOpcode("NewVector3_3");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11107,6 +11915,7 @@ else \
 				}
 				case HiOpcodeEnum::NewVector4_2:
 				{
+					machine.PushOpcode("NewVector4_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11116,6 +11925,7 @@ else \
 				}
 				case HiOpcodeEnum::NewVector4_3:
 				{
+					machine.PushOpcode("NewVector4_3");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11126,6 +11936,7 @@ else \
 				}
 				case HiOpcodeEnum::NewVector4_4:
 				{
+					machine.PushOpcode("NewVector4_4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11137,6 +11948,7 @@ else \
 				}
 				case HiOpcodeEnum::CtorVector2:
 				{
+					machine.PushOpcode("CtorVector2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11146,6 +11958,7 @@ else \
 				}
 				case HiOpcodeEnum::CtorVector3_2:
 				{
+					machine.PushOpcode("CtorVector3_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11155,6 +11968,7 @@ else \
 				}
 				case HiOpcodeEnum::CtorVector3_3:
 				{
+					machine.PushOpcode("CtorVector3_3");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11165,6 +11979,7 @@ else \
 				}
 				case HiOpcodeEnum::CtorVector4_2:
 				{
+					machine.PushOpcode("CtorVector4_2");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11174,6 +11989,7 @@ else \
 				}
 				case HiOpcodeEnum::CtorVector4_3:
 				{
+					machine.PushOpcode("CtorVector4_3");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11184,6 +12000,7 @@ else \
 				}
 				case HiOpcodeEnum::CtorVector4_4:
 				{
+					machine.PushOpcode("CtorVector4_4");
 					uint16_t __obj = *(uint16_t*)(ip + 2);
 					uint16_t __x = *(uint16_t*)(ip + 4);
 					uint16_t __y = *(uint16_t*)(ip + 6);
@@ -11195,6 +12012,7 @@ else \
 				}
 				case HiOpcodeEnum::ArrayGetGenericValueImpl:
 				{
+					machine.PushOpcode("ArrayGetGenericValueImpl");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11208,6 +12026,7 @@ else \
 				}
 				case HiOpcodeEnum::ArraySetGenericValueImpl:
 				{
+					machine.PushOpcode("ArraySetGenericValueImpl");
 					uint16_t __arr = *(uint16_t*)(ip + 2);
 					uint16_t __index = *(uint16_t*)(ip + 4);
 					uint16_t __value = *(uint16_t*)(ip + 6);
@@ -11221,6 +12040,7 @@ else \
 				}
 				case HiOpcodeEnum::NewString:
 				{
+					machine.PushOpcode("NewString");
 					uint16_t __str = *(uint16_t*)(ip + 2);
 					uint16_t __chars = *(uint16_t*)(ip + 4);
 				    Il2CppArray* _chars = (*(Il2CppArray**)(localVarBase + __chars));
@@ -11231,6 +12051,7 @@ else \
 				}
 				case HiOpcodeEnum::NewString_2:
 				{
+					machine.PushOpcode("NewString_2");
 					uint16_t __str = *(uint16_t*)(ip + 2);
 					uint16_t __chars = *(uint16_t*)(ip + 4);
 					uint16_t __startIndex = *(uint16_t*)(ip + 6);
@@ -11245,6 +12066,7 @@ else \
 				}
 				case HiOpcodeEnum::NewString_3:
 				{
+					machine.PushOpcode("NewString_3");
 					uint16_t __str = *(uint16_t*)(ip + 2);
 					uint16_t __c = *(uint16_t*)(ip + 4);
 					uint16_t __count = *(uint16_t*)(ip + 6);
@@ -11261,6 +12083,7 @@ else \
 				}
 				case HiOpcodeEnum::UnsafeEnumCast:
 				{
+					machine.PushOpcode("UnsafeEnumCast");
 					uint16_t __dst = *(uint16_t*)(ip + 2);
 					uint16_t __src = *(uint16_t*)(ip + 4);
 					uint16_t __srcType = *(uint16_t*)(ip + 6);
@@ -11270,6 +12093,7 @@ else \
 				}
 				case HiOpcodeEnum::AssemblyGetExecutingAssembly:
 				{
+					machine.PushOpcode("AssemblyGetExecutingAssembly");
 					uint16_t __ret = *(uint16_t*)(ip + 2);
 				    (*(Il2CppObject**)(localVarBase + __ret)) = (Il2CppObject*)il2cpp::vm::Reflection::GetAssemblyObject(imi->method->klass->image->assembly);
 				    ip += 8;
