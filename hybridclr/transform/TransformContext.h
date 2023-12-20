@@ -80,7 +80,9 @@ namespace transform
 		U2,
 		I4,
 		I8,
+		Ref,
 		S,
+		StructContainsRef,
 	};
 
 #if HYBRIDCLR_ARCH_64
@@ -171,8 +173,8 @@ namespace transform
 		EvalStackVarInfo* evalStack;
 		int32_t evalStackBaseOffset;
 		std::vector<uint64_t>& resolveDatas;
-		std::unordered_map<uint32_t, uint32_t>& token2DataIdxs;
-		std::unordered_map<const void*, uint32_t>& ptr2DataIdxs;
+		Il2CppHashMap<uint32_t, uint32_t, il2cpp::utils::PassThroughHash<uint32_t>>& token2DataIdxs;
+		Il2CppHashMap<const void*, uint32_t, il2cpp::utils::PassThroughHash<const void*>>& ptr2DataIdxs;
 		std::vector<int32_t*>& relocationOffsets;
 		std::vector<std::pair<int32_t, int32_t>>& switchOffsetsInResolveData;
 		std::vector<FlowInfo*>& pendingFlows;
@@ -441,6 +443,11 @@ namespace transform
 			switch (ir->type)
 			{
 				case HiOpcodeEnum::BoxVarVar:
+				{
+					IRBoxVarVar* irBox = (IRBoxVarVar*)ir;
+					Il2CppClass* klass = ((Il2CppClass*)resolveDatas[irBox->klass]);
+					return IS_CLASS_VALUE_TYPE(klass) && !il2cpp::vm::Class::IsNullable(klass);
+				}
 				case HiOpcodeEnum::NewSystemObjectVar:
 				case HiOpcodeEnum::NewString:
 				case HiOpcodeEnum::NewString_2:
@@ -454,8 +461,7 @@ namespace transform
 				//case HiOpcodeEnum::NewClassVar_NotCtor:
 				case HiOpcodeEnum::NewMdArrVarVar_length:
 				case HiOpcodeEnum::NewMdArrVarVar_length_bound:
-				case HiOpcodeEnum::NewArrVarVar_4:
-				case HiOpcodeEnum::NewArrVarVar_8:
+				case HiOpcodeEnum::NewArrVarVar:
 				case HiOpcodeEnum::LdsfldaFromFieldDataVarVar:
 				case HiOpcodeEnum::LdsfldaVarVar:
 				case HiOpcodeEnum::LdthreadlocalaVarVar:
@@ -1041,68 +1047,36 @@ namespace transform
 			PushStackByReduceType(EvalStackReduceDataType::I4);
 		}
 
-		void Add_ldelem(EvalStackReduceDataType resultType, HiOpcodeEnum opI4, HiOpcodeEnum opI8)
+		void Add_ldelem(EvalStackReduceDataType resultType, HiOpcodeEnum opI4)
 		{
 			IL2CPP_ASSERT(evalStackTop >= 2);
 			EvalStackVarInfo& arr = evalStack[evalStackTop - 2];
 			EvalStackVarInfo& index = evalStack[evalStackTop - 1];
 
-			CreateAddIR(ir, GetArrayElementVarVar_i1_8);
+			CreateAddIR(ir, GetArrayElementVarVar_i1);
+			ir->type = opI4;
 			ir->arr = arr.locOffset;
 			ir->index = index.locOffset;
 			ir->dst = arr.locOffset;
 
-			switch (index.reduceType)
-			{
-			case EvalStackReduceDataType::I4:
-			{
-				ir->type = opI4;
-				break;
-			}
-			case EvalStackReduceDataType::I8:
-			{
-				ir->type = opI8;
-				break;
-			}
-			default:
-			{
-				RaiseExecutionEngineException("ldelem");
-			}
-			}
 			PopStackN(2);
 			PushStackByReduceType(resultType);
 			ip++;
 		}
 
-		void Add_stelem(HiOpcodeEnum opI4, HiOpcodeEnum opI8)
+		void Add_stelem(HiOpcodeEnum opI4)
 		{
 			IL2CPP_ASSERT(evalStackTop >= 3);
 			EvalStackVarInfo& arr = evalStack[evalStackTop - 3];
 			EvalStackVarInfo& index = evalStack[evalStackTop - 2];
 			EvalStackVarInfo& ele = evalStack[evalStackTop - 1];
 
-			CreateAddIR(ir, SetArrayElementVarVar_i1_4);
+			CreateAddIR(ir, SetArrayElementVarVar_i1);
+			ir->type = opI4;
 			ir->arr = arr.locOffset;
 			ir->index = index.locOffset;
 			ir->ele = ele.locOffset;
 
-			switch (index.reduceType)
-			{
-			case EvalStackReduceDataType::I4:
-			{
-				ir->type = opI4;
-				break;
-			}
-			case EvalStackReduceDataType::I8:
-			{
-				ir->type = opI8;
-				break;
-			}
-			default:
-			{
-				RaiseExecutionEngineException("stelem");
-			}
-			}
 			PopStackN(3);
 			ip++;
 		}

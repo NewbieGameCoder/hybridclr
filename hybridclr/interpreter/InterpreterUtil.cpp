@@ -10,43 +10,11 @@ namespace interpreter
 {
 	TypeDesc GetValueTypeArgDescBySize(uint32_t size)
 	{
-#if HYBRIDCLR_ABI_ARM_64
 		if (size <= 8)
 		{
 			return { LocationDataType::U8, 1 };
 		}
-		else if (size <= 16)
-		{
-			return { LocationDataType::S_16, 2 };
-		}
-		else
-		{
-			return { LocationDataType::SR, (uint32_t)metadata::GetStackSizeByByteSize(size) };
-		}
-#elif HYBRIDCLR_ABI_UNIVERSAL_64 || HYBRIDCLR_ABI_UNIVERSAL_32 || HYBRIDCLR_ABI_WEBGL32
-		if (size <= 8)
-		{
-			return { LocationDataType::U8, 1 };
-		}
-		else if (size <= 16)
-		{
-			return { LocationDataType::S_16, 2 };
-		}
-		else if (size <= 24)
-		{
-			return { LocationDataType::S_24, 3 };
-		}
-		else if (size <= 32)
-		{
-			return { LocationDataType::S_32, 4 };
-		}
-		else
-		{
-			return { LocationDataType::S_N, (uint32_t)metadata::GetStackSizeByByteSize(size) };
-		}
-#else
-#error "not support ABI"
-#endif
+		return { LocationDataType::S_N, (uint32_t)metadata::GetStackSizeByByteSize(size) };
 	}
 
 	TypeDesc GetTypeArgDesc(const Il2CppType* type)
@@ -121,19 +89,6 @@ namespace interpreter
 			return{ LocationDataType::U8, 1 };
 		}
 		}
-	}
-
-	bool IsPassByValWhenInvoke(const Il2CppType* type, bool passByValWhenCall)
-	{
-		if (type->byref)
-		{
-			return false;
-		}
-		if (hybridclr::metadata::IsValueType(type))
-		{
-			return passByValWhenCall;
-		}
-		return false;
 	}
 
 	Il2CppObject* TranslateNativeValueToBoxValue(const Il2CppType* type, void* value)

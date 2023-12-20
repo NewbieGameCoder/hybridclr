@@ -1,6 +1,7 @@
 #pragma once
 
 #include "il2cpp-config.h"
+#include "codegen/il2cpp-codegen-metadata.h"
 #include "il2cpp-class-internals.h"
 
 #include "vm/Array.h"
@@ -8,6 +9,7 @@
 #include "vm/Runtime.h"
 #include "vm/GlobalMetadataFileInternals.h"
 #include "icalls/mscorlib/System/Type.h"
+#include "gc/GarbageCollector.h"
 
 #if HYBRIDCLR_UNITY_2020
 #include "icalls/mscorlib/System/MonoType.h"
@@ -31,51 +33,28 @@
 #error "only support litten endian"
 #endif
 
-#if IL2CPP_TARGET_ARM64
-#define HYBRIDCLR_TARGET_ARM64 1
-#elif IL2CPP_TARGET_ARMV7
-#define HYBRIDCLR_TARGET_ARMV7 1
-#elif IL2CPP_TARGET_WINDOWS || IL2CPP_TARGET_DARWIN || IL2CPP_TARGET_LINUX || IL2CPP_TARGET_ANDROID
-#if PLATFORM_ARCH_64
-#define HYBRIDCLR_TARGET_X64 1
-#else
-#define HYBRIDCLR_TARGET_X86 1
-#endif
-#elif IL2CPP_TARGET_JAVASCRIPT
-#define HYBRIDCLR_TARGET_JAVASCRIPT 1
-#else
-#error "not support platform"
-#endif
-
 #if	PLATFORM_ARCH_64
 #define HYBRIDCLR_ARCH_64 1
-#if IL2CPP_TARGET_ARM64
-#define HYBRIDCLR_ABI_ARM_64 1
-#define HYBRIDCLR_ABI_NAME "Arm64"
 #else
-#define HYBRIDCLR_ABI_UNIVERSAL_64 1
-#define HYBRIDCLR_ABI_NAME "General64"
-#endif
-#else
-#if IL2CPP_TARGET_JAVASCRIPT
-#define HYBRIDCLR_ABI_WEBGL32 1
-#define HYBRIDCLR_ABI_NAME "WebGL32"
-#else
-#define HYBRIDCLR_ABI_UNIVERSAL_32 1
-#define HYBRIDCLR_ABI_NAME "General32"
-#endif
+#define HYBRIDCLR_ARCH_64 0
 #endif
 
 #define PTR_SIZE IL2CPP_SIZEOF_VOID_P
 
-#define SUPPORT_MEMORY_NOT_ALIGMENT_ACCESS  (HYBRIDCLR_ARCH_64 || HYBRIDCLR_TARGET_X86)
+#if HYBRIDCLR_ARCH_64 || HYBRIDCLR_TARGET_X86
+#define SUPPORT_MEMORY_NOT_ALIGMENT_ACCESS  1
+#else
+#define SUPPORT_MEMORY_NOT_ALIGMENT_ACCESS  0
+#endif
 
 #ifndef ENABLE_PLACEHOLDER_DLL
 #define ENABLE_PLACEHOLDER_DLL 1
 #endif
 
 #if IL2CPP_ENABLE_WRITE_BARRIERS
-#error "not support incremental gc"
+#define HYBRIDCLR_ENABLE_WRITE_BARRIERS 1
+#else
+#define HYBRIDCLR_ENABLE_WRITE_BARRIERS 0
 #endif
 
 namespace hybridclr
@@ -112,6 +91,20 @@ namespace hybridclr
 		}
 		InitAndGetInterpreterDirectlyCallMethodPointerSlow(const_cast<MethodInfo*>(method));
 		return method->virtualMethodPointerCallByInterp;
+	}
+
+	inline void HYBRIDCLR_SET_WRITE_BARRIER(void** ptr)
+	{
+#if HYBRIDCLR_ENABLE_WRITE_BARRIERS
+		il2cpp::gc::GarbageCollector::SetWriteBarrier(ptr);
+#endif
+	}
+
+	inline void HYBRIDCLR_SET_WRITE_BARRIER(void** ptr, size_t size)
+	{
+#if HYBRIDCLR_ENABLE_WRITE_BARRIERS
+		il2cpp::gc::GarbageCollector::SetWriteBarrier(ptr, size);
+#endif
 	}
 }
 

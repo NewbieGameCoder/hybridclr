@@ -25,9 +25,10 @@ namespace interpreter
 {
 	il2cpp::os::ThreadLocalValue InterpreterModule::s_machineState;
 
-	static std::unordered_map<const char*, Managed2NativeCallMethod, CStringHash, CStringEqualTo> g_managed2natives;
-	static std::unordered_map<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_native2manageds;
-	static std::unordered_map<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_adjustThunks;
+	static Il2CppHashMap<const char*, Managed2NativeCallMethod, CStringHash, CStringEqualTo> g_managed2natives;
+	static Il2CppHashMap<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_native2manageds;
+	static Il2CppHashMap<const char*, Il2CppMethodPointer, CStringHash, CStringEqualTo> g_adjustThunks;
+	static Il2CppHashMap<const char*, const char*, CStringHash, CStringEqualTo> g_fullName2signature;
 
 	MachineState& InterpreterModule::GetCurrentThreadMachineState()
 	{
@@ -82,6 +83,15 @@ namespace interpreter
 			}
 			g_adjustThunks.insert({ method.signature, method.method });
 		}
+		for (size_t i = 0 ; ; i++)
+		{
+			FullName2Signature& nameSig = g_fullName2SignatureStub[i];
+			if (!nameSig.fullName)
+			{
+				break;
+			}
+			g_fullName2signature.insert({ nameSig.fullName, nameSig.signature });
+		}
 	}
 
 	void InterpreterModule::NotSupportNative2Managed()
@@ -94,11 +104,17 @@ namespace interpreter
 		il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException("NotSupportAdjustorThunk"));
 	}
 
+	const char* InterpreterModule::GetValueTypeSignature(const char* fullName)
+	{
+		auto it = g_fullName2signature.find(fullName);
+		return it != g_fullName2signature.end() ? it->second : "$";
+	}
+
 	static void* NotSupportInvoke(Il2CppMethodPointer, const MethodInfo* method, void*, void**)
 	{
 		char sigName[1000];
 		ComputeSignature(method, true, sigName, sizeof(sigName) - 1);
-		TEMP_FORMAT(errMsg, "Invoke method missing. ABI:%s sinature:%s %s.%s::%s", HYBRIDCLR_ABI_NAME, sigName, method->klass->namespaze, method->klass->name, method->name);
+		TEMP_FORMAT(errMsg, "Invoke method missing. sinature:%s %s.%s::%s", sigName, method->klass->namespaze, method->klass->name, method->name);
 		il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
 		return nullptr;
 	}
@@ -169,34 +185,7 @@ namespace interpreter
 	{
 		if (hybridclr::metadata::IsInterpreterImplement(method))
 		{
-			IL2CPP_ASSERT(method->parameters_count <= 32);
-			StackObject newArgs[32];
-			int32_t argBaseOffset;
-			if (hybridclr::metadata::IsInstanceMethod(method))
-			{
-				newArgs[0] = localVarBase[argVarIndexs[0]];
-				argBaseOffset = 1;
-			}
-			else
-			{
-				argBaseOffset = 0;
-			}
-			InterpMethodInfo* imi = method->interpData ? (InterpMethodInfo*)method->interpData : GetInterpMethodInfo(method);
-			MethodArgDesc* argDescs = imi->args;
-			for (uint8_t i = 0; i < method->parameters_count; i++)
-			{
-				int32_t argOffset = argBaseOffset + i;
-				StackObject* argValue = localVarBase + argVarIndexs[argOffset];
-				if (argDescs[argOffset].passByValWhenCall)
-				{
-					newArgs[argOffset] = *argValue;
-				}
-				else
-				{
-					newArgs[argOffset].ptr = argValue;
-				}
-			}
-			Interpreter::Execute(method, newArgs, ret);
+			Interpreter::Execute(method,  localVarBase + argVarIndexs[0], ret);
 			return;
 		}
 		if (method->invoker_method == nullptr)
@@ -204,8 +193,12 @@ namespace interpreter
 			char sigName[1000];
 			ComputeSignature(method, true, sigName, sizeof(sigName) - 1);
 
-			TEMP_FORMAT(errMsg, "GetManaged2NativeMethodPointer. ABI:%s sinature:%s not support.", HYBRIDCLR_ABI_NAME, sigName);
+			TEMP_FORMAT(errMsg, "GetManaged2NativeMethodPointer. sinature:%s not support.", sigName);
 			RaiseMethodNotSupportException(method, errMsg);
+		}
+		if (!InitAndGetInterpreterDirectlyCallMethodPointer(method))
+		{
+			RaiseAOTGenericMethodNotInstantiatedException(method);
 		}
 		void* thisPtr;
 		uint16_t* argVarIndexBase;
@@ -317,17 +310,20 @@ namespace interpreter
 
 	#ifdef HYBRIDCLR_UNITY_2021_OR_NEW
 	
-	static void InterpterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args, void* __ret)
+	static void InterpreterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args, void* __ret)
 	{
+		InterpMethodInfo* imi = method->interpData ? (InterpMethodInfo*)method->interpData : InterpreterModule::GetInterpMethodInfo(method);
 		bool isInstanceMethod = metadata::IsInstanceMethod(method);
-		StackObject args[256];
+		StackObject* args = (StackObject*)alloca(sizeof(StackObject) * imi->argStackObjectSize);
 		if (isInstanceMethod)
 		{
-			__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			if (IS_CLASS_VALUE_TYPE(method->klass))
+			{
+				__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			}
 			args[0].ptr = __this;
 		}
 		
-		InterpMethodInfo* imi = method->interpData ? (InterpMethodInfo*)method->interpData : InterpreterModule::GetInterpMethodInfo(method);
 		MethodArgDesc* argDescs = imi->args + isInstanceMethod;
 		ConvertInvokeArgs(args + isInstanceMethod, method, argDescs, __args);
 		Interpreter::Execute(method, args, __ret);
@@ -402,13 +398,16 @@ namespace interpreter
 		}
 	}
 	#else
-	static void* InterpterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args)
+	static void* InterpreterInvoke(Il2CppMethodPointer methodPointer, const MethodInfo* method, void* __this, void** __args)
 	{
 		StackObject args[256];
 		bool isInstanceMethod = metadata::IsInstanceMethod(method);
 		if (isInstanceMethod)
 		{
-			__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			if (IS_CLASS_VALUE_TYPE(method->klass))
+			{
+				__this = (Il2CppObject*)__this + (methodPointer != method->methodPointerCallByInterp);
+			}
 			args[0].ptr = __this;
 		}
 		InterpMethodInfo* imi = method->interpData ? (InterpMethodInfo*)method->interpData : InterpreterModule::GetInterpMethodInfo(method);
@@ -504,18 +503,18 @@ namespace interpreter
 		Il2CppClass* klass = il2cpp::vm::GlobalMetadata::GetTypeInfoFromTypeDefinitionIndex(method->declaringType);
 		const char* methodName = il2cpp::vm::GlobalMetadata::GetStringFromIndex(method->nameIndex);
 		// special for Delegate::DynamicInvoke
-		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(methodName, "Invoke") ? InterpterInvoke : InterpreterDelegateInvoke;
+		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(methodName, "Invoke") ? InterpreterInvoke : InterpreterDelegateInvoke;
 	}
 
 	InvokerMethod InterpreterModule::GetMethodInvoker(const MethodInfo* method)
 	{
 		Il2CppClass* klass = method->klass;
-		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(method->name, "Invoke") ? InterpterInvoke : InterpreterDelegateInvoke;
+		return !klass || !metadata::IsChildTypeOfMulticastDelegate(klass) || strcmp(method->name, "Invoke") ? InterpreterInvoke : InterpreterDelegateInvoke;
 	}
 
 	bool InterpreterModule::IsImplementsByInterpreter(const MethodInfo* method)
 	{
-		return method->invoker_method == InterpreterDelegateInvoke || method->invoker_method == InterpterInvoke;
+		return method->invoker_method == InterpreterDelegateInvoke || method->invoker_method == InterpreterInvoke;
 	}
 
 	InterpMethodInfo* InterpreterModule::GetInterpMethodInfo(const MethodInfo* methodInfo)

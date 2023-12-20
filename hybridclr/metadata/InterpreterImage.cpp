@@ -262,7 +262,7 @@ namespace metadata
 			uint32_t typeIndex = i; // type index start from 0, diff with field index ...
 
 			// enum element_type == 
-			if (cur.bitfield & (1 << (il2cpp::vm::kBitIsEnum - 1)))
+			if (IsEnumType(&cur))
 			{
 				cur.elementTypeIndex = _fieldDetails[DecodeMetadataIndex(cur.fieldStart)].fieldDef.typeIndex;
 			}
@@ -1236,7 +1236,7 @@ namespace metadata
 			}
 
 			cache->attributes[i] = attr;
-			il2cpp::gc::GarbageCollector::SetWriteBarrier((void**)cache->attributes + i);
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)cache->attributes + i);
 		}
 
 		il2cpp::os::Atomic::FullMemoryBarrier();
@@ -1283,7 +1283,7 @@ namespace metadata
 			if (reader.VisitCustomAttributeData(_il2cppImage, &iter, &creator, &exc))
 			{
 				cache->attributes[i] = creator.GetAttribute(&exc);
-				il2cpp::gc::GarbageCollector::SetWriteBarrier((void**)&cache->attributes[i]);
+				HYBRIDCLR_SET_WRITE_BARRIER((void**)&cache->attributes[i]);
 			}
 
 			if (exc != NULL)
@@ -1377,6 +1377,7 @@ namespace metadata
 			Il2CppTypeDefinition& typeDef = _typesDefines[i];
 			uint32_t rawMethodStart = DecodeMetadataIndex(typeDef.methodStart);
 			bool isInterface = IsInterface(typeDef.flags);
+			uint16_t slotIdx = 0;
 			for (int m = 0; m < typeDef.method_count; m++)
 			{
 				Il2CppMethodDefinition& md = _methodDefines[rawMethodStart + m];
@@ -1389,9 +1390,9 @@ namespace metadata
 				{
 					typeDef.bitfield |= (1 << (il2cpp::vm::kBitHasFinalizer - 1));
 				}
-				if (isInterface)
+				if (isInterface && IsInstanceMethod(&md) && IsVirtualMethod(md.flags))
 				{
-					md.slot = m;
+					md.slot = slotIdx++;
 				}
 				// TODO 可以考虑优化一下,将 signature在前一步存到暂时不用的 returnType里
 				TbMethod methodData = _rawImage.ReadMethod(rawMethodStart + m + 1);
@@ -2254,18 +2255,19 @@ namespace metadata
 			{
 				*(void**)data = nullptr;
 			}
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)data);
 			break;
 		}
 		case IL2CPP_TYPE_STRING:
 		{
 			*(Il2CppString**)data = ReadSerString(reader);
-			// FIXME memory barrier
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)data);
 			break;
 		}
 		case IL2CPP_TYPE_OBJECT:
 		{
 			*(Il2CppObject**)data = ReadBoxedValue(reader);
-			// FIXME memory barrier
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)data);
 			break;
 		}
 		case IL2CPP_TYPE_CLASS:
@@ -2288,6 +2290,7 @@ namespace metadata
 				TEMP_FORMAT(errMsg, "fixed arg type:%s.%s not support", klass->namespaze, klass->name);
 				RaiseNotSupportedException(errMsg);
 			}
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)data);
 			break;
 		}
 		case IL2CPP_TYPE_VALUETYPE:
@@ -2300,6 +2303,7 @@ namespace metadata
 		case IL2CPP_TYPE_SYSTEM_TYPE:
 		{
 			*(Il2CppReflectionType**)data = ReadSystemType(reader);
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)data);
 			break;
 		}
 		case IL2CPP_TYPE_BOXED_OBJECT:
@@ -2307,6 +2311,7 @@ namespace metadata
 			uint8_t fieldOrPropType = reader.ReadByte();
 			IL2CPP_ASSERT(fieldOrPropType == 0x51);
 			*(Il2CppObject**)data = ReadBoxedValue(reader);
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)data);
 			break;
 		}
 		case IL2CPP_TYPE_ENUM:

@@ -38,7 +38,9 @@ namespace metadata
 		int32_t size;
 		int32_t nativeSize;
 		uint8_t alignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
 		uint8_t naturalAlignment;
+#endif
 	};
 
 	struct FieldLayoutData
@@ -49,12 +51,14 @@ namespace metadata
 		int32_t nativeSize;
 		
 		uint8_t minimumAlignment;
+#if !HYBRIDCLR_UNITY_2022_OR_NEW
 		uint8_t naturalAlignment;
+#endif
 	};
 
 	class InterpreterImage;
 
-	typedef std::unordered_map<const Il2CppType*, ClassLayoutInfo, Il2CppTypeHash, Il2CppTypeEqualTo> Il2CppType2ClassLayoutInfoMap;
+	typedef Il2CppHashMap<const Il2CppType*, ClassLayoutInfo*, Il2CppTypeHash, Il2CppTypeEqualTo> Il2CppType2ClassLayoutInfoMap;
 
 	class ClassFieldLayoutCalculator
 	{
@@ -68,10 +72,18 @@ namespace metadata
 
 		}
 
+		~ClassFieldLayoutCalculator()
+		{
+			for (auto it : _classMap)
+			{
+				IL2CPP_FREE(it.second);
+			}
+		}
+
 		ClassLayoutInfo* GetClassLayoutInfo(const Il2CppType* type)
 		{
 			auto it = _classMap.find(type);
-			return it != _classMap.end() ? &it->second : nullptr;
+			return it != _classMap.end() ? it->second : nullptr;
 		}
 
 		void CalcClassNotStaticFields(const Il2CppType* type);
