@@ -5,6 +5,7 @@
 #include "../CommonDef.h"
 
 #include "gc/GarbageCollector.h"
+#include "vm/String.h"
 #include "vm/Exception.h"
 #include "vm/StackTrace.h"
 
