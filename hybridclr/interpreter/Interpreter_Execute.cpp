@@ -1315,6 +1315,10 @@ namespace interpreter
 
 inline void InvokeSingleDelegate(uint16_t invokeParamCount, const MethodInfo * method, Il2CppObject * obj, Managed2NativeCallMethod staticM2NMethod, Managed2NativeCallMethod instanceM2NMethod, uint16_t * argIdxs, StackObject * localVarBase, void* ret)
 {
+	if (!InitAndGetInterpreterDirectlyCallMethodPointer(method))
+	{
+		RaiseAOTGenericMethodNotInstantiatedException(method);
+	}
 	if (!InterpreterModule::HasImplementCallNative2Managed(method))
 	{
 		instanceM2NMethod = staticM2NMethod = InterpreterModule::Managed2NativeCallByReflectionInvoke;
@@ -1654,8 +1658,6 @@ else \
 		Il2CppException* lastUnwindException;
 
 		PREPARE_NEW_FRAME_FROM_NATIVE(methodInfo, args, ret);
-
-		StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 
 	LoopStart:
 		try
@@ -4663,7 +4665,6 @@ else \
 				    StackObject* _frameBasePtr = localVarBase + _argIdxs[0];
 				    Il2CppObject* _this = (Il2CppObject*)(_frameBasePtr - GetStackSizeByByteSize(_typeSize));
 				    _frameBasePtr->ptr = _this;
-				    InitDefaultN(_this, _typeSize);
 				    ((Managed2NativeCallMethod)__managed2NativeMethod)(__method, _argIdxs, localVarBase, nullptr);
 				    std::memmove((void*)(localVarBase + __obj), _this, _typeSize);
 				    ip += 16;
@@ -4710,7 +4711,6 @@ else \
 				    std::memmove(_frameBasePtr + 1, (void*)(localVarBase + __argBase), __argStackObjectNum * sizeof(StackObject)); // move arg
 				    _frameBasePtr->ptr = (StackObject*)(void*)(localVarBase + __obj);
 				    int32_t _typeSize = GetTypeValueSize(__method->klass);
-				    InitDefaultN((void*)(localVarBase + __obj), _typeSize); // init after move
 				    CALL_INTERP_VOID((ip + 16), __method, _frameBasePtr);
 				    continue;
 				}
@@ -5121,6 +5121,7 @@ else \
 					uint16_t __invokeParamCount = *(uint16_t*)(ip + 2);
 					void* _ret = nullptr;
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
+					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -5200,6 +5201,7 @@ else \
 					uint16_t __retTypeStackObjectSize = *(uint16_t*)(ip + 6);
 				    void* _ret = (void*)(localVarBase + __ret);
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
+					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -5280,6 +5282,7 @@ else \
 					uint8_t __retLocationType = *(uint8_t*)(ip + 2);
 				    void* _ret = (void*)(localVarBase + __ret);
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
+					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -10880,6 +10883,7 @@ else \
 				    void* _addr = GetMdArrayElementAddress(_arr, (StackObject*)(void*)(localVarBase + __lengthIdxs));
 				    CheckArrayElementTypeCompatible(_arr, (*(Il2CppObject**)(localVarBase + __ele)));
 				    *(Il2CppObject**)_addr = (*(Il2CppObject**)(localVarBase + __ele));
+				    HYBRIDCLR_SET_WRITE_BARRIER((void**)_addr);
 				    ip += 8;
 				    continue;
 				}
