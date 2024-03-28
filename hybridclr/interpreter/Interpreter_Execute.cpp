@@ -1315,6 +1315,10 @@ namespace interpreter
 
 inline void InvokeSingleDelegate(uint16_t invokeParamCount, const MethodInfo * method, Il2CppObject * obj, Managed2NativeCallMethod staticM2NMethod, Managed2NativeCallMethod instanceM2NMethod, uint16_t * argIdxs, StackObject * localVarBase, void* ret)
 {
+	if (!InitAndGetInterpreterDirectlyCallMethodPointer(method))
+	{
+		RaiseAOTGenericMethodNotInstantiatedException(method);
+	}
 	if (!InterpreterModule::HasImplementCallNative2Managed(method))
 	{
 		instanceM2NMethod = staticM2NMethod = InterpreterModule::Managed2NativeCallByReflectionInvoke;
@@ -1662,8 +1666,6 @@ else \
 		Il2CppException* lastUnwindException;
 
 		PREPARE_NEW_FRAME_FROM_NATIVE(methodInfo, args, ret);
-
-		StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 
 	LoopStart:
 		try
@@ -5440,6 +5442,7 @@ else \
 					uint16_t __invokeParamCount = *(uint16_t*)(ip + 2);
 					void* _ret = nullptr;
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
+					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -5520,6 +5523,7 @@ else \
 					uint16_t __retTypeStackObjectSize = *(uint16_t*)(ip + 6);
 				    void* _ret = (void*)(localVarBase + __ret);
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
+					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -5601,6 +5605,7 @@ else \
 					uint8_t __retLocationType = *(uint8_t*)(ip + 2);
 				    void* _ret = (void*)(localVarBase + __ret);
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
+					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -11670,6 +11675,7 @@ else \
 				    void* _addr = GetMdArrayElementAddress(_arr, (StackObject*)(void*)(localVarBase + __lengthIdxs));
 				    CheckArrayElementTypeCompatible(_arr, (*(Il2CppObject**)(localVarBase + __ele)));
 				    *(Il2CppObject**)_addr = (*(Il2CppObject**)(localVarBase + __ele));
+				    HYBRIDCLR_SET_WRITE_BARRIER((void**)_addr);
 				    ip += 8;
 				    continue;
 				}
