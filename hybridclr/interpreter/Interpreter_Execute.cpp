@@ -4,7 +4,6 @@
 #include <cmath>
 #include <algorithm>
 
-#include "codegen/il2cpp-codegen-il2cpp.h"
 #include "vm/Object.h"
 #include "vm/Class.h"
 #include "vm/ClassInlines.h"
@@ -1653,7 +1652,6 @@ else \
 
 	void Interpreter::Execute(const MethodInfo* methodInfo, StackObject* args, void* ret)
 	{
-		INIT_CLASS(methodInfo->klass);
 		MachineState& machine = InterpreterModule::GetCurrentThreadMachineState();
 		InterpFrameGroup interpFrameGroup(machine);
 

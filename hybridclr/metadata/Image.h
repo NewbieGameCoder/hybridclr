@@ -42,7 +42,7 @@ namespace metadata
 
 		const RawImage& GetRawImage() const
 		{
-			return _rawImage;
+			return *_rawImage;
 		}
 
 		// misc
@@ -103,7 +103,7 @@ namespace metadata
 		virtual Il2CppGenericContainer* GetGenericContainerByTypeDefRawIndex(int32_t typeDefIndex) = 0;
 		virtual const Il2CppMethodDefinition* GetMethodDefinitionFromRawIndex(uint32_t index) = 0;
 
-		virtual MethodBody* GetMethodBody(uint32_t token) = 0;
+		virtual MethodBody* GetMethodBody(uint32_t token, MethodBody& tempMethodBody) = 0;
 		virtual void ReadFieldRefInfoFromFieldDefToken(uint32_t rowIndex, FieldRefInfo& ret) = 0;
 		virtual void InitRuntimeMetadatas() = 0;
 	protected:
@@ -114,6 +114,15 @@ namespace metadata
 			for (auto ass : assemblies)
 			{
 				_nameToAssemblies[ass->image->nameNoExt] = ass;
+			}
+			_rawImage = new RawImage();
+		}
+
+		virtual ~Image()
+		{
+			if (_rawImage)
+			{
+				delete _rawImage;
 			}
 		}
 
@@ -138,7 +147,7 @@ namespace metadata
 
 		Il2CppClass* FindNetStandardExportedType(const char* namespaceStr, const char* nameStr);
 
-		RawImage _rawImage;
+		RawImage* _rawImage;
 		Il2CppHashMap<const char*, const Il2CppAssembly*, CStringHash, CStringEqualTo> _nameToAssemblies;
 		il2cpp::gc::AppendOnlyGCHashMap<uint32_t, Il2CppString*, il2cpp::utils::PassThroughHash<uint32_t>> _il2cppStringCache;
 
