@@ -360,9 +360,14 @@ namespace interpreter
 
 		std::string GetExecutedOpCodeInfo()
 		{
-			std::string name;
+			std::string name = "";
 
 			InterpFrame* frame = GetTopFrame();
+			if (frame == nullptr)
+			{
+				return name;
+			}
+
 			int32_t startIndex = frame->oldOpCodesStartIndex;
 			if (_opCodesStartIndex - startIndex > MaxOpCodesCount)
 			{
