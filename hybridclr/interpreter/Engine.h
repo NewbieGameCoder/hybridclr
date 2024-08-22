@@ -5,7 +5,6 @@
 #include "../CommonDef.h"
 
 #include "gc/GarbageCollector.h"
-#include "vm/String.h"
 #include "vm/Exception.h"
 #include "vm/StackTrace.h"
 
@@ -30,7 +29,6 @@ namespace interpreter
 			_stackSize = -1;
 			_stackBase = nullptr;
 			_stackTopIdx = 0;
-			_opCodesStartIndex = 0;
 			_localPoolBottomIdx = -1;
 
 			_frameBase = nullptr;
@@ -81,11 +79,6 @@ namespace interpreter
 		StackObject* GetStackBasePtr() const
 		{
 			return _stackBase;
-		}
-
-		int32_t GetopCodesStartIndex() const
-		{
-			return _opCodesStartIndex;
 		}
 
 		int32_t GetStackTop() const
@@ -167,17 +160,13 @@ namespace interpreter
 					il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetStackOverflowException("AllocFrame"));
 				}
 			}
-
 			return _frameBase + _frameTopIdx++;
 		}
 
 		void PopFrame()
 		{
 			IL2CPP_ASSERT(_frameTopIdx > 0);
-			InterpFrame* frame = GetTopFrame();
 			--_frameTopIdx;
-
-			_opCodesStartIndex = frame->oldOpCodesStartIndex;
 		}
 
 		void PopFrameN(int32_t count)
@@ -257,44 +246,8 @@ namespace interpreter
 		void CollectFrames(il2cpp::vm::StackFrames* stackFrames);
 		void SetupFramesDebugInfo(il2cpp::vm::StackFrames* stackFrames);
 
-		void CollectOpCodes(Il2CppException* ex)
-		{
-			if (ex == nullptr || _ilOpcodesDeque.size() == 0)
-			{
-				return;
-			}
-
-			std::string opCodesStr = GetExecutedOpCodeInfo();
-			if (opCodesStr.empty() == false)
-			{
-				std::string msg = "";
-				if (ex->message != nullptr && ex->message->length > 0)
-				{
-					msg = il2cpp::utils::StringUtils::Utf16ToUtf8(ex->message->chars);
-					msg.append("\n");
-				}
-				msg.append("opCodes: ");
-				msg.append(opCodesStr);
-				ex->message = il2cpp::vm::String::New(msg.c_str());
-			}
-			_opCodesStartIndex = 0;
-			_ilOpcodesDeque.clear();
-		}
-
-		void PushOpcode(const std::string& opcodeStr)
-		{
-			if (_opCodesStartIndex >= _ilOpcodesDeque.size())
-			{
-				_ilOpcodesDeque.push_back(opcodeStr);
-			}
-			else
-			{
-				_ilOpcodesDeque[_opCodesStartIndex] = opcodeStr;
-			}
-			_opCodesStartIndex++;
-		}
-
 	private:
+
 
 		void InitEvalStack()
 		{
@@ -319,34 +272,6 @@ namespace interpreter
 			_exceptionFlowTopIdx = 0;
 		}
 
-		std::string GetExecutedOpCodeInfo()
-		{
-			std::string name = "";
-
-			InterpFrame* frame = GetTopFrame();
-			if (frame == nullptr)
-			{
-				return name;
-			}
-
-			int32_t startIndex = frame->oldOpCodesStartIndex;
-			if (_opCodesStartIndex - startIndex > MaxOpCodesCount)
-			{
-				startIndex = _opCodesStartIndex - MaxOpCodesCount;
-			}
-
-			for (int32_t j = startIndex; j < _opCodesStartIndex; j++)
-			{
-				name.append(_ilOpcodesDeque[j]);
-				if (j < _opCodesStartIndex - 1)
-				{
-					name.append("->");
-				}
-			}
-
-			return name;
-		}
-
 		StackObject* _stackBase;
 		int32_t _stackSize;
 		int32_t _stackTopIdx;
@@ -360,9 +285,7 @@ namespace interpreter
 		int32_t _exceptionFlowTopIdx;
 		int32_t _exceptionFlowCount;
 
-		const int MaxOpCodesCount = 30;
-		int32_t _opCodesStartIndex;
-		std::vector<std::string> _ilOpcodesDeque;
+
 		std::stack<const Il2CppImage*> _executingImageStack;
 	};
 
