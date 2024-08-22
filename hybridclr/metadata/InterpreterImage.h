@@ -23,21 +23,16 @@ namespace metadata
 
 	struct TypeDefinitionDetail
 	{
-		uint32_t index; // from 0
-		Il2CppTypeDefinition* typeDef;
-		Il2CppTypeDefinitionSizes typeSizes;
-		std::vector<VirtualMethodImpl> vtable;
 		uint32_t methodImplStart;
 		uint32_t methodImplCount;
-		std::vector<MethodImpl>* methodImpls;
+		uint32_t vtableCount;
+		Il2CppTypeDefinitionSizes typeSizes;
+		VirtualMethodImpl* vtable;
 	};
 
 	struct ParamDetail
 	{
-		Il2CppType type;
 		Il2CppParameterDefinition paramDef;
-		const Il2CppMethodDefinition* methodDef;
-		//uint32_t methodIndex;
 		uint32_t parameterIndex;
 		uint32_t defaultValueIndex; // -1 for invalid
 	};
@@ -133,10 +128,18 @@ namespace metadata
 		{
 			if (_inited)
 			{
-				RaiseExecutionEngineException("image can't be init again");
+				RaiseExecutionEngineException("image can't be inited again");
 			}
 			_inited = true;
-			return _rawImage->Load(imageData, length);
+			_rawImage = new RawImage();
+			LoadImageErrorCode err = _rawImage->Load(imageData, length);
+			if (err != LoadImageErrorCode::OK)
+			{
+				delete _rawImage;
+				_rawImage = nullptr;
+				return err;
+			}
+			return LoadImageErrorCode::OK;
 		}
 
 		bool IsInitialized() const
@@ -226,6 +229,12 @@ namespace metadata
 			return (uint32_t)(typeDef - &_typesDefines[0]);
 		}
 
+		Il2CppTypeDefinition* GetTypeDefinitionByTypeDetail(const TypeDefinitionDetail* typeDetail)
+		{
+			uint32_t index = (uint32_t)(typeDetail - &_typeDetails[0]);
+			return &_typesDefines[index];
+		}
+
 		uint32_t GetTypeRawIndexByEncodedIl2CppTypeIndex(int32_t il2cppTypeIndex) const
 		{
 			return GetTypeRawIndex((const Il2CppTypeDefinition*)_types[DecodeMetadataIndex(il2cppTypeIndex)]->data.typeHandle);
@@ -245,8 +254,8 @@ namespace metadata
 
 		const Il2CppType* GetIl2CppTypeFromRawTypeDefIndex(uint32_t index) override
 		{
-			IL2CPP_ASSERT(index < (uint32_t)_typeDetails.size());
-			return _types[DecodeMetadataIndex(_typeDetails[index].typeDef->byvalTypeIndex)];
+			IL2CPP_ASSERT(index < (uint32_t)_typesDefines.size());
+			return _types[DecodeMetadataIndex(_typesDefines[index].byvalTypeIndex)];
 		}
 
 		const Il2CppFieldDefinition* GetFieldDefinitionFromRawIndex(uint32_t index)
@@ -312,9 +321,9 @@ namespace metadata
 			return GetGenericContainerByTypeDefinition(&_typesDefines[typeDefIndex]);
 		}
 
-		const std::vector<MethodImpl>& GetTypeMethodImplByTypeDefinition(const Il2CppTypeDefinition* typeDef);
+		const il2cpp::utils::dynamic_array<MethodImpl> GetTypeMethodImplByTypeDefinition(const Il2CppTypeDefinition* typeDef);
 
-		Il2CppType* GetGenericParameterConstraintFromIndex(GenericParameterConstraintIndex index)
+		const Il2CppType* GetGenericParameterConstraintFromIndex(GenericParameterConstraintIndex index)
 		{
 			IL2CPP_ASSERT((size_t)index < _genericConstraints.size());
 			TypeIndex typeIndex = _genericConstraints[index];
@@ -323,13 +332,12 @@ namespace metadata
 
 				TbGenericParamConstraint data = _rawImage->ReadGenericParamConstraint(index + 1);
 				Il2CppGenericParameter& genericParam = _genericParams[data.owner - 1];
-				Il2CppType paramCons = {};
 
 				const Il2CppGenericContainer* klassGc;
 				const Il2CppGenericContainer* methodGc;
 				GetClassAndMethodGenericContainerFromGenericContainerIndex(genericParam.ownerIndex, klassGc, methodGc);
 
-				ReadTypeFromToken(klassGc, methodGc, DecodeTypeDefOrRefOrSpecCodedIndexTableType(data.constraint), DecodeTypeDefOrRefOrSpecCodedIndexRowIndex(data.constraint), paramCons);
+				const Il2CppType* paramCons = ReadTypeFromToken(klassGc, methodGc, DecodeTypeDefOrRefOrSpecCodedIndexTableType(data.constraint), DecodeTypeDefOrRefOrSpecCodedIndexRowIndex(data.constraint));
 				_genericConstraints[index] = typeIndex = DecodeMetadataIndex(AddIl2CppTypeCache(paramCons));
 			}
 			return _types[typeIndex];
@@ -373,7 +381,7 @@ namespace metadata
 
 		uint32_t GetFieldOffset(TypeDefinitionIndex typeIndex, int32_t fieldIndexInType)
 		{
-			Il2CppTypeDefinition* typeDef = _typeDetails[typeIndex].typeDef;
+			Il2CppTypeDefinition* typeDef = &_typesDefines[typeIndex];
 			return GetFieldOffset(typeDef, fieldIndexInType);
 		}
 
@@ -448,8 +456,13 @@ namespace metadata
 			uint32_t rowIndex = DecodeMetadataIndex(typeDef->propertyStart) + index;
 			PropertyDetail& pd = _propeties[rowIndex - 1];
 			uint32_t baseMethodIdx = DecodeMetadataIndex(typeDef->methodStart) + 1;
+#if UNITY_ENGINE_TUANJIE
+			const MethodInfo* getter = pd.getterMethodIndex ? il2cpp::vm::Class::GetOrSetupOneMethod(const_cast<Il2CppClass*>(klass), pd.getterMethodIndex - baseMethodIdx) : nullptr;
+			const MethodInfo* setter = pd.setterMethodIndex ? il2cpp::vm::Class::GetOrSetupOneMethod(const_cast<Il2CppClass*>(klass), pd.setterMethodIndex - baseMethodIdx) : nullptr;
+#else
 			const MethodInfo* getter = pd.getterMethodIndex ? klass->methods[pd.getterMethodIndex - baseMethodIdx] : nullptr;
 			const MethodInfo* setter = pd.setterMethodIndex ? klass->methods[pd.setterMethodIndex - baseMethodIdx] : nullptr;
+#endif
 			return { pd.name, getter, setter, pd.flags, EncodeToken(TableType::PROPERTY, rowIndex) };
 		}
 
@@ -470,9 +483,15 @@ namespace metadata
 			uint32_t rowIndex = DecodeMetadataIndex(typeDef->eventStart) + index;
 			EventDetail& pd = _events[rowIndex - 1];
 			uint32_t baseMethodIdx = DecodeMetadataIndex(typeDef->methodStart) + 1;
+#if UNITY_ENGINE_TUANJIE
+			const MethodInfo* addOn = pd.addMethodIndex ? il2cpp::vm::Class::GetOrSetupOneMethod(const_cast<Il2CppClass*>(klass), pd.addMethodIndex - baseMethodIdx) : nullptr;
+			const MethodInfo* removeOn = pd.removeMethodIndex ? il2cpp::vm::Class::GetOrSetupOneMethod(const_cast<Il2CppClass*>(klass), pd.removeMethodIndex - baseMethodIdx) : nullptr;
+			const MethodInfo* raiseOn = pd.fireMethodIndex ? il2cpp::vm::Class::GetOrSetupOneMethod(const_cast<Il2CppClass*>(klass), pd.fireMethodIndex - baseMethodIdx) : nullptr;
+#else
 			const MethodInfo* addOn = pd.addMethodIndex ? klass->methods[pd.addMethodIndex - baseMethodIdx] : nullptr;
 			const MethodInfo* removeOn = pd.removeMethodIndex ? klass->methods[pd.removeMethodIndex - baseMethodIdx] : nullptr;
 			const MethodInfo* raiseOn = pd.fireMethodIndex ? klass->methods[pd.fireMethodIndex - baseMethodIdx] : nullptr;
+#endif
 			return { pd.name, &klass->byval_arg, addOn, removeOn, raiseOn, EncodeToken(TableType::EVENT, rowIndex) };
 		}
 
@@ -614,11 +633,11 @@ namespace metadata
 
 		Il2CppInterfaceOffsetInfo GetInterfaceOffsetInfo(const Il2CppTypeDefinition* typeDefine, TypeInterfaceOffsetIndex index);
 
-		uint32_t AddIl2CppTypeCache(const Il2CppType& type);
+		uint32_t AddIl2CppTypeCache(const Il2CppType* type);
 
 		uint32_t AddIl2CppGenericContainers(Il2CppGenericContainer& geneContainer);
 
-		bool GetModuleIl2CppType(Il2CppType& type, uint32_t moduleRowIndex, uint32_t typeNamespace, uint32_t typeName, bool raiseExceptionIfNotFound) override;
+		const Il2CppType* GetModuleIl2CppType(uint32_t moduleRowIndex, uint32_t typeNamespace, uint32_t typeName, bool raiseExceptionIfNotFound) override;
 		void ReadFieldRefInfoFromFieldDefToken(uint32_t rowIndex, FieldRefInfo& ret) override;
 		void ReadMethodDefSig(BlobReader& reader, const Il2CppGenericContainer* klassGenericContainer, const Il2CppGenericContainer* methodGenericContainer, Il2CppMethodDefinition& methodDef, std::vector<ParamDetail>& paramArr);
 
@@ -685,17 +704,16 @@ namespace metadata
 		std::vector<Il2CppTypeDefinition> _typesDefines;
 		std::vector<Il2CppTypeDefinition> _exportedTypeDefines;
 
-		std::vector<Il2CppType*> _types;
+		std::vector<const Il2CppType*> _types;
 		Il2CppHashMap<const Il2CppType*, uint32_t, Il2CppTypeHashShallow, Il2CppTypeEqualityComparerShallow> _type2Indexs;
 		std::vector<TypeIndex> _interfaceDefines;
 		std::vector<InterfaceOffsetInfo> _interfaceOffsets;
 
-		std::vector<const MethodInfo*> _methodDefine2InfoCaches;
 		std::vector<Il2CppMethodDefinition> _methodDefines;
 		Il2CppHashMap<uint32_t, MethodBody*, il2cpp::utils::PassThroughHash<uint32_t>> _methodBodyCache;
 
 		std::vector<ParamDetail> _params;
-		std::vector<int32_t> _paramRawIndex2ActualParamIndex; // rawIindex = rowIndex - 1; because local function, param list count maybe less than actual method param count
+		std::vector<int32_t>* _paramRawIndex2ActualParamIndex; // rawIindex = rowIndex - 1; because local function, param list count maybe less than actual method param count
 		std::vector<Il2CppParameterDefaultValue> _paramDefaultValues;
 
 		std::vector<Il2CppGenericParameter> _genericParams;

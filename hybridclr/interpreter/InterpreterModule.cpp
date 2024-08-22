@@ -378,7 +378,7 @@ namespace interpreter
 	Managed2NativeCallMethod InterpreterModule::GetManaged2NativeMethodPointer(const metadata::ResolveStandAloneMethodSig& method)
 	{
 		char sigName[1000];
-		ComputeSignature(&method.returnType, method.params, method.paramCount, metadata::IsPrologHasThis(method.flags), sigName, sizeof(sigName) - 1);
+		ComputeSignature(method.returnType, method.params, metadata::IsPrologHasThis(method.flags), sigName, sizeof(sigName) - 1);
 		auto it = s_managed2natives.find(sigName);
 		return it != s_managed2natives.end() ? it->second : Managed2NativeCallByReflectionInvoke;
 	}
@@ -507,8 +507,7 @@ namespace interpreter
 		}
 		else
 		{
-			IL2CPP_ASSERT(GetTypeArgDesc(method->return_type).stackObjectSize <= hybridclr::metadata::kMaxRetValueTypeStackObjectSize);
-			StackObject ret[hybridclr::metadata::kMaxRetValueTypeStackObjectSize];
+			StackObject* ret = (StackObject*)alloca(sizeof(StackObject) * imi->retStackObjectSize);
 			Interpreter::Execute(method, args, ret);
 			return TranslateNativeValueToBoxValue(method->return_type, ret);
 		}
@@ -631,7 +630,7 @@ namespace interpreter
 			TEMP_FORMAT(errMsg, "Method body is null. %s.%s::%s", methodInfo->klass->namespaze, methodInfo->klass->name, methodInfo->name);
 			il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
 		}
-		InterpMethodInfo* imi = new (HYBRIDCLR_MALLOC_ZERO(sizeof(InterpMethodInfo))) InterpMethodInfo;
+		InterpMethodInfo* imi = new (HYBRIDCLR_METADATA_MALLOC(sizeof(InterpMethodInfo))) InterpMethodInfo;
 		transform::HiTransform::Transform(image, methodInfo, *methodBody, *imi);
 		il2cpp::os::Atomic::FullMemoryBarrier();
 		const_cast<MethodInfo*>(methodInfo)->interpData = imi;

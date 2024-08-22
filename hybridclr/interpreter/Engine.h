@@ -17,28 +17,6 @@
 #include "MethodBridge.h"
 #include <algorithm>
 
-
-#if IL2CPP_ENABLE_STACKTRACE_SENTRIES
-
-#if HYBRIDCLR_UNITY_2020_OR_NEW
-#define PUSH_STACK_FRAME(method) do { \
-	Il2CppStackFrameInfo stackFrameInfo = { method, (uintptr_t)method->methodPointer }; \
-	il2cpp::vm::StackTrace::PushFrame(stackFrameInfo); \
-} while(0)
-#else
-#define PUSH_STACK_FRAME(method) do { \
-	Il2CppStackFrameInfo stackFrameInfo = { method }; \
-	il2cpp::vm::StackTrace::PushFrame(stackFrameInfo); \
-} while(0)
-#endif
-
-#define POP_STACK_FRAME() do { il2cpp::vm::StackTrace::PopFrame(); } while(0)
-
-#else 
-#define PUSH_STACK_FRAME(method)
-#define POP_STACK_FRAME() 
-#endif
-
 namespace hybridclr
 {
 namespace interpreter
@@ -276,25 +254,8 @@ namespace interpreter
 			}
 		}
 
-		void CollectFrames(il2cpp::vm::StackFrames* stackFrames)
-		{
-			if (_frameTopIdx <= 0)
-			{
-				return;
-			}
-			stackFrames->insert(stackFrames->begin(), _frameTopIdx, Il2CppStackFrameInfo());
-			for (int32_t i = 0; i < _frameTopIdx; i++)
-			{
-				InterpFrame* frame = _frameBase + i;
-				const MethodInfo* method = frame->method->method;
-				(*stackFrames)[i] = {
-					method
-#if HYBRIDCLR_UNITY_2020_OR_NEW
-					, (uintptr_t)method->methodPointer
-#endif
-				};
-			}
-		}
+		void CollectFrames(il2cpp::vm::StackFrames* stackFrames);
+		void SetupFramesDebugInfo(il2cpp::vm::StackFrames* stackFrames);
 
 		void CollectOpCodes(Il2CppException* ex)
 		{
@@ -443,10 +404,9 @@ namespace interpreter
 			}
 		}
 
-		InterpFrame* EnterFrameFromInterpreter(const InterpMethodInfo* imi, StackObject* argBase);
+		InterpFrame* EnterFrameFromInterpreter(const MethodInfo* method, StackObject* argBase);
 
-
-		InterpFrame* EnterFrameFromNative(const InterpMethodInfo* imi, StackObject* argBase);
+		InterpFrame* EnterFrameFromNative(const MethodInfo* method, StackObject* argBase);
 
 		InterpFrame* LeaveFrame();
 

@@ -189,19 +189,17 @@ else \
 		int32_t actualParamCount = methodInfo->parameters_count + instanceCall;
 
 		ArgVarInfo* args = pool.NewNAny<ArgVarInfo>(actualParamCount);
-		LocVarInfo* locals = pool.NewNAny<LocVarInfo>(body.localVarCount);
+		LocVarInfo* locals = pool.NewNAny<LocVarInfo>((int)body.localVars.size());
 		// FIXME may exceed max size
 		// TODO MEMORY OPTIMISTIC
 		EvalStackVarInfo* evalStack = pool.NewNAny<EvalStackVarInfo>(body.maxStack + 100);
 
-		std::vector<uint64_t>& resolveDatas = result.resolveDatas;
+		il2cpp::utils::dynamic_array<uint64_t> resolveDatas;
+
 		// TODO. alloc use pool
 		Il2CppHashMap<uint32_t, uint32_t, il2cpp::utils::PassThroughHash<uint32_t>> token2DataIdxs;
 		// TOTO. alloc use pool
 		Il2CppHashMap<const void*, uint32_t, il2cpp::utils::PassThroughHash<const void*>> ptr2DataIdxs;
-
-		resolveDatas.push_back(0); // reserved
-
 
 		std::vector<int32_t*> relocationOffsets;
 		// index, count 
@@ -236,11 +234,11 @@ else \
 		}
 
 		int32_t totalArgLocalSize = totalArgSize;
-		for (uint32_t i = 0; i < body.localVarCount; i++)
+		for (size_t i = 0; i < body.localVars.size(); i++)
 		{
 			LocVarInfo& local = locals[i];
 			// FIXME memory leak
-			local.type = InflateIfNeeded(body.localVars + i, genericContext, true);
+			local.type = InflateIfNeeded(body.localVars[i], genericContext, true);
 			local.klass = il2cpp::vm::Class::FromIl2CppType(local.type);
 			il2cpp::vm::Class::SetupFields(local.klass);
 			local.locOffset = totalArgLocalSize;
@@ -256,8 +254,8 @@ else \
 
 
 		const byte* ipBase = body.ilcodes;
-
 		const byte* ip = body.ilcodes;
+		uint32_t ipOffset = 0;
 
 		int32_t evalStackTop = 0;
 		int32_t prefixFlags = 0;
@@ -267,6 +265,11 @@ else \
 		int64_t varKst8 = 0;
 		int32_t brOffset = 0;
 		const MethodInfo* shareMethod = nullptr;
+
+		Token2RuntimeHandleMap tokenCache(64);
+
+		hybridclr::metadata::PDBImage* pdbImage = image->GetPDBImage();
+		IR2OffsetMap* ir2offsetMap = pdbImage ? new IR2OffsetMap(body.codeSize) : nullptr;
 
 		TransformContext ctx =
 		{
@@ -306,6 +309,8 @@ else \
 			varKst8,
 			brOffset,
 			shareMethod,
+			ipOffset,
+			ir2offsetMap,
 		};
 
 		bool initLocals = (body.flags & (uint32_t)CorILMethodFormat::InitLocals) != 0;
@@ -315,9 +320,11 @@ else \
 			ctx.AddInst(CreateInitLocals(pool, totalLocalSize * sizeof(StackObject)));
 		}
 
+		il2cpp::utils::dynamic_array<InterpExceptionClause> exClauses(body.exceptionClauses.size());
+		int clauseIdx = 0;
 		for (ExceptionClause& ec : body.exceptionClauses)
 		{
-			InterpExceptionClause* iec = (InterpExceptionClause*)HYBRIDCLR_MALLOC_ZERO(sizeof(InterpExceptionClause));
+			InterpExceptionClause* iec = &exClauses[clauseIdx++];
 			iec->flags = ec.flags;
 			iec->tryBeginOffset = ec.tryOffset;
 			iec->tryEndOffset = ec.tryOffset + ec.tryLength;
@@ -330,7 +337,7 @@ else \
 			if (ec.flags == CorILExceptionClauseType::Exception)
 			{
 				iec->filterBeginOffset = 0;
-				iec->exKlass = image->GetClassFromToken(ec.classTokenOrFilterOffset, klassContainer, methodContainer, genericContext);
+				iec->exKlass = image->GetClassFromToken(tokenCache, ec.classTokenOrFilterOffset, klassContainer, methodContainer, genericContext);
 			}
 			else if (ec.flags == CorILExceptionClauseType::Filter)
 			{
@@ -400,7 +407,6 @@ else \
 				RaiseExecutionEngineException("");
 			}
 			}
-			result.exClauses.push_back(iec);
 		}
 
 #pragma endregion
@@ -408,7 +414,7 @@ else \
 		IRBasicBlock* lastBb = nullptr;
 		for (;;)
 		{
-			int32_t ipOffset = (int32_t)(ip - ipBase);
+			ipOffset = (uint32_t)(ip - ipBase);
 			curbb = ip2bb[ipOffset];
 			if (curbb != lastBb)
 			{
@@ -683,7 +689,7 @@ else \
 			{
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
 				ip += 5;
-				shareMethod = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				shareMethod = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(shareMethod);
 			}
 
@@ -802,7 +808,7 @@ else \
 			{
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
 				ip += 5;
-				shareMethod = image->GetMethodInfoFromToken(token, klassContainer, methodContainer, genericContext);
+				shareMethod = image->GetMethodInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 			}
 		LabelCallVir:
 			{
@@ -889,12 +895,6 @@ else \
 						else
 						{
 							interpreter::TypeDesc retDesc = GetTypeArgDesc(returnType);
-							if (retDesc.stackObjectSize > kMaxRetValueTypeStackObjectSize)
-							{
-								std::string methodName = GetMethodNameWithSignature(shareMethod);
-								TEMP_FORMAT(errMsg, " return type size of method:%s is %d, excced kMaxRetValueTypeStackObjectSize:%d", methodName.c_str(), retDesc.stackObjectSize, kMaxRetValueTypeStackObjectSize);
-								il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetExecutionEngineException(errMsg));
-							}
 							if (IsNeedExpandLocationType(retDesc.type))
 							{
 								CreateAddIR(ir, CallDelegateInvoke_ret_expand);
@@ -1001,7 +1001,7 @@ else \
 				uint32_t managed2NativeMethodDataIdx = ctx.GetOrAddResolveDataIndex((void*)managed2NativeMethod);
 				bool hasThis = metadata::IsPrologHasThis(methodSig.flags);
 
-				int32_t resolvedTotalArgNum = methodSig.paramCount + hasThis;
+				int32_t resolvedTotalArgNum = (int32_t)methodSig.params.size() + hasThis;
 				int32_t needDataSlotNum = (resolvedTotalArgNum + 3) / 4;
 				int32_t argIdxDataIndex;
 				uint16_t* __argIdxs;
@@ -1022,18 +1022,18 @@ else \
 					__argIdxs[0] = evalStack[callArgEvalStackIdxBase].locOffset;
 				}
 
-				for (uint32_t i = 0; i < methodSig.paramCount; i++)
+				for (size_t i = 0; i < methodSig.params.size(); i++)
 				{
-					uint32_t curArgIdx = i + hasThis;
+					size_t curArgIdx = i + hasThis;
 					__argIdxs[curArgIdx] = evalStack[callArgEvalStackIdxBase + curArgIdx].locOffset;
 				}
 
 				ctx.PopStackN(resolvedTotalArgNum + 1);
 
-				if (!IsVoidType(&methodSig.returnType))
+				if (!IsVoidType(methodSig.returnType))
 				{
-					ctx.PushStackByType(&methodSig.returnType);
-					interpreter::LocationDataType locDataType = GetLocationDataTypeByType(&methodSig.returnType);
+					ctx.PushStackByType(methodSig.returnType);
+					interpreter::LocationDataType locDataType = GetLocationDataTypeByType(methodSig.returnType);
 					if (interpreter::IsNeedExpandLocationType(locDataType))
 					{
 						CreateAddIR(ir, CallInd_ret_expand);
@@ -1683,7 +1683,7 @@ else \
 				EvalStackVarInfo& src = evalStack[evalStackTop - 1];
 
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				IL2CPP_ASSERT(objKlass);
 				if (IS_CLASS_VALUE_TYPE(objKlass))
 				{
@@ -1769,7 +1769,7 @@ else \
 				EvalStackVarInfo& top = evalStack[evalStackTop - 1];
 
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				IL2CPP_ASSERT(objKlass);
 				LocationDescInfo desc = ComputLocationDescInfo(&objKlass->byval_arg);
 
@@ -1901,7 +1901,7 @@ else \
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
 				ip += 5;
 				// TODO token cache optimistic
-				shareMethod = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				shareMethod = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(shareMethod);
 				IL2CPP_ASSERT(!std::strcmp(shareMethod->name, ".ctor"));
 				IL2CPP_ASSERT(hybridclr::metadata::IsInstanceMethod(shareMethod));
@@ -2032,7 +2032,7 @@ else \
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				IL2CPP_ASSERT(objKlass);
 
 				if (il2cpp::vm::Class::IsNullable(objKlass))
@@ -2051,7 +2051,7 @@ else \
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				IL2CPP_ASSERT(objKlass);
 
 				if (il2cpp::vm::Class::IsNullable(objKlass))
@@ -2099,7 +2099,7 @@ else \
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				//if (il2cpp::vm::Class::IsNullable(objKlass))
 				//{
 				//    objKlass = il2cpp::vm::Class::GetNullableArgument(objKlass);
@@ -2128,7 +2128,7 @@ else \
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(fieldInfo);
 				// ldfld obj may be obj or or valuetype or ref valuetype....
 				EvalStackVarInfo& obj = evalStack[evalStackTop - 1];
@@ -2148,7 +2148,7 @@ else \
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(fieldInfo);
 
 				uint16_t topIdx = ctx.GetEvalStackTopOffset();
@@ -2169,7 +2169,7 @@ else \
 
 				IL2CPP_ASSERT(evalStackTop >= 2);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(fieldInfo);
 
 				IRCommon* ir = CreateStfld(pool, ctx.GetEvalStackOffset_2(), fieldInfo, ctx.GetEvalStackOffset_1());
@@ -2181,7 +2181,7 @@ else \
 			case OpcodeValue::LDSFLD:
 			{
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(fieldInfo);
 				uint32_t parentIndex = ctx.GetOrAddResolveDataIndex(fieldInfo->parent);
 				uint16_t dstIdx = ctx.GetEvalStackNewTopOffset();
@@ -2200,7 +2200,7 @@ else \
 			case OpcodeValue::LDSFLDA:
 			{
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(fieldInfo);
 
 				uint16_t dstIdx = ctx.GetEvalStackNewTopOffset();
@@ -2245,7 +2245,7 @@ else \
 				ctx.ResetPrefixFlags();
 				IL2CPP_ASSERT(evalStackTop >= 1);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(token, klassContainer, methodContainer, genericContext));
+				FieldInfo* fieldInfo = const_cast<FieldInfo*>(image->GetFieldInfoFromToken(tokenCache, token, klassContainer, methodContainer, genericContext));
 				IL2CPP_ASSERT(fieldInfo);
 
 				uint32_t klassIndex = ctx.GetOrAddResolveDataIndex(fieldInfo->parent);
@@ -2270,7 +2270,7 @@ else \
 
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
 
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 
 				IL2CPP_ASSERT(objKlass);
 				if (IS_CLASS_VALUE_TYPE(objKlass))
@@ -2413,7 +2413,7 @@ else \
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				/*	if (il2cpp::vm::Class::IsNullable(objKlass))
 					{
 						objKlass = il2cpp::vm::Class::GetNullableArgument(objKlass);
@@ -2439,7 +2439,7 @@ else \
 				IL2CPP_ASSERT(evalStackTop > 0);
 				EvalStackVarInfo& varSize = evalStack[evalStackTop - 1];
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* eleKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* eleKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				IL2CPP_ASSERT(eleKlass);
 				Il2CppClass* arrKlass = il2cpp::vm::Class::GetArrayClass(eleKlass, 1);
 				uint32_t arrKlassIndex = ctx.GetOrAddResolveDataIndex(arrKlass);
@@ -2472,14 +2472,23 @@ else \
 				EvalStackVarInfo& index = evalStack[evalStackTop - 1];
 
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* eleKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* eleKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				uint32_t eleKlassIndex = ctx.GetOrAddResolveDataIndex(eleKlass);
 
-				CreateAddIR(ir, GetArrayElementAddressCheckAddrVarVar);
-				ir->arr = ir->addr = arr.locOffset;
-				ir->index = index.locOffset;
-				ir->eleKlass = eleKlassIndex;
-
+				if (prefixFlags & (int32_t)PrefixFlags::ReadOnly)
+				{
+					CreateAddIR(ir, GetArrayElementAddressAddrVarVar);
+					ir->arr = ir->addr = arr.locOffset;
+					ir->index = index.locOffset;
+				}
+				else
+				{
+					CreateAddIR(ir, GetArrayElementAddressCheckAddrVarVar);
+					ir->arr = ir->addr = arr.locOffset;
+					ir->index = index.locOffset;
+					ir->eleKlass = eleKlassIndex;
+				}
+				ctx.ResetPrefixFlags();
 				ctx.PopStackN(2);
 				ctx.PushStackByReduceType(NATIVE_INT_REDUCE_TYPE);
 				ip += 5;
@@ -2607,7 +2616,7 @@ ir->dst = arr.locOffset;
 				EvalStackVarInfo& index = evalStack[evalStackTop - 1];
 
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				const Il2CppType* eleType = &objKlass->byval_arg;
 
 				IL2CPP_ASSERT(index.reduceType == EvalStackReduceDataType::I4 || index.reduceType == EvalStackReduceDataType::I8);
@@ -2727,7 +2736,7 @@ ir->ele = ele.locOffset;
 				EvalStackVarInfo& ele = evalStack[evalStackTop - 1];
 
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				const Il2CppType* eleType = &objKlass->byval_arg;
 
 				IL2CPP_ASSERT(index.reduceType == EvalStackReduceDataType::I4 || index.reduceType == EvalStackReduceDataType::I8);
@@ -2796,7 +2805,7 @@ ir->ele = ele.locOffset;
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				IL2CPP_ASSERT(objKlass);
 
 				if (IS_CLASS_VALUE_TYPE(objKlass))
@@ -2862,7 +2871,7 @@ ir->ele = ele.locOffset;
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				CreateAddIR(ir, RefAnyValueVarVar);
 				ir->addr = ir->typedRef = ctx.GetEvalStackTopOffset();
 				ir->klass = ctx.GetOrAddResolveDataIndex(objKlass);
@@ -2903,7 +2912,7 @@ ir->ele = ele.locOffset;
 			{
 				IL2CPP_ASSERT(evalStackTop > 0);
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+				Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 				IL2CPP_ASSERT(objKlass);
 				CreateAddIR(ir, MakeRefVarVar);
 				ir->dst = ir->data = ctx.GetEvalStackTopOffset();
@@ -2920,7 +2929,7 @@ ir->ele = ele.locOffset;
 			case OpcodeValue::LDTOKEN:
 			{
 				uint32_t token = (uint32_t)GetI4LittleEndian(ip + 1);
-				void* runtimeHandle = (void*)image->GetRuntimeHandleFromToken(token, klassContainer, methodContainer, genericContext);
+				void* runtimeHandle = (void*)image->GetRuntimeHandleFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 
 				CreateAddIR(ir, LdtokenVar);
 				ir->runtimeHandle = ctx.GetEvalStackNewTopOffset();
@@ -3078,7 +3087,7 @@ ir->ele = ele.locOffset;
 				case OpcodeValue::LDFTN:
 				{
 					uint32_t methodToken = (uint32_t)GetI4LittleEndian(ip + 2);
-					MethodInfo* methodInfo = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(methodToken, klassContainer, methodContainer, genericContext));
+					MethodInfo* methodInfo = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(tokenCache, methodToken, klassContainer, methodContainer, genericContext));
 					IL2CPP_ASSERT(methodInfo);
 					CreateAddIR(ir, LdcVarConst_8);
 					ir->dst = ctx.GetEvalStackNewTopOffset();
@@ -3091,7 +3100,7 @@ ir->ele = ele.locOffset;
 				{
 					IL2CPP_ASSERT(evalStackTop > 0);
 					uint32_t methodToken = (uint32_t)GetI4LittleEndian(ip + 2);
-					MethodInfo* methodInfo = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(methodToken, klassContainer, methodContainer, genericContext));
+					MethodInfo* methodInfo = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(tokenCache, methodToken, klassContainer, methodContainer, genericContext));
 					IL2CPP_ASSERT(methodInfo);
 
 					CreateAddIR(ir, LdvirftnVarVar);
@@ -3217,7 +3226,7 @@ ir->ele = ele.locOffset;
 				{
 					IL2CPP_ASSERT(evalStackTop > 0);
 					uint32_t token = (uint32_t)GetI4LittleEndian(ip + 2);
-					Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+					Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 					if (IS_CLASS_VALUE_TYPE(objKlass))
 					{
 						uint32_t objSize = GetTypeValueSize(objKlass);
@@ -3351,7 +3360,7 @@ ir->ele = ele.locOffset;
 				case OpcodeValue::CONSTRAINED_:
 				{
 					uint32_t typeToken = (uint32_t)GetI4LittleEndian(ip + 2);
-					Il2CppClass* conKlass = image->GetClassFromToken(typeToken, klassContainer, methodContainer, genericContext);
+					Il2CppClass* conKlass = image->GetClassFromToken(tokenCache, typeToken, klassContainer, methodContainer, genericContext);
 					IL2CPP_ASSERT(conKlass);
 					ip += 6;
 
@@ -3360,7 +3369,7 @@ ir->ele = ele.locOffset;
 					ip += 5;
 
 					// TODO token cache optimistic
-					shareMethod = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(methodToken, klassContainer, methodContainer, genericContext));
+					shareMethod = const_cast<MethodInfo*>(image->GetMethodInfoFromToken(tokenCache, methodToken, klassContainer, methodContainer, genericContext));
 					IL2CPP_ASSERT(shareMethod);
 
 
@@ -3376,6 +3385,35 @@ ir->ele = ele.locOffset;
 						{
 							shareMethod = implMethod;
 							goto LabelCall;
+						}
+						else if (conKlass->enumtype && !std::strcmp(shareMethod->name, "GetHashCode"))
+						{
+							Il2CppTypeEnum typeEnum = conKlass->element_class->byval_arg.type;
+
+							if (typeEnum == IL2CPP_TYPE_I8 || typeEnum == IL2CPP_TYPE_U8)
+							{
+								CreateAddIR(ir, GetEnumHashCode);
+								ir->dst = ir->src = self.locOffset;
+							}
+							else
+							{
+								CreateAddIR(ir, LdindVarVar_i1);
+								ir->dst = ir->src = self.locOffset;
+								switch (conKlass->element_class->byval_arg.type)
+								{
+								case IL2CPP_TYPE_U1: ir->type = HiOpcodeEnum::LdindVarVar_u1; break;
+								case IL2CPP_TYPE_I1: ir->type = HiOpcodeEnum::LdindVarVar_i1; break;
+								case IL2CPP_TYPE_U2: ir->type = HiOpcodeEnum::LdindVarVar_u2; break;
+								case IL2CPP_TYPE_I2: ir->type = HiOpcodeEnum::LdindVarVar_u2; break;
+								case IL2CPP_TYPE_U4: ir->type = HiOpcodeEnum::LdindVarVar_u4; break;
+								case IL2CPP_TYPE_I4: ir->type = HiOpcodeEnum::LdindVarVar_i4; break;
+								case IL2CPP_TYPE_CHAR: ir->type = HiOpcodeEnum::LdindVarVar_u2; break;
+								case IL2CPP_TYPE_BOOLEAN: ir->type = HiOpcodeEnum::LdindVarVar_i1; break;
+								default:
+									IL2CPP_ASSERT(false && "GetHashCode");
+									break;
+								}
+							}
 						}
 						else
 						{
@@ -3456,7 +3494,7 @@ ir->ele = ele.locOffset;
 				case OpcodeValue::SIZEOF:
 				{
 					uint32_t token = (uint32_t)GetI4LittleEndian(ip + 2);
-					Il2CppClass* objKlass = image->GetClassFromToken(token, klassContainer, methodContainer, genericContext);
+					Il2CppClass* objKlass = image->GetClassFromToken(tokenCache, token, klassContainer, methodContainer, genericContext);
 					IL2CPP_ASSERT(objKlass);
 					int32_t typeSize = GetTypeValueSize(&objKlass->byval_arg);
 					ctx.CreateAddInst_ldc4(typeSize, EvalStackReduceDataType::I4);
@@ -3545,7 +3583,17 @@ ir->ele = ele.locOffset;
 		}
 
 
-		byte* tranCodes = (byte*)HYBRIDCLR_MALLOC(totalSize);
+		il2cpp::utils::dynamic_array<hybridclr::metadata::ILMapper>* ilMappers;
+		if (ir2offsetMap)
+		{
+			ilMappers = new il2cpp::utils::dynamic_array<hybridclr::metadata::ILMapper>();
+			ilMappers->reserve(ir2offsetMap->size());
+		}
+		else
+		{
+			ilMappers = nullptr;
+		}
+		byte* tranCodes = (byte*)HYBRIDCLR_METADATA_MALLOC(totalSize);
 
 		uint32_t tranOffset = 0;
 		for (IRBasicBlock* bb : irbbs)
@@ -3553,10 +3601,22 @@ ir->ele = ele.locOffset;
 			bb->codeOffset = tranOffset;
 			for (IRCommon* ir : bb->insts)
 			{
+				if (ilMappers)
+				{
+					auto it = ir2offsetMap->find(ir);
+					if (it != ir2offsetMap->end())
+					{
+						hybridclr::metadata::ILMapper ilMapper;
+						ilMapper.irOffset = tranOffset;
+						ilMapper.ilOffset = it->second;
+						ilMappers->push_back(ilMapper);
+					}
+				}
 				uint32_t irSize = g_instructionSizes[(int)ir->type];
 				std::memcpy(tranCodes + tranOffset, &ir->type, irSize);
 				tranOffset += irSize;
 			}
+			bb->~IRBasicBlock();
 		}
 		IL2CPP_ASSERT(tranOffset == totalSize);
 
@@ -3568,14 +3628,15 @@ ir->ele = ele.locOffset;
 		MethodArgDesc* argDescs;
 		if (actualParamCount > 0)
 		{
-			argDescs = (MethodArgDesc*)HYBRIDCLR_CALLOC(actualParamCount, sizeof(MethodArgDesc));
+			argDescs = (MethodArgDesc*)HYBRIDCLR_METADATA_CALLOC(actualParamCount, sizeof(MethodArgDesc));
 			for (int32_t i = 0; i < actualParamCount; i++)
 			{
 				const Il2CppType* argType = args[i].type;
 				TypeDesc typeDesc = GetTypeArgDesc(argType);
 				MethodArgDesc& argDesc = argDescs[i];
 				argDesc.type = typeDesc.type;
-				argDesc.stackObjectSize = typeDesc.stackObjectSize;
+				IL2CPP_ASSERT(typeDesc.stackObjectSize < 0x10000);
+				argDesc.stackObjectSize = (uint16_t)typeDesc.stackObjectSize;
 				argDesc.passbyValWhenInvoke = argType->byref || !IsValueType(argType);
 			}
 		}
@@ -3584,10 +3645,10 @@ ir->ele = ele.locOffset;
 			argDescs = nullptr;
 		}
 
-		result.method = methodInfo;
 		result.args = argDescs;
 		result.argCount = actualParamCount;
 		result.argStackObjectSize = totalArgSize;
+		result.retStackObjectSize = IsVoidType(methodInfo->return_type) ? 0 : GetTypeArgDesc(methodInfo->return_type).stackObjectSize;
 		result.codes = tranCodes;
 		result.codeLength = totalSize;
 		result.evalStackBaseOffset = evalStackBaseOffset;
@@ -3595,6 +3656,37 @@ ir->ele = ele.locOffset;
 		result.localStackSize = totalArgLocalSize;
 		result.maxStackSize = maxStackSize;
 		result.initLocals = initLocals;
+
+		if (resolveDatas.empty())
+		{
+			result.resolveDatas = nullptr;
+		}
+		else
+		{
+			//result.resolveData = (uint8_t*)HYBRIDCLR_MALLOC(resolveDatas.size() * sizeof(uint8_t));
+			size_t dataSize = resolveDatas.size() * sizeof(uint64_t);
+			uint64_t* data = (uint64_t*)HYBRIDCLR_METADATA_MALLOC(dataSize);
+			std::memcpy(data, resolveDatas.data(), dataSize);
+			result.resolveDatas = data;
+		}
+		if (exClauses.empty())
+		{
+			result.exClauses = nullptr;
+			result.exClauseCount = 0;
+		}
+		else
+		{
+			size_t dataSize = exClauses.size() * sizeof(InterpExceptionClause);
+			InterpExceptionClause* data = (InterpExceptionClause*)HYBRIDCLR_METADATA_MALLOC(dataSize);
+			std::memcpy(data, exClauses.data(), dataSize);
+			result.exClauses = data;
+			result.exClauseCount = (uint32_t)exClauses.size();
+		}
+
+		if (ilMappers)
+		{
+			pdbImage->SetMethodDebugInfo(methodInfo, *ilMappers);
+		}
 	}
 }
 

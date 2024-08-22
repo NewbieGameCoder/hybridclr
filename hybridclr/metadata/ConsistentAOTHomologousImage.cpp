@@ -131,7 +131,7 @@ namespace metadata
 		uint32_t rowIndex = DecodeTokenRowIndex(token);
 		IL2CPP_ASSERT(rowIndex > 0);
 		TbMethod methodData = _rawImage->ReadMethod(rowIndex);
-		MethodBody* body = new (HYBRIDCLR_MALLOC_ZERO(sizeof(MethodBody))) MethodBody();
+		MethodBody* body = new (HYBRIDCLR_METADATA_MALLOC(sizeof(MethodBody))) MethodBody();
 		ReadMethodBody(*_methodDefs[rowIndex - 1], methodData, *body);
 		_token2MethodBodies.insert({ token, body });
 		return body;
@@ -164,7 +164,7 @@ namespace metadata
 	{
 		IL2CPP_ASSERT(rowIndex > 0);
 		AOTFieldData& fd = _fields[rowIndex - 1];
-		ret.containerType = *_il2cppTypeForTypeDefs[fd.typeDefIndex];
+		ret.containerType = _il2cppTypeForTypeDefs[fd.typeDefIndex];
 		ret.field = fd.fieldDef;
 	}
 }
