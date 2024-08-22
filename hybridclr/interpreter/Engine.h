@@ -14,20 +14,7 @@
 #include "InterpreterDefs.h"
 #include "MemoryUtil.h"
 #include "MethodBridge.h"
-
-
-//#if DEBUG
-//#define PUSH_STACK_FRAME(method) do { \
-//	Il2CppStackFrameInfo stackFrameInfo = { method, (uintptr_t)method->methodPointer }; \
-//	il2cpp::vm::StackTrace::PushFrame(stackFrameInfo); \
-//} while(0)
-//
-//#define POP_STACK_FRAME() do { il2cpp::vm::StackTrace::PopFrame(); } while(0)
-//
-//#else 
-#define PUSH_STACK_FRAME(method)
-#define POP_STACK_FRAME() 
-//#endif
+#include <algorithm>
 
 namespace hybridclr
 {
@@ -256,25 +243,8 @@ namespace interpreter
 			}
 		}
 
-		void CollectFrames(il2cpp::vm::StackFrames* stackFrames)
-		{
-			if (_frameTopIdx <= 0)
-			{
-				return;
-			}
-			stackFrames->insert(stackFrames->begin(), _frameTopIdx, Il2CppStackFrameInfo());
-			for (int32_t i = 0; i < _frameTopIdx; i++)
-			{
-				InterpFrame* frame = _frameBase + i;
-				const MethodInfo* method = frame->method->method;
-				(*stackFrames)[i] = {
-					method
-#if HYBRIDCLR_UNITY_2020_OR_NEW
-					, (uintptr_t)method->methodPointer
-#endif
-				};
-			}
-		}
+		void CollectFrames(il2cpp::vm::StackFrames* stackFrames);
+		void SetupFramesDebugInfo(il2cpp::vm::StackFrames* stackFrames);
 
 	private:
 
@@ -357,10 +327,9 @@ namespace interpreter
 			}
 		}
 
-		InterpFrame* EnterFrameFromInterpreter(const InterpMethodInfo* imi, StackObject* argBase);
+		InterpFrame* EnterFrameFromInterpreter(const MethodInfo* method, StackObject* argBase);
 
-
-		InterpFrame* EnterFrameFromNative(const InterpMethodInfo* imi, StackObject* argBase);
+		InterpFrame* EnterFrameFromNative(const MethodInfo* method, StackObject* argBase);
 
 		InterpFrame* LeaveFrame();
 
@@ -384,28 +353,6 @@ namespace interpreter
 		MachineState& _machineState;
 		int32_t _stackBaseIdx;
 		uint32_t _frameBaseIdx;
-	};
-
-	class StackObjectAllocScope
-	{
-	private:
-		MachineState& _state;
-		const int32_t _originStackTop;
-		const int32_t _count;
-		StackObject* _data;
-	public:
-		StackObjectAllocScope(MachineState& state, int32_t count) : _state(state), _count(count), _originStackTop(_state.GetStackTop())
-		{
-			_data = state.AllocStackSlot(count);
-		}
-
-		~StackObjectAllocScope()
-		{
-			IL2CPP_ASSERT(_state.GetStackTop() > _originStackTop);
-			_state.SetStackTop(_originStackTop);
-		}
-
-		StackObject* GetData() const { return _data; }
 	};
 }
 }

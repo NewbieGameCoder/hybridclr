@@ -8,12 +8,13 @@
 #include "vm/Type.h"
 #include "vm/Runtime.h"
 #include "vm/GlobalMetadataFileInternals.h"
+#include "vm/MetadataAlloc.h"
 #include "icalls/mscorlib/System/Type.h"
 #include "gc/GarbageCollector.h"
 
 #if HYBRIDCLR_UNITY_2020
 #include "icalls/mscorlib/System/MonoType.h"
-#elif HYBRIDCLR_UNITY_2021 || HYBRIDCLR_UNITY_2022
+#elif HYBRIDCLR_UNITY_2021_OR_NEW
 #include "icalls/mscorlib/System/RuntimeType.h"
 #include "icalls/mscorlib/System/RuntimeTypeHandle.h"
 #elif HYBRIDCLR_UNITY_2019
@@ -202,8 +203,14 @@ namespace hybridclr
 		Il2CppReflectionType* refType = il2cpp::icalls::mscorlib::System::Type::internal_from_handle((intptr_t)type);
 		return il2cpp::icalls::mscorlib::System::MonoType::getFullName(refType, false, false);
 	}
+
+	inline std::string GetKlassFullName2(const Il2CppType* type)
+	{
+		Il2CppReflectionType* refType = il2cpp::icalls::mscorlib::System::Type::internal_from_handle((intptr_t)type);
+		return il2cpp::icalls::mscorlib::System::MonoType::getFullName2(refType, false, false);
+	}
 }
-#elif HYBRIDCLR_UNITY_2021 || HYBRIDCLR_UNITY_2022
+#elif HYBRIDCLR_UNITY_2021_OR_NEW
 
 inline bool IS_CLASS_VALUE_TYPE(const Il2CppClass* klass)
 {
@@ -281,6 +288,12 @@ namespace hybridclr
 	{
 		Il2CppReflectionType* refType = il2cpp::icalls::mscorlib::System::Type::internal_from_handle((intptr_t)type);
 		return il2cpp::icalls::mscorlib::System::RuntimeType::getFullName((Il2CppReflectionRuntimeType*)refType, false, false);
+	}
+
+	inline std::string GetKlassFullName2(const Il2CppType* type)
+	{
+		Il2CppReflectionType* refType = il2cpp::icalls::mscorlib::System::Type::internal_from_handle((intptr_t)type);
+		return il2cpp::icalls::mscorlib::System::RuntimeType::getFullName2((Il2CppReflectionRuntimeType*)refType, false, false);
 	}
 
 }

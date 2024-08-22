@@ -4,7 +4,6 @@
 #include <cmath>
 #include <algorithm>
 
-#include "codegen/il2cpp-codegen-il2cpp.h"
 #include "vm/Object.h"
 #include "vm/Class.h"
 #include "vm/ClassInlines.h"
@@ -1230,6 +1229,13 @@ namespace interpreter
 		}
 	}
 
+	// align with the implementation of Enum::get_hashcode
+	inline int32_t GetEnumLongHashCode(void* data)
+	{
+		int64_t value = *((int64_t*)data);
+		return (int32_t)(value & 0xffffffff) ^ (int32_t)(value >> 32);
+	}
+
 	inline void ConstructorDelegate2(MethodInfo* ctor, Il2CppDelegate* del, Il2CppObject* target, MethodInfo* method)
 	{
 #if HYBRIDCLR_UNITY_2021_OR_NEW
@@ -1249,25 +1255,27 @@ namespace interpreter
 }
 
 #define LOAD_PREV_FRAME() { \
-	imi = frame->method; \
+	imi = (const InterpMethodInfo*)frame->method->interpData; \
 	ip = frame->ip; \
+	frame->ip = (byte*)&ip; \
 	ipBase = imi->codes; \
 	localVarBase = frame->stackBasePtr; \
 }
 
-	// maxStackSize包含 arg + local + eval,对于解释器栈来说，可能多余
 #define PREPARE_NEW_FRAME_FROM_NATIVE(newMethodInfo, argBasePtr, retPtr) { \
 	imi = newMethodInfo->interpData ? (InterpMethodInfo*)newMethodInfo->interpData : InterpreterModule::GetInterpMethodInfo(newMethodInfo); \
-	frame = interpFrameGroup.EnterFrameFromNative(imi, argBasePtr); \
+	frame = interpFrameGroup.EnterFrameFromNative(newMethodInfo, argBasePtr); \
 	frame->ret = retPtr; \
+	frame->ip = (byte*)&ip; \
 	ip = ipBase = imi->codes; \
 	localVarBase = frame->stackBasePtr; \
 }
 
 #define PREPARE_NEW_FRAME_FROM_INTERPRETER(newMethodInfo, argBasePtr, retPtr) { \
 	imi = newMethodInfo->interpData ? (InterpMethodInfo*)newMethodInfo->interpData : InterpreterModule::GetInterpMethodInfo(newMethodInfo); \
-	frame = interpFrameGroup.EnterFrameFromInterpreter(imi, argBasePtr); \
+	frame = interpFrameGroup.EnterFrameFromInterpreter(newMethodInfo, argBasePtr); \
 	frame->ret = retPtr; \
+	frame->ip = (byte*)&ip; \
 	ip = ipBase = imi->codes; \
 	localVarBase = frame->stackBasePtr; \
 }
@@ -1458,11 +1466,11 @@ while (true) \
 	ExceptionFlowInfo* efi = frame->GetCurExFlow(); \
 	IL2CPP_ASSERT(efi && efi->exFlowType == ExceptionFlowType::Exception); \
 	IL2CPP_ASSERT(efi->ex); \
-	int32_t exClauseNum = (int32_t)imi->exClauses.size(); \
+	int32_t exClauseNum = (int32_t)imi->exClauseCount; \
 	for (; efi->nextExClauseIndex < exClauseNum; ) \
 	{ \
 		for (ExceptionFlowInfo* prevExFlow; (prevExFlow = frame->GetPrevExFlow()) && efi->nextExClauseIndex >= prevExFlow->nextExClauseIndex ;) {\
-			InterpExceptionClause* prevIec = imi->exClauses[prevExFlow->nextExClauseIndex - 1]; \
+			const InterpExceptionClause* prevIec = &imi->exClauses[prevExFlow->nextExClauseIndex - 1]; \
 			if (!(prevIec->handlerBeginOffset <= efi->throwOffset && efi->throwOffset < prevIec->handlerEndOffset)) { \
 				PopPrevExceptionFlowInfo(frame, &efi);\
 			} \
@@ -1471,7 +1479,7 @@ while (true) \
 				break; \
 			} \
 		}\
-		InterpExceptionClause* iec = imi->exClauses[efi->nextExClauseIndex++]; \
+		const InterpExceptionClause* iec = &imi->exClauses[efi->nextExClauseIndex++]; \
 		if (iec->tryBeginOffset <= efi->throwOffset && efi->throwOffset < iec->tryEndOffset) \
 		{ \
 			switch (iec->flags) \
@@ -1535,16 +1543,16 @@ while (true) \
 #define RETHROW_EX() { \
 	ExceptionFlowInfo* curExFlow = frame->GetCurExFlow(); \
 	IL2CPP_ASSERT(curExFlow->exFlowType == ExceptionFlowType::Catch); \
-	il2cpp::vm::Exception::Raise(curExFlow->ex, const_cast<MethodInfo*>(imi->method)); \
+	il2cpp::vm::Exception::Raise(curExFlow->ex, const_cast<MethodInfo*>(frame->method)); \
 }
 
 #define CONTINUE_NEXT_FINALLY() { \
 ExceptionFlowInfo* efi = frame->GetCurExFlow(); \
 IL2CPP_ASSERT(efi && efi->exFlowType == ExceptionFlowType::Leave); \
-int32_t exClauseNum = (int32_t)imi->exClauses.size(); \
+int32_t exClauseNum = (int32_t)imi->exClauseCount; \
 for (; efi->nextExClauseIndex < exClauseNum; ) \
 { \
-	InterpExceptionClause* iec = imi->exClauses[efi->nextExClauseIndex++]; \
+	const InterpExceptionClause* iec = &imi->exClauses[efi->nextExClauseIndex++]; \
 	if (iec->tryBeginOffset <= efi->throwOffset && efi->throwOffset < iec->tryEndOffset) \
 	{ \
 		if (iec->tryBeginOffset <= efi->leaveTarget && efi->leaveTarget < iec->tryEndOffset) \
@@ -1578,7 +1586,7 @@ PopCurExceptionFlowInfo(frame); \
 #define POP_PREV_CATCH_HANDLERS(leaveTarget)\
 { \
 	for (ExceptionFlowInfo* prevExFlow; (prevExFlow = frame->GetPrevExFlow()) && prevExFlow->exFlowType == ExceptionFlowType::Catch ;) { \
-			InterpExceptionClause* prevIec = imi->exClauses[prevExFlow->nextExClauseIndex - 1]; \
+			const InterpExceptionClause* prevIec = &imi->exClauses[prevExFlow->nextExClauseIndex - 1]; \
 			if (!(prevIec->handlerBeginOffset <= leaveTarget && leaveTarget < prevIec->handlerEndOffset)) {	\
 					PopPrevExceptionFlowInfo(frame, nullptr); \
 			} \
@@ -1591,7 +1599,7 @@ PopCurExceptionFlowInfo(frame); \
 
 #define LEAVE_EX(target, firstHandlerIndex)  { \
 	PushExceptionFlowInfo(frame, machine, {ExceptionFlowType::Leave, (int32_t)(ip - ipBase), nullptr, firstHandlerIndex + 1, target}); \
-	InterpExceptionClause* iec = imi->exClauses[firstHandlerIndex]; \
+	const InterpExceptionClause* iec = &imi->exClauses[firstHandlerIndex]; \
 	POP_PREV_CATCH_HANDLERS(target); \
 	ip = ipBase + iec->handlerBeginOffset; \
 }
@@ -1599,7 +1607,7 @@ PopCurExceptionFlowInfo(frame); \
 #define POP_CUR_CATCH_HANDLERS(leaveTarget)\
 { \
 	for (ExceptionFlowInfo* prevExFlow; (prevExFlow = frame->GetCurExFlow()) && prevExFlow->exFlowType == ExceptionFlowType::Catch ;) { \
-			InterpExceptionClause* prevIec = imi->exClauses[prevExFlow->nextExClauseIndex - 1]; \
+			const InterpExceptionClause* prevIec = &imi->exClauses[prevExFlow->nextExClauseIndex - 1]; \
 			if (!(prevIec->handlerBeginOffset <= leaveTarget && leaveTarget < prevIec->handlerEndOffset)) {	\
 					PopCurExceptionFlowInfo(frame); \
 			} \
@@ -1645,7 +1653,6 @@ else \
 
 	void Interpreter::Execute(const MethodInfo* methodInfo, StackObject* args, void* ret)
 	{
-		INIT_CLASS(methodInfo->klass);
 		MachineState& machine = InterpreterModule::GetCurrentThreadMachineState();
 		InterpFrameGroup interpFrameGroup(machine);
 
@@ -5121,7 +5128,6 @@ else \
 					uint16_t __invokeParamCount = *(uint16_t*)(ip + 2);
 					void* _ret = nullptr;
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
-					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -5170,7 +5176,7 @@ else \
 						{
 							Managed2NativeCallMethod _staticM2NMethod = (Managed2NativeCallMethod)imi->resolveDatas[__managed2NativeStaticMethod];
 							Managed2NativeCallMethod _instanceM2NMethod = (Managed2NativeCallMethod)imi->resolveDatas[__managed2NativeInstanceMethod];
-							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, tempRet);
+							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, _ret);
 						}
 					}
 					else
@@ -5185,7 +5191,7 @@ else \
 							IL2CPP_ASSERT(subDel->delegates == nullptr);
 							const MethodInfo* method = subDel->delegate.method;
 							Il2CppObject* target = subDel->delegate.target;
-							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, tempRet);
+							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, _ret);
 						}
 					}
 				    ip += 16;
@@ -5200,8 +5206,8 @@ else \
 					uint16_t __invokeParamCount = *(uint16_t*)(ip + 4);
 					uint16_t __retTypeStackObjectSize = *(uint16_t*)(ip + 6);
 				    void* _ret = (void*)(localVarBase + __ret);
+					StackObject* _tempRet = (StackObject*)alloca(sizeof(StackObject) * __retTypeStackObjectSize);
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
-					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -5250,7 +5256,7 @@ else \
 						{
 							Managed2NativeCallMethod _staticM2NMethod = (Managed2NativeCallMethod)imi->resolveDatas[__managed2NativeStaticMethod];
 							Managed2NativeCallMethod _instanceM2NMethod = (Managed2NativeCallMethod)imi->resolveDatas[__managed2NativeInstanceMethod];
-							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, tempRet);
+							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, _tempRet);
 						}
 					}
 					else
@@ -5265,10 +5271,10 @@ else \
 							IL2CPP_ASSERT(subDel->delegates == nullptr);
 							const MethodInfo* method = subDel->delegate.method;
 							Il2CppObject* target = subDel->delegate.target;
-							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, tempRet);
+							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, _tempRet);
 						}
 					}
-					CopyStackObject((StackObject*)_ret, tempRet, __retTypeStackObjectSize);
+					CopyStackObject((StackObject*)_ret, _tempRet, __retTypeStackObjectSize);
 				    ip += 24;
 				    continue;
 				}
@@ -5281,8 +5287,8 @@ else \
 					uint16_t __invokeParamCount = *(uint16_t*)(ip + 6);
 					uint8_t __retLocationType = *(uint8_t*)(ip + 2);
 				    void* _ret = (void*)(localVarBase + __ret);
+					StackObject _tempRet[1];
 					uint16_t* _resolvedArgIdxs = ((uint16_t*)&imi->resolveDatas[__argIdxs]);
-					StackObject tempRet[kMaxRetValueTypeStackObjectSize];
 					StackObject* _argBasePtr = localVarBase + _resolvedArgIdxs[0];
 					Il2CppMulticastDelegate* _del = (Il2CppMulticastDelegate*)_argBasePtr->obj;
 					CHECK_NOT_NULL_THROW(_del);
@@ -5331,7 +5337,7 @@ else \
 						{
 							Managed2NativeCallMethod _staticM2NMethod = (Managed2NativeCallMethod)imi->resolveDatas[__managed2NativeStaticMethod];
 							Managed2NativeCallMethod _instanceM2NMethod = (Managed2NativeCallMethod)imi->resolveDatas[__managed2NativeInstanceMethod];
-							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, tempRet);
+							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, _tempRet);
 						}
 					}
 					else
@@ -5346,10 +5352,10 @@ else \
 							IL2CPP_ASSERT(subDel->delegates == nullptr);
 							const MethodInfo* method = subDel->delegate.method;
 							Il2CppObject* target = subDel->delegate.target;
-							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, tempRet);
+							InvokeSingleDelegate(__invokeParamCount, method, target, _staticM2NMethod, _instanceM2NMethod, _resolvedArgIdxs, localVarBase, _tempRet);
 						}
 					}
-				    CopyLocationData2StackDataByType((StackObject*)_ret, tempRet, (LocationDataType)__retLocationType);
+				    CopyLocationData2StackDataByType((StackObject*)_ret, _tempRet, (LocationDataType)__retLocationType);
 				    ip += 24;
 				    continue;
 				}
@@ -11264,10 +11270,25 @@ else \
 				    ip += 8;
 				    continue;
 				}
+				case HiOpcodeEnum::GetEnumHashCode:
+				{
+					uint16_t __dst = *(uint16_t*)(ip + 2);
+					uint16_t __src = *(uint16_t*)(ip + 4);
+				    (*(int32_t*)(localVarBase + __dst)) = GetEnumLongHashCode({(*(void**)(localVarBase + __src))});
+				    ip += 8;
+				    continue;
+				}
 				case HiOpcodeEnum::AssemblyGetExecutingAssembly:
 				{
 					uint16_t __ret = *(uint16_t*)(ip + 2);
-				    (*(Il2CppObject**)(localVarBase + __ret)) = (Il2CppObject*)il2cpp::vm::Reflection::GetAssemblyObject(imi->method->klass->image->assembly);
+				    (*(Il2CppObject**)(localVarBase + __ret)) = (Il2CppObject*)il2cpp::vm::Reflection::GetAssemblyObject(frame->method->klass->image->assembly);
+				    ip += 8;
+				    continue;
+				}
+				case HiOpcodeEnum::MethodBaseGetCurrentMethod:
+				{
+					uint16_t __ret = *(uint16_t*)(ip + 2);
+				    (*(Il2CppObject**)(localVarBase + __ret)) = (Il2CppObject*)il2cpp::vm::Reflection::GetMethodObject(frame->method, nullptr);
 				    ip += 8;
 				    continue;
 				}
