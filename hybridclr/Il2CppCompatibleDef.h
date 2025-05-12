@@ -59,11 +59,11 @@
 #endif
 
 #ifndef HYBRIDCLR_ENABLE_PROFILER
-#define HYBRIDCLR_ENABLE_PROFILER  (IL2CPP_ENABLE_PROFILER && (IL2CPP_DEBUG || HYBRIDCLR_ENABLE_PROFILER_IN_RELEASE_BUILD))
+#define HYBRIDCLR_ENABLE_PROFILER  IL2CPP_ENABLE_PROFILER
 #endif
 
 #ifndef HYBRIDCLR_ENABLE_STRACKTRACE
-#define HYBRIDCLR_ENABLE_STRACKTRACE (IL2CPP_ENABLE_STACKTRACE_SENTRIES && (IL2CPP_DEBUG || HYBRIDCLR_ENABLE_STRACE_TRACE_IN_WEBGL_RELEASE_BUILD))
+#define HYBRIDCLR_ENABLE_STRACKTRACE IL2CPP_ENABLE_STACKTRACE_SENTRIES
 #endif
 
 #if UNITY_ENGINE_TUANJIE
@@ -185,6 +185,12 @@ namespace hybridclr
 		delegate->method_ptr = InitAndGetInterpreterDirectlyCallVirtualMethodPointer(method);
 		delegate->method = method;
 		delegate->target = target;
+#if HYBRIDCLR_ENABLE_WRITE_BARRIERS
+		if (target)
+		{
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)&delegate->target);
+		}
+#endif
 		//il2cpp::vm::Type::ConstructDelegate(delegate, target, InitAndGetInterpreterDirectlyCallMethodPointer(method), method);
 	}
 
@@ -266,6 +272,13 @@ namespace hybridclr
 		delegate->method = method;
 		delegate->invoke_impl = InitAndGetInterpreterDirectlyCallVirtualMethodPointer(method);
 		delegate->invoke_impl_this = target;
+#if HYBRIDCLR_ENABLE_WRITE_BARRIERS
+		if (target)
+		{
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)&delegate->target);
+			HYBRIDCLR_SET_WRITE_BARRIER((void**)&delegate->invoke_impl_this);
+		}
+#endif
 	}
 
 	inline const MethodInfo* GetGenericVirtualMethod(const MethodInfo* result, const MethodInfo* inflateMethod)

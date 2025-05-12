@@ -26,6 +26,16 @@ namespace interpreter
 		//!!!{{OPCODE
 		InitLocals_n_2,
 		InitLocals_n_4,
+		InitLocals_size_8,
+		InitLocals_size_16,
+		InitLocals_size_24,
+		InitLocals_size_32,
+		InitInlineLocals_n_2,
+		InitInlineLocals_n_4,
+		InitInlineLocals_size_8,
+		InitInlineLocals_size_16,
+		InitInlineLocals_size_24,
+		InitInlineLocals_size_32,
 		LdlocVarVar,
 		LdlocExpandVarVar_i1,
 		LdlocExpandVarVar_u1,
@@ -336,6 +346,9 @@ namespace interpreter
 		CallInd_void,
 		CallInd_ret,
 		CallInd_ret_expand,
+		CallPInvoke_void,
+		CallPInvoke_ret,
+		CallPInvoke_ret_expand,
 		CallDelegateInvoke_void,
 		CallDelegateInvoke_ret,
 		CallDelegateInvoke_ret_expand,
@@ -751,6 +764,8 @@ namespace interpreter
 		StthreadlocalVarVar_n_4,
 		StthreadlocalVarVar_WriteBarrier_n_2,
 		StthreadlocalVarVar_WriteBarrier_n_4,
+		CheckThrowIfNullVar,
+		InitClassStaticCtor,
 		NewArrVarVar,
 		GetArrayLengthVarVar,
 		GetArrayElementAddressAddrVarVar,
@@ -878,6 +893,102 @@ namespace interpreter
 		uint8_t __pad2;
 		uint8_t __pad3;
 		uint32_t size;
+	};
+
+
+	struct IRInitLocals_size_8 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint8_t __pad4;
+		uint8_t __pad5;
+		uint8_t __pad6;
+		uint8_t __pad7;
+	};
+
+
+	struct IRInitLocals_size_16 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint8_t __pad4;
+		uint8_t __pad5;
+		uint8_t __pad6;
+		uint8_t __pad7;
+	};
+
+
+	struct IRInitLocals_size_24 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint8_t __pad4;
+		uint8_t __pad5;
+		uint8_t __pad6;
+		uint8_t __pad7;
+	};
+
+
+	struct IRInitLocals_size_32 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint8_t __pad4;
+		uint8_t __pad5;
+		uint8_t __pad6;
+		uint8_t __pad7;
+	};
+
+
+	struct IRInitInlineLocals_n_2 : IRCommon
+	{
+		uint16_t size;
+		uint32_t offset;
+	};
+
+
+	struct IRInitInlineLocals_n_4 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint32_t size;
+		uint32_t offset;
+		uint8_t __pad12;
+		uint8_t __pad13;
+		uint8_t __pad14;
+		uint8_t __pad15;
+	};
+
+
+	struct IRInitInlineLocals_size_8 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint32_t offset;
+	};
+
+
+	struct IRInitInlineLocals_size_16 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint32_t offset;
+	};
+
+
+	struct IRInitInlineLocals_size_24 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint32_t offset;
+	};
+
+
+	struct IRInitInlineLocals_size_32 : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint32_t offset;
 	};
 
 
@@ -3827,18 +3938,28 @@ namespace interpreter
 
 	struct IRCallInd_void : IRCommon
 	{
-		uint8_t __pad2;
+		uint8_t isMethodInfoPointer;
 		uint8_t __pad3;
 		uint32_t managed2NativeMethod;
+		uint32_t managed2NativeFunctionPointerMethod;
 		uint32_t methodInfo;
 		uint32_t argIdxs;
+		uint8_t __pad20;
+		uint8_t __pad21;
+		uint8_t __pad22;
+		uint8_t __pad23;
 	};
 
 
 	struct IRCallInd_ret : IRCommon
 	{
+		uint8_t isMethodInfoPointer;
+		uint8_t __pad3;
 		uint16_t ret;
+		uint8_t __pad6;
+		uint8_t __pad7;
 		uint32_t managed2NativeMethod;
+		uint32_t managed2NativeFunctionPointerMethod;
 		uint32_t methodInfo;
 		uint32_t argIdxs;
 	};
@@ -3846,13 +3967,46 @@ namespace interpreter
 
 	struct IRCallInd_ret_expand : IRCommon
 	{
+		uint8_t isMethodInfoPointer;
+		uint8_t retLocationType;
+		uint16_t ret;
+		uint8_t __pad6;
+		uint8_t __pad7;
+		uint32_t managed2NativeMethod;
+		uint32_t managed2NativeFunctionPointerMethod;
+		uint32_t methodInfo;
+		uint32_t argIdxs;
+	};
+
+
+	struct IRCallPInvoke_void : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint32_t managed2NativeFunctionPointerMethod;
+		uint32_t pinvokeMethodPointer;
+		uint32_t argIdxs;
+	};
+
+
+	struct IRCallPInvoke_ret : IRCommon
+	{
+		uint16_t ret;
+		uint32_t managed2NativeFunctionPointerMethod;
+		uint32_t pinvokeMethodPointer;
+		uint32_t argIdxs;
+	};
+
+
+	struct IRCallPInvoke_ret_expand : IRCommon
+	{
 		uint8_t retLocationType;
 		uint8_t __pad3;
 		uint16_t ret;
 		uint8_t __pad6;
 		uint8_t __pad7;
-		uint32_t managed2NativeMethod;
-		uint32_t methodInfo;
+		uint32_t managed2NativeFunctionPointerMethod;
+		uint32_t pinvokeMethodPointer;
 		uint32_t argIdxs;
 		uint8_t __pad20;
 		uint8_t __pad21;
@@ -8735,6 +8889,28 @@ namespace interpreter
 		uint8_t __pad7;
 		uint32_t klass;
 		uint32_t size;
+	};
+
+
+	struct IRCheckThrowIfNullVar : IRCommon
+	{
+		uint16_t obj;
+		uint8_t __pad4;
+		uint8_t __pad5;
+		uint8_t __pad6;
+		uint8_t __pad7;
+	};
+
+
+	struct IRInitClassStaticCtor : IRCommon
+	{
+		uint8_t __pad2;
+		uint8_t __pad3;
+		uint8_t __pad4;
+		uint8_t __pad5;
+		uint8_t __pad6;
+		uint8_t __pad7;
+		uint64_t klass;
 	};
 
 

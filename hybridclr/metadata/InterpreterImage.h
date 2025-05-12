@@ -93,6 +93,13 @@ namespace metadata
 	};
 #endif
 
+	struct ImplMapInfo
+	{
+		const char* moduleName;
+		const char* importName;
+		uint32_t mappingFlags;
+	};
+
 	class InterpreterImage : public Image
 	{
 	public:
@@ -167,32 +174,18 @@ namespace metadata
 			return rawIndex != 0 ? EncodeImageAndMetadataIndex(_index, rawIndex) : 0;
 		}
 
-		MethodBody* GetMethodBody(uint32_t token, MethodBody& tempMethodBody) override
+		MethodBody* GetMethodBody(uint32_t token) override
 		{
 			IL2CPP_ASSERT(DecodeTokenTableType(token) == TableType::METHOD);
 			uint32_t rowIndex = DecodeTokenRowIndex(token);
 			IL2CPP_ASSERT(rowIndex > 0 && rowIndex <= (uint32_t)_methodDefines.size());
 
-			auto it = _methodBodyCache.find(rowIndex);
-			if (it != _methodBodyCache.end())
-			{
-				return it->second;
-			}
+
 			const Il2CppMethodDefinition* methodDef = &_methodDefines[rowIndex - 1];
 			bool isGenericMethod = methodDef->genericContainerIndex != kGenericContainerIndexInvalid || _typesDefines[DecodeMetadataIndex(methodDef->declaringType)].genericContainerIndex != kGenericContainerIndexInvalid;
 
 			TbMethod methodData = _rawImage->ReadMethod(rowIndex);
-			MethodBody* resultMethodBody = nullptr;
-			// only cache generic method
-			if (isGenericMethod)
-			{
-				resultMethodBody = new (HYBRIDCLR_MALLOC_ZERO(sizeof(MethodBody))) MethodBody();
-				_methodBodyCache.insert({ rowIndex, resultMethodBody });
-			}
-			else
-			{
-				resultMethodBody = &tempMethodBody;
-			}
+			MethodBody* resultMethodBody = new (HYBRIDCLR_MALLOC_ZERO(sizeof(MethodBody))) MethodBody();
 			ReadMethodBody(*methodDef, methodData, *resultMethodBody);
 			return resultMethodBody;
 		}
@@ -517,7 +510,7 @@ namespace metadata
 			CustomAttributeIndex nextIndex = DecodeMetadataIndex(GET_CUSTOM_ATTRIBUTE_TYPE_RANGE_START(*(dataRangeCur + 1)));
 			CustomAttribute& curCa = _customAttribues[curIndex];
 			CustomAttribute& nextCa = _customAttribues[nextIndex];
-			return std::make_tuple<void*, void*>((void*)_rawImage->GetBlobReaderByRawIndex(curCa.value).GetData(), (void*)_rawImage->GetBlobReaderByRawIndex(nextCa.value).GetData());
+			return std::tuple<void*, void*>((void*)_rawImage->GetBlobReaderByRawIndex(curCa.value).GetData(), (void*)_rawImage->GetBlobReaderByRawIndex(nextCa.value).GetData());
 		}
 
 		CustomAttributesCache* GenerateCustomAttributesCacheInternal(const Il2CppCustomAttributeTypeRange* typeRange)
@@ -622,7 +615,11 @@ namespace metadata
 		void GetPropertyDeclaringTypeIndexAndPropertyIndexByName(const Il2CppTypeDefinition* declaringType, const char* name, int32_t& typeIndex, int32_t& fieldIndex);
 #endif
 
-
+		ImplMapInfo* GetImplMapInfo(uint32_t token)
+		{
+			auto it = _implMapInfos.find(token);
+			return it != _implMapInfos.end() ? &it->second : nullptr;
+		}
 
 		Il2CppClass* GetTypeInfoFromTypeDefinitionRawIndex(uint32_t index);
 
@@ -667,8 +664,11 @@ namespace metadata
 		void InitMethodDefs();
 		void InitMethodImpls0();
 		void InitNestedClass();
+		void InitClassLayouts0();
 		void InitClassLayouts();
 		void InitCustomAttributes();
+		void InitModuleRefs();
+		void InitImplMaps();
 		void InitProperties();
 		void InitEvents();
 		void InitMethodSemantics();
@@ -710,7 +710,6 @@ namespace metadata
 		std::vector<InterfaceOffsetInfo> _interfaceOffsets;
 
 		std::vector<Il2CppMethodDefinition> _methodDefines;
-		Il2CppHashMap<uint32_t, MethodBody*, il2cpp::utils::PassThroughHash<uint32_t>> _methodBodyCache;
 
 		std::vector<ParamDetail> _params;
 		std::vector<int32_t>* _paramRawIndex2ActualParamIndex; // rawIindex = rowIndex - 1; because local function, param list count maybe less than actual method param count
@@ -749,6 +748,9 @@ namespace metadata
 
 		std::vector<PropertyDetail> _propeties;
 		std::vector<EventDetail> _events;
+
+		std::vector<const char*> _moduleRefs;
+		std::unordered_map<uint32_t, ImplMapInfo> _implMapInfos;
 	};
 }
 }

@@ -167,6 +167,9 @@ namespace metadata
 		InitMethodSemantics();
 		InitConsts();
 		InitCustomAttributes();
+		InitModuleRefs();
+		InitImplMaps();
+		InitClassLayouts0();
 		InitTypeDefs_2();
 		InitClassLayouts();
 		InitInterfaces();
@@ -961,8 +964,6 @@ namespace metadata
 		case IL2CPP_TYPE_OBJECT:
 		{
 			ConvertBoxedValue(writer, reader, writeType);
-			//*(Il2CppObject**)data = ReadBoxedValue(reader);
-			// FIXME memory barrier
 			break;
 		}
 		case IL2CPP_TYPE_CLASS:
@@ -1215,12 +1216,8 @@ namespace metadata
 					TEMP_FORMAT(errMsg, "CustomAttribute field missing. klass:%s.%s field:%s", klass->namespaze, klass->name, cstrName);
 					il2cpp::vm::Exception::Raise(il2cpp::vm::Exception::GetTypeInitializationException(errMsg, nullptr));
 				}
-				Il2CppReflectionField* refField = il2cpp::vm::Reflection::GetFieldObject(klass, field);
 				IL2CPP_ASSERT(IsTypeEqual(&fieldOrPropType, field->type));
-				uint32_t fieldSize = GetTypeValueSize(&fieldOrPropType);
-				std::memcpy((byte*)obj + field->offset, &value, fieldSize);
-				//fixme MEMORY BARRIER
-				IL2CPP_ASSERT(refField);
+				il2cpp::vm::Field::SetValue(obj, field, &value);
 			}
 			else
 			{
@@ -1247,31 +1244,19 @@ namespace metadata
 	CustomAttributesCache* InterpreterImage::GenerateCustomAttributesCacheInternal(CustomAttributeIndex index)
 	{
 		IL2CPP_ASSERT(index != kCustomAttributeIndexInvalid);
+		IL2CPP_ASSERT(index < (CustomAttributeIndex)_customAttributeHandles.size());
 		CustomAttributesCache* cache = _customAttribtesCaches[index];
 		if (cache)
 		{
 			return cache;
 		}
-		IL2CPP_ASSERT(index < (CustomAttributeIndex)_customAttributeHandles.size());
 
 		Il2CppCustomAttributeTypeRange& typeRange = _customAttributeHandles[index];
-
-		il2cpp::os::FastAutoLock metaLock(&il2cpp::vm::g_MetadataLock);
-		cache = _customAttribtesCaches[index];
-		if (cache)
-		{
-			return cache;
-		}
 
 		hybridclr::interpreter::ExecutingInterpImageScope scope(hybridclr::interpreter::InterpreterModule::GetCurrentThreadMachineState(), this->_il2cppImage);
 
 		cache = (CustomAttributesCache*)IL2CPP_CALLOC(1, sizeof(CustomAttributesCache));
-		int32_t count;
-#ifdef HYBRIDCLR_UNITY_2021_OR_NEW
-		count = (int32_t)(_customAttributeHandles[index + 1].startOffset - typeRange.startOffset);
-#else
-		count = (int32_t)typeRange.count;
-#endif
+		int32_t count= (int32_t)typeRange.count;
 		cache->count = count;
 		cache->attributes = (Il2CppObject**)il2cpp::gc::GarbageCollector::AllocateFixed(sizeof(Il2CppObject*) * count, 0);
 
@@ -1303,6 +1288,16 @@ namespace metadata
 			HYBRIDCLR_SET_WRITE_BARRIER((void**)cache->attributes + i);
 		}
 
+		il2cpp::os::FastAutoLock metaLock(&il2cpp::vm::g_MetadataLock);
+		CustomAttributesCache* original = _customAttribtesCaches[index];
+		if (original)
+		{
+			// A non-NULL return value indicates some other thread already generated this cache.
+			// We need to cleanup the resources we allocated
+			il2cpp::gc::GarbageCollector::FreeFixed(cache->attributes);
+			HYBRIDCLR_FREE(cache);
+			return original;
+		}
 		il2cpp::os::Atomic::FullMemoryBarrier();
 		_customAttribtesCaches[index] = cache;
 		return cache;
@@ -1311,16 +1306,8 @@ namespace metadata
 	CustomAttributesCache* InterpreterImage::GenerateCustomAttributesCacheInternal(CustomAttributeIndex index)
 	{
 		IL2CPP_ASSERT(index != kCustomAttributeIndexInvalid);
-		CustomAttributesCache* cache = _customAttribtesCaches[index];
-		if (cache)
-		{
-			return cache;
-		}
 		IL2CPP_ASSERT(index < (CustomAttributeIndex)_customAttributeHandles.size());
-
-		Il2CppCustomAttributeTypeRange& typeRange = _customAttributeHandles[index];
-
-		cache = _customAttribtesCaches[index];
+		CustomAttributesCache* cache = _customAttribtesCaches[index];
 		if (cache)
 		{
 			return cache;
@@ -1328,6 +1315,7 @@ namespace metadata
 
 		hybridclr::interpreter::ExecutingInterpImageScope scope(hybridclr::interpreter::InterpreterModule::GetCurrentThreadMachineState(), this->_il2cppImage);
 
+		Il2CppCustomAttributeTypeRange& typeRange = _customAttributeHandles[index];
 		void* start;
 		void* end;
 		std::tie(start, end) = CreateCustomAttributeDataTuple(&typeRange);
@@ -1353,7 +1341,7 @@ namespace metadata
 			if (exc != NULL)
 			{
 				il2cpp::gc::GarbageCollector::FreeFixed(cache->attributes);
-				IL2CPP_FREE(cache);
+				HYBRIDCLR_FREE(cache);
 				il2cpp::vm::Exception::Raise(exc);
 			}
 		}
@@ -1366,7 +1354,7 @@ namespace metadata
 			// A non-NULL return value indicates some other thread already generated this cache.
 			// We need to cleanup the resources we allocated
 			il2cpp::gc::GarbageCollector::FreeFixed(cache->attributes);
-			IL2CPP_FREE(cache);
+			HYBRIDCLR_FREE(cache);
 			return original;
 		}
 		il2cpp::os::Atomic::FullMemoryBarrier();
@@ -1374,6 +1362,34 @@ namespace metadata
 		return cache;
 	}
 #endif
+
+	void InterpreterImage::InitModuleRefs()
+	{
+		const Table& moduleRefTb = _rawImage->GetTable(TableType::MODULEREF);
+		_moduleRefs.reserve(moduleRefTb.rowNum);
+		for (uint32_t rid = 1; rid <= moduleRefTb.rowNum; rid++)
+		{
+			TbModuleRef moduleRef = _rawImage->ReadModuleRef(rid);
+			const char* moduleName = _rawImage->GetStringFromRawIndex(moduleRef.name);
+			_moduleRefs.push_back(moduleName);
+		}
+	}
+
+	void InterpreterImage::InitImplMaps()
+	{
+		const Table& implMapTb = _rawImage->GetTable(TableType::IMPLMAP);
+		_implMapInfos.reserve(implMapTb.rowNum);
+		for (uint32_t rid = 1; rid <= implMapTb.rowNum; rid++)
+		{
+			TbImplMap implMap = _rawImage->ReadImplMap(rid);
+			ImplMapInfo info = {};
+			info.moduleName = _moduleRefs[DecodeTokenRowIndex(implMap.importScope) - 1];
+			info.importName = _rawImage->GetStringFromRawIndex(implMap.importName);
+			info.mappingFlags = implMap.mappingFlags;
+			uint32_t memberForwardedToken = hybridclr::metadata::ConvertMemberForwardedToken2Token(implMap.memberForwarded);
+			_implMapInfos.insert({ memberForwardedToken, info });
+		}
+	}
 
 	void InterpreterImage::InitMethodDefs0()
 	{
@@ -1742,7 +1758,7 @@ namespace metadata
 		}
 	}
 
-	void InterpreterImage::InitClassLayouts()
+	void InterpreterImage::InitClassLayouts0()
 	{
 		const Table& classLayoutTb = _rawImage->GetTable(TableType::CLASSLAYOUT);
 		for (uint32_t i = 0; i < classLayoutTb.rowNum; i++)
@@ -1755,7 +1771,10 @@ namespace metadata
 				typeSizes.instance_size = data.classSize + sizeof(Il2CppObject);
 			}
 		}
+	}
 
+	void InterpreterImage::InitClassLayouts()
+	{
 		ClassFieldLayoutCalculator calculator(this);
 		for (Il2CppTypeDefinition& type : _typesDefines)
 		{

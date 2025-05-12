@@ -39,31 +39,11 @@ namespace metadata
         Assembly::InitializePlaceHolderAssemblies();
     }
 
-
-    LoadImageErrorCode MetadataModule::LoadMetadataForAOTAssembly(const void* dllBytes, uint32_t dllSize, HomologousImageMode mode)
+    Image* MetadataModule::GetUnderlyingInterpreterImage(const MethodInfo* methodInfo)
     {
-        il2cpp::os::FastAutoLock lock(&il2cpp::vm::g_MetadataLock);
-
-        AOTHomologousImage* image = nullptr;
-        switch (mode)
-        {
-        case HomologousImageMode::CONSISTENT: image = new ConsistentAOTHomologousImage(); break;
-        case HomologousImageMode::SUPERSET: image = new SuperSetAOTHomologousImage(); break;
-        default: return LoadImageErrorCode::INVALID_HOMOLOGOUS_MODE;
-        }
-
-        LoadImageErrorCode err = image->Load((byte*)CopyBytes(dllBytes, dllSize), dllSize);
-        if (err != LoadImageErrorCode::OK)
-        {
-            return err;
-        }
-        if (AOTHomologousImage::FindImageByAssemblyLocked(image->GetAOTAssembly(), lock))
-        {
-            return LoadImageErrorCode::HOMOLOGOUS_ASSEMBLY_HAS_BEEN_LOADED;
-        }
-        image->InitRuntimeMetadatas();
-        AOTHomologousImage::RegisterLocked(image, lock);
-        return LoadImageErrorCode::OK;
+        return metadata::IsInterpreterMethod(methodInfo) ? hybridclr::metadata::MetadataModule::GetImage(methodInfo->klass)
+            : (metadata::Image*)hybridclr::metadata::AOTHomologousImage::FindImageByAssembly(
+                methodInfo->klass->rank ? il2cpp_defaults.corlib->assembly : methodInfo->klass->image->assembly);
     }
 }
 }
