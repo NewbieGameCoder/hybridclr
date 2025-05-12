@@ -49,6 +49,9 @@ namespace metadata
 		{
 			return GetImage(DecodeImageIndex(encodedIndex));
 		}
+		
+		static Image* GetUnderlyingInterpreterImage(const MethodInfo* method);
+
 
 		static const char* GetStringFromEncodeIndex(StringIndex index)
 		{
@@ -243,8 +246,6 @@ namespace metadata
 				return strcmp(method->name, "Invoke") == 0;
 			}
 		}
-
-		static LoadImageErrorCode LoadMetadataForAOTAssembly(const void* dllBytes, uint32_t dllSize, HomologousImageMode mode);
 	private:
 
 	};

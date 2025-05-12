@@ -142,7 +142,7 @@ namespace metadata
         type.numsizes = reader.ReadCompressedUint32();
         if (type.numsizes > 0)
         {
-            type.sizes = (int*)alloca(type.numsizes * sizeof(int));
+            type.sizes = (int*)HYBRIDCLR_CALLOC(type.numsizes, sizeof(int));
             for (uint8_t i = 0; i < type.numsizes; i++)
             {
                 type.sizes[i] = reader.ReadCompressedUint32();
@@ -155,7 +155,7 @@ namespace metadata
         type.numlobounds = reader.ReadCompressedUint32();
         if (type.numlobounds > 0)
         {
-            type.lobounds = (int*)alloca(type.numlobounds * sizeof(int));
+            type.lobounds = (int*)HYBRIDCLR_CALLOC(type.numlobounds, sizeof(int));
             for (uint8_t i = 0; i < type.numlobounds; i++)
             {
                 type.lobounds[i] = reader.ReadCompressedInt32();
@@ -898,7 +898,7 @@ namespace metadata
 
     Il2CppClass* Image::GetClassFromToken(Token2RuntimeHandleMap& tokenCache, uint32_t token, const Il2CppGenericContainer* klassGenericContainer, const Il2CppGenericContainer* methodGenericContainer, const Il2CppGenericContext* genericContext)
     {
-        TokenGenericContextType key = { token, genericContext };
+        TokenGenericContextType key(token, genericContext);
         auto it = tokenCache.find(key);
         if (it != tokenCache.end())
         {
@@ -957,11 +957,9 @@ namespace metadata
             IL2CPP_ASSERT(genericInstantiation == nullptr);
             Il2CppClass* arrayKlass = il2cpp::vm::Class::FromIl2CppType(type);
             il2cpp::vm::Class::SetupMethods(arrayKlass);
-            //const Il2CppType* genericClassInstArgv[] = { &arrayKlass->element_class->byval_arg };
             const Il2CppType** genericClassInstArgv = genericContext && genericContext->class_inst ? genericContext->class_inst->type_argv : nullptr;
             const Il2CppType** genericMethodInstArgv = genericContext && genericContext->method_inst ? genericContext->method_inst->type_argv : nullptr;
 
-            // FIXME MEMORY LEAK
             for (uint16_t i = 0; i < arrayKlass->method_count; i++)
             {
                 const MethodInfo* method = arrayKlass->methods[i];
@@ -987,16 +985,14 @@ namespace metadata
             {
                 RaiseMissingFieldException(rmr.parent.type, rmr.name);
             }
-            const FieldInfo* fieldInfo = GetFieldInfoFromFieldRef(*rmr.parent.type, fieldDef);
+            const Il2CppType* parentType = genericContext != nullptr ? il2cpp::metadata::GenericMetadata::InflateIfNeeded(rmr.parent.type, genericContext, true) : rmr.parent.type;
+            const FieldInfo* fieldInfo = GetFieldInfoFromFieldRef(*parentType, fieldDef);
             return fieldInfo;
         }
         else if (rmr.signature.memberType == TableType::METHOD_POINTER)
         {
-            if (genericContext)
-            {
-                rmr.parent.type = TryInflateIfNeed(rmr.parent.type, genericContext, true);
-            }
-            return ResolveMethodInfo(rmr.parent.type, rmr.name, rmr.signature.method, nullptr, genericContext);
+            const Il2CppType* parentType = genericContext != nullptr ? il2cpp::metadata::GenericMetadata::InflateIfNeeded(rmr.parent.type, genericContext, true) : rmr.parent.type;
+            return ResolveMethodInfo(parentType, rmr.name, rmr.signature.method, nullptr, genericContext);
         }
         else
         {
@@ -1052,7 +1048,7 @@ namespace metadata
 
     const FieldInfo* Image::GetFieldInfoFromToken(Token2RuntimeHandleMap& tokenCache, uint32_t token, const Il2CppGenericContainer* klassGenericContainer, const Il2CppGenericContainer* methodGenericContainer, const Il2CppGenericContext* genericContext)
     {
-        TokenGenericContextType key = { token, genericContext };
+        TokenGenericContextType key(token, genericContext);
         auto it = tokenCache.find(key);
         if (it != tokenCache.end())
         {

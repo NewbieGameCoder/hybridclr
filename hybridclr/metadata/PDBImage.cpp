@@ -3,8 +3,6 @@
 #include <algorithm>
 
 #include "vm/MetadataLock.h"
-#include "os/Mutex.h"
-#include "Baselib.h"
 
 #include "../interpreter/InterpreterDefs.h"
 
@@ -15,8 +13,6 @@ namespace hybridclr
 namespace metadata
 {
 	constexpr uint32_t kHiddenLine = 0xfeefee;
-
-	baselib::ReentrantLock s_pdbLock;
 
 	LoadImageErrorCode PDBImage::LoadCLIHeader(uint32_t& entryPointToken, uint32_t& metadataRva, uint32_t& metadataSize)
 	{
@@ -71,7 +67,6 @@ namespace metadata
 			return nullptr;
 		}
 
-		il2cpp::os::FastAutoLock lock(&s_pdbLock);
 		auto it = _documents.find(documentToken);
 		if (it != _documents.end())
 		{
@@ -108,6 +103,7 @@ namespace metadata
 
 	void PDBImage::SetupStackFrameInfo(const MethodInfo* method, const void* ip, Il2CppStackFrameInfo& stackFrame)
 	{
+		il2cpp::os::FastAutoLock lock(&il2cpp::vm::g_MetadataLock);
 		auto it = _methodInfos.find(method);
 		if (it == _methodInfos.end())
 		{
@@ -149,12 +145,15 @@ namespace metadata
 
 	void PDBImage::SetMethodDebugInfo(const MethodInfo* method, const il2cpp::utils::dynamic_array<ILMapper>& ilMapper)
 	{
-		il2cpp::os::FastAutoLock lock(&s_pdbLock);
 		IL2CPP_ASSERT(_methodInfos.find(method) == _methodInfos.end());
+		SymbolMethodDefData* methodData = GetMethodDataFromCache(method->token);
+		if (!methodData)
+		{
+			return;
+		}
 
 		SymbolMethodInfoData* methodInfoData = new (HYBRIDCLR_MALLOC_ZERO(sizeof(SymbolMethodInfoData))) SymbolMethodInfoData();
-		methodInfoData->methodData = GetMethodDataFromCache(method->token);
-		IL2CPP_ASSERT(methodInfoData->methodData);
+		methodInfoData->methodData = methodData;
 		methodInfoData->ilMapper = ilMapper;
 		_methodInfos.add(method, methodInfoData);
 	}
@@ -168,8 +167,6 @@ namespace metadata
 		{
 			return nullptr;
 		}
-
-		il2cpp::os::FastAutoLock lock(&s_pdbLock);
 
 		auto it = _methods.find(methodToken);
 		if (it != _methods.end())

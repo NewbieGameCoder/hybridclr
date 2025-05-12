@@ -135,7 +135,7 @@ namespace metadata
 		}
 		else
 		{
-			const Il2CppTypeDefinition* aotTypeDef = (const Il2CppTypeDefinition*)il2cpp::vm::Image::TypeHandleFromName(_aotAssembly->image, namespaze, name);
+			const Il2CppTypeDefinition* aotTypeDef = (const Il2CppTypeDefinition*)il2cpp::vm::Image::TypeHandleFromName(_targetAssembly->image, namespaze, name);
 			if (aotTypeDef)
 			{
 				type.aotTypeDef = aotTypeDef;
@@ -146,7 +146,7 @@ namespace metadata
 		}
 		labelInitDefault:
 		type.aotIl2CppType = _defaultIl2CppType;
-		//TEMP_FORMAT(msg, "type: %s::%s can't find homologous type in assembly:%s", type.namespaze, type.name, _aotAssembly->aname.name);
+		//TEMP_FORMAT(msg, "type: %s::%s can't find homologous type in assembly:%s", type.namespaze, type.name, _targetAssembly->aname.name);
 		//RaiseExecutionEngineException(msg);
 	}
 
@@ -285,7 +285,7 @@ namespace metadata
 		}
 	}
 
-	MethodBody* SuperSetAOTHomologousImage::GetMethodBody(uint32_t token, MethodBody& tempMethodBody)
+	MethodBody* SuperSetAOTHomologousImage::GetMethodBody(uint32_t token)
 	{
 		auto it = _token2MethodDefs.find(token);
 		if (it == _token2MethodDefs.end())
@@ -293,15 +293,11 @@ namespace metadata
 			return nullptr;
 		}
 		SuperSetMethodDefDetail* method = it->second;
-		if (!method->body)
-		{
-			uint32_t rowIndex = (uint32_t)(method - &_methodDefs[0] + 1);
-			TbMethod methodData = _rawImage->ReadMethod(rowIndex);
-			MethodBody* body = new (HYBRIDCLR_METADATA_MALLOC(sizeof(MethodBody))) MethodBody();
-			ReadMethodBody(*method->aotMethodDef, methodData, *body);
-			method->body = body;
-		}
-		return method->body;
+		uint32_t rowIndex = (uint32_t)(method - &_methodDefs[0] + 1);
+		TbMethod methodData = _rawImage->ReadMethod(rowIndex);
+		MethodBody* body = new (HYBRIDCLR_MALLOC_ZERO(sizeof(MethodBody))) MethodBody();
+		ReadMethodBody(*method->aotMethodDef, methodData, *body);
+		return body;
 	}
 
 	const Il2CppType* SuperSetAOTHomologousImage::GetIl2CppTypeFromRawTypeDefIndex(uint32_t index)

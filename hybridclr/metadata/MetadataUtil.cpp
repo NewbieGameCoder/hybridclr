@@ -263,7 +263,6 @@ namespace metadata
 			if (!IsSameOverrideType(t1->data.generic_class->type, t2->data.generic_class->type))
 				return false;
 
-			/* FIXME: we should probably just compare the instance pointers directly.  */
 			for (uint32_t i = 0; i < i1->type_argc; ++i)
 			{
 				if (!IsSameOverrideType(i1->type_argv[i], i2->type_argv[i]))
@@ -407,7 +406,6 @@ namespace metadata
 			if (!IsMatchSigType(dstType->data.generic_class->type, sigType->data.generic_class->type, klassGenericContainer, methodGenericContainer))
 				return false;
 
-			/* FIXME: we should probably just compare the instance pointers directly.  */
 			for (uint32_t i = 0; i < i1->type_argc; ++i)
 			{
 				if (!IsMatchSigType(i1->type_argv[i], i2->type_argv[i], klassGenericContainer, methodGenericContainer))
@@ -499,7 +497,6 @@ namespace metadata
 			if (!IsMatchSigType(dstType->data.generic_class->type, sigType->data.generic_class->type, klassInstArgv, methodInstArgv))
 				return false;
 
-			/* FIXME: we should probably just compare the instance pointers directly.  */
 			for (uint32_t i = 0; i < i1->type_argc; ++i)
 			{
 				if (!IsMatchSigType(i1->type_argv[i], i2->type_argv[i], klassInstArgv, methodInstArgv))
@@ -748,6 +745,40 @@ namespace metadata
 			argv[i] = TryInflateIfNeed(inst->type_argv[i], genericContext, true);
 		}
 		return il2cpp::vm::MetadataCache::GetGenericInst(argv, inst->type_argc);
+	}
+
+	bool HasNotInstantiatedGenericType(const Il2CppGenericInst* inst)
+	{
+		if (inst == nullptr)
+		{
+			return false;
+		}
+		for (uint32_t i = 0; i < inst->type_argc; i++)
+		{
+			if (HasNotInstantiatedGenericType(inst->type_argv[i]))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool HasNotInstantiatedGenericType(const Il2CppType* type)
+	{
+		switch (type->type)
+		{
+		case IL2CPP_TYPE_FNPTR:
+			return true;
+		case IL2CPP_TYPE_PTR:
+		case IL2CPP_TYPE_SZARRAY: return HasNotInstantiatedGenericType(type->data.type);
+		case IL2CPP_TYPE_ARRAY: return HasNotInstantiatedGenericType(type->data.array->etype);
+		case IL2CPP_TYPE_GENERICINST:
+		{
+			Il2CppGenericClass* genericClass = type->data.generic_class;
+			return HasNotInstantiatedGenericType(genericClass->context.class_inst);
+		}
+		default: return false;
+		}
 	}
 
 	const Il2CppType* GetIl2CppTypeFromTypeDefinition(const Il2CppTypeDefinition* typeDef)
