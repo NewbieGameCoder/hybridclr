@@ -702,8 +702,7 @@ namespace transform
 
 	interpreter::IRCommon* CreateLdsfld(TemporaryMemoryArena& pool, int32_t dstIdx, const FieldInfo* fieldInfo, uint32_t parent)
 	{
-		IL2CPP_ASSERT(fieldInfo->offset < (1 << 16));
-		uint16_t offset = (uint16_t)fieldInfo->offset;
+		uint32_t offset = fieldInfo->offset;
 
 		const Il2CppType* type = fieldInfo->type;
 		LocationDescInfo desc = ComputLocationDescInfo(type);
@@ -805,8 +804,7 @@ namespace transform
 
 	interpreter::IRCommon* CreateStsfld(TemporaryMemoryArena& pool, const FieldInfo* fieldInfo, uint32_t parent, int32_t dataIdx)
 	{
-		IL2CPP_ASSERT(fieldInfo->offset < (1 << 16));
-		uint16_t offset = (uint16_t)fieldInfo->offset;
+		uint32_t offset = fieldInfo->offset;
 
 
 		const Il2CppType* type = fieldInfo->type;
@@ -4172,10 +4170,12 @@ else \
 						goto LabelCall;
 					}
 				}
+
 				if (!InitAndGetInterpreterDirectlyCallMethodPointer(shareMethod))
 				{
 					RaiseAOTGenericMethodNotInstantiatedException(shareMethod);
 				}
+
 				int32_t callArgEvalStackIdxBase = evalStackTop - shareMethod->parameters_count;
 				IL2CPP_ASSERT(callArgEvalStackIdxBase >= 0);
 				uint16_t objIdx = GetEvalStackOffset(callArgEvalStackIdxBase);
@@ -4225,16 +4225,6 @@ else \
 						}
 					}
 					IL2CPP_ASSERT(maxStackSize < MAX_STACK_SIZE);
-					continue;
-				}
-
-				// optimize when argv == 0
-				if (shareMethod->parameters_count == 0 && !IS_CLASS_VALUE_TYPE(klass))
-				{
-					CreateAddIR(ir, NewClassVar_Ctor_0);
-					ir->method = methodDataIndex;
-					ir->obj = GetEvalStackNewTopOffset();
-					PushStackByReduceType(NATIVE_INT_REDUCE_TYPE);
 					continue;
 				}
 

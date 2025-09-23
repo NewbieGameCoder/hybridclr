@@ -312,6 +312,7 @@ namespace interpreter
 		NewClassVar_Ctor_0,
 		NewClassVar_NotCtor,
 		NewValueTypeVar,
+		NewValueTypeVar_Ctor_0,
 		NewClassInterpVar,
 		NewClassInterpVar_Ctor_0,
 		NewValueTypeInterpVar,
@@ -3589,6 +3590,15 @@ namespace interpreter
 		uint32_t managed2NativeMethod;
 		uint32_t method;
 		uint32_t argIdxs;
+	};
+
+
+	struct IRNewValueTypeVar_Ctor_0 : IRCommon
+	{
+		uint16_t obj;
+		uint16_t size;
+		uint8_t __pad6;
+		uint8_t __pad7;
 	};
 
 
@@ -7884,10 +7894,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_i1 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7898,10 +7906,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_u1 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7912,10 +7918,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_i2 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7926,10 +7930,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_u2 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7940,10 +7942,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_i4 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7954,10 +7954,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_u4 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7968,10 +7966,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_i8 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7982,10 +7978,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_u8 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -7996,10 +7990,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_size_8 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8010,10 +8002,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_size_12 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8024,10 +8014,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_size_16 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8038,10 +8026,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_size_20 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8052,10 +8038,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_size_24 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8066,10 +8050,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_size_28 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8080,10 +8062,8 @@ namespace interpreter
 	struct IRLdsfldVarVar_size_32 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8094,33 +8074,27 @@ namespace interpreter
 	struct IRLdsfldVarVar_n_2 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
 		uint16_t size;
+		uint8_t __pad6;
+		uint8_t __pad7;
 		uint32_t klass;
-		uint8_t __pad12;
-		uint8_t __pad13;
-		uint8_t __pad14;
-		uint8_t __pad15;
+		uint32_t offset;
 	};
 
 
 	struct IRLdsfldVarVar_n_4 : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint32_t size;
 	};
 
 
 	struct IRStsfldVarVar_i1 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8131,10 +8105,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_u1 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8145,10 +8117,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_i2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8159,10 +8129,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_u2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8173,10 +8141,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_i4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8187,10 +8153,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_u4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8201,10 +8165,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_i8 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8215,10 +8177,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_u8 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8229,10 +8189,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_ref : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8243,10 +8201,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_size_8 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8257,10 +8213,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_size_12 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8271,10 +8225,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_size_16 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8285,10 +8237,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_size_20 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8299,10 +8249,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_size_24 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8313,10 +8261,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_size_28 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8327,10 +8273,8 @@ namespace interpreter
 
 	struct IRStsfldVarVar_size_32 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8341,48 +8285,40 @@ namespace interpreter
 
 	struct IRStsfldVarVar_n_2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
 		uint16_t size;
+		uint8_t __pad6;
+		uint8_t __pad7;
 		uint32_t klass;
-		uint8_t __pad12;
-		uint8_t __pad13;
-		uint8_t __pad14;
-		uint8_t __pad15;
+		uint32_t offset;
 	};
 
 
 	struct IRStsfldVarVar_n_4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint32_t size;
 	};
 
 
 	struct IRStsfldVarVar_WriteBarrier_n_2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
 		uint16_t size;
+		uint8_t __pad6;
+		uint8_t __pad7;
 		uint32_t klass;
-		uint8_t __pad12;
-		uint8_t __pad13;
-		uint8_t __pad14;
-		uint8_t __pad15;
+		uint32_t offset;
 	};
 
 
 	struct IRStsfldVarVar_WriteBarrier_n_4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint32_t size;
 	};
 
@@ -8390,10 +8326,8 @@ namespace interpreter
 	struct IRLdsfldaVarVar : IRCommon
 	{
 		uint16_t dst;
-		uint16_t offset;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint8_t __pad12;
 		uint8_t __pad13;
 		uint8_t __pad14;
@@ -8622,10 +8556,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_i1 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8636,10 +8568,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_u1 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8650,10 +8580,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_i2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8664,10 +8592,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_u2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8678,10 +8604,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_i4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8692,10 +8616,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_u4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8706,10 +8628,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_i8 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8720,10 +8640,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_u8 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8734,10 +8652,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_ref : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8748,10 +8664,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_size_8 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8762,10 +8676,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_size_12 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8776,10 +8688,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_size_16 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8790,10 +8700,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_size_20 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8804,10 +8712,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_size_24 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8818,10 +8724,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_size_28 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8832,10 +8736,8 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_size_32 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
+		uint32_t offset;
 		uint32_t klass;
 		uint8_t __pad12;
 		uint8_t __pad13;
@@ -8846,48 +8748,40 @@ namespace interpreter
 
 	struct IRStthreadlocalVarVar_n_2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
 		uint16_t size;
+		uint8_t __pad6;
+		uint8_t __pad7;
 		uint32_t klass;
-		uint8_t __pad12;
-		uint8_t __pad13;
-		uint8_t __pad14;
-		uint8_t __pad15;
+		uint32_t offset;
 	};
 
 
 	struct IRStthreadlocalVarVar_n_4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint32_t size;
 	};
 
 
 	struct IRStthreadlocalVarVar_WriteBarrier_n_2 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
 		uint16_t size;
+		uint8_t __pad6;
+		uint8_t __pad7;
 		uint32_t klass;
-		uint8_t __pad12;
-		uint8_t __pad13;
-		uint8_t __pad14;
-		uint8_t __pad15;
+		uint32_t offset;
 	};
 
 
 	struct IRStthreadlocalVarVar_WriteBarrier_n_4 : IRCommon
 	{
-		uint16_t offset;
 		uint16_t data;
-		uint8_t __pad6;
-		uint8_t __pad7;
 		uint32_t klass;
+		uint32_t offset;
 		uint32_t size;
 	};
 

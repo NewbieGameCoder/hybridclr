@@ -73,7 +73,7 @@ namespace metadata
 			return it->second;
 		}
 
-		TbSymbolDocument document = ReadSymbolDocument(rowIndex);
+		TbDocument document = ReadDocument(rowIndex);
 		SymbolDocumentData* documentData = new (HYBRIDCLR_MALLOC_ZERO(sizeof(SymbolDocumentData))) SymbolDocumentData();
 		BlobReader reader = GetBlobReaderByRawIndex(document.name);
 		
@@ -112,16 +112,8 @@ namespace metadata
 		const SymbolMethodInfoData* methodInfoData = it->second;
 		const SymbolMethodDefData* methodData = methodInfoData->methodData;
 		const hybridclr::interpreter::InterpMethodInfo* imi = (const hybridclr::interpreter::InterpMethodInfo*)method->interpData;
-		const byte* actualIp;
-		if (ip >= imi->codes && ip < imi->codes + imi->codeLength)
-		{
-			actualIp = (const byte*)ip;
-		}
-		else
-		{
-			actualIp = *(byte**)ip;
-			IL2CPP_ASSERT(actualIp >= imi->codes && actualIp < imi->codes + imi->codeLength);
-		}
+		IL2CPP_ASSERT(ip >= imi->codes && ip < imi->codes + imi->codeLength);
+		const byte* actualIp = (const byte*)ip;
 
 		uint32_t irOffset = (uint32_t)((uintptr_t)actualIp - (uintptr_t)imi->codes);
 		uint32_t ilOffset = FindILOffsetByIROffset(methodInfoData->ilMapper, irOffset);
@@ -130,14 +122,15 @@ namespace metadata
 		{
 			--ilOffset;
 		}
+		stackFrame.ilOffset = ilOffset;
 
 		const SymbolSequencePoint* ssp = FindSequencePoint(methodData->sequencePoints, ilOffset);
 		if (!ssp)
 		{
+			stackFrame.sourceCodeLineNumber = 0;
 			return;
 		}
 
-		stackFrame.ilOffset = ilOffset;
 		stackFrame.sourceCodeLineNumber = ssp->line;
 
 		stackFrame.filePath = GetDocumentName(ssp->document);
@@ -161,7 +154,7 @@ namespace metadata
 
 	PDBImage::SymbolMethodDefData* PDBImage::GetMethodDataFromCache(uint32_t methodToken)
 	{
-		const Table& tableMeta = GetTable(TableType::METHODBODY);
+		const Table& tableMeta = GetTable(TableType::METHODDEBUGINFORMATION);
 		uint32_t rowIndex = hybridclr::metadata::DecodeTokenRowIndex(methodToken);
 		if (rowIndex == 0 || rowIndex > tableMeta.rowNum)
 		{
@@ -177,7 +170,7 @@ namespace metadata
 		SymbolMethodDefData* methodData = new (HYBRIDCLR_MALLOC_ZERO(sizeof(SymbolMethodDefData))) SymbolMethodDefData();
 
 		// see https://github.com/dotnet/runtime/blob/main/docs/design/specs/PortablePdb-Metadata.md
-		TbSymbolMethodBody smb = ReadSymbolMethodBody(rowIndex);
+		TbMethodDebugInformation smb = ReadMethodDebugInformation(rowIndex);
 		methodData->document = smb.document;
 		if (smb.sequencePoints > 0)
 		{
